@@ -50,6 +50,15 @@
             android:text="login"
             android:textColor="@android:color/black" />
 
+        <!-- Login Button -->
+        <Button
+            android:id="@+id/a_login"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:background="@color/colorAccent"
+            android:text="login"
+            android:textColor="@android:color/black" />
 
 
         <com.google.android.gms.common.SignInButton
