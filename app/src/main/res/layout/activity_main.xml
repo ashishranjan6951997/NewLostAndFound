@@ -13,14 +13,15 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="24dp"
-        tools:context=".singin_activity">
+        tools:context=".singin_activity"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="212dp">
 
         <Button
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Button" />
-
 
         <EditText
             android:id="@+id/email"
@@ -31,15 +32,9 @@
             android:inputType="textEmailAddress"
             android:textColor="@android:color/black"
             android:textColorHint="@android:color/darker_gray" />
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="password"
-            android:inputType="textPassword"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/darker_gray" />
+
+
+
         <!-- Login Button -->
         <Button
             android:id="@+id/ah_login"
@@ -51,12 +46,17 @@
             android:textColor="@android:color/black" />
 
 
-
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_google"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="369dp"
+            android:layout_height="wrap_content"
+            android:text="Button" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
