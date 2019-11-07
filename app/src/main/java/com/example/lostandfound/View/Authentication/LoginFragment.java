@@ -1,4 +1,4 @@
-package com.example.lostandfound.Authentication;
+package com.example.lostandfound.View.Authentication;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,19 +11,26 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.lostandfound.Controller.Authentication.AuthenticateController;
 import com.example.lostandfound.R;
+import com.example.lostandfound.View.Authentication.CallBackInterface;
 
-public class LoginFragment extends Fragment {
+import static com.example.lostandfound.NameClass.signUp;
+
+public class LoginFragment extends Fragment
+{
     CallBackInterface callBackInterface;
     View rootView;
     EditText editemail;
     EditText editpass;
     Button btnlogin;
     Button btnSignup;
+    AuthenticateController controller;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView=inflater.inflate(R.id.login_fragment,container,false);
+        rootView=inflater.inflate(R.layout.login_fragment,container,false);
             initUI();
             return rootView;
     }
@@ -31,18 +38,33 @@ public class LoginFragment extends Fragment {
     {
         this.callBackInterface=callBackInterface;
     }
-    private void initUI() {
+    private void initUI()
+    {
+
         editemail=rootView.findViewById(R.id.email);
         editpass=rootView.findViewById(R.id.password);
         btnlogin=rootView.findViewById(R.id.login);
         btnSignup=rootView.findViewById(R.id.SignUp);
+
+
+        String emailText = editemail.getText().toString();
+        String passwordText = editpass.getText().toString();
+
+        controller = new AuthenticateController(getActivity(),emailText,passwordText);
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(callBackInterface!=null)
                 {
-                    callBackInterface.callBackMethod();
+                    callBackInterface.callBackMethod(signUp);
                 }
+            }
+        });
+
+        btnlogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controller.login();
             }
         });
     }
