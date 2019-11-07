@@ -16,10 +16,11 @@ import com.example.lostandfound.R;
 
 import static com.example.lostandfound.NameClass.logIn;
 
-public class SignUpFragment extends Fragment {
+public class SignUpFragment extends Fragment
+{
     View rootView;
-    EditText editemail;
-    EditText editpass;
+    EditText editEmail;
+    EditText editPass;
     EditText editConfirmPass;
     Button btnlogin;
     Button btnSignup;
@@ -41,17 +42,13 @@ public class SignUpFragment extends Fragment {
 
     private void initUi()
     {
-        editemail=rootView.findViewById(R.id.email);
-        editpass=rootView.findViewById(R.id.password);
+        editEmail=rootView.findViewById(R.id.email);
+        editPass=rootView.findViewById(R.id.password);
         editConfirmPass=rootView.findViewById(R.id.ConfirmPassword);
 
         btnlogin=rootView.findViewById(R.id.login);
         btnSignup=rootView.findViewById(R.id.SignUp);
 
-        String emailText = editemail.getText().toString();
-        String passwordText = editpass.getText().toString();
-
-        controller = new AuthenticateController(getActivity(),emailText,passwordText);
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,7 +61,15 @@ public class SignUpFragment extends Fragment {
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                String emailText = editEmail.getText().toString();
+                String passwordText = editPass.getText().toString();
+                String confirmText = editConfirmPass.getText().toString();
+
+                String cred[] = {emailText,passwordText,confirmText};
+
+                controller = new AuthenticateController(getActivity(),cred);
                 controller.signUp();
             }
         });

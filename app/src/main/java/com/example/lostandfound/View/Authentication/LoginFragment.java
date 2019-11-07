@@ -47,10 +47,6 @@ public class LoginFragment extends Fragment
         btnSignup=rootView.findViewById(R.id.SignUp);
 
 
-        String emailText = editemail.getText().toString();
-        String passwordText = editpass.getText().toString();
-
-        controller = new AuthenticateController(getActivity(),emailText,passwordText);
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,6 +60,14 @@ public class LoginFragment extends Fragment
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                String emailText = editemail.getText().toString();
+                String passwordText = editpass.getText().toString();
+
+                String cred[] = {emailText,passwordText};
+
+                controller = new AuthenticateController(getActivity(),cred);
                 controller.login();
             }
         });

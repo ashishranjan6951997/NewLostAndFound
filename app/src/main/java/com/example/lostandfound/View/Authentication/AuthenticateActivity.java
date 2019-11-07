@@ -32,6 +32,7 @@ public class AuthenticateActivity extends AppCompatActivity implements CallBackI
         loginFragment.setCallBackInterface(this);
 
         // to know whether fragment is present after multiple fragment transaction
+
         if(getSupportFragmentManager().findFragmentById(R.id.framecon) !=null )
         {
             fragmentTransaction.replace(R.id.framecon,loginFragment);
@@ -51,6 +52,7 @@ public class AuthenticateActivity extends AppCompatActivity implements CallBackI
 
 
         // to know whether fragment is present after multiple fragment transaction
+
         if(getSupportFragmentManager().findFragmentById(R.id.framecon) !=null )
         {
             fragmentTransaction.replace(R.id.framecon,signUpFragment);
