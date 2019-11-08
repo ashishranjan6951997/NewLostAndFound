@@ -1,4 +1,4 @@
-package com.example.dummyui;
+package com.example.lostandfound.SecondUi;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

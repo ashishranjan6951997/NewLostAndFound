@@ -1,6 +1,7 @@
 package com.example.lostandfound.Controller.Authentication;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -75,6 +76,7 @@ public class AuthenticateController {
 
                             sendVerification();
                             Toast.makeText(activity, "Sign Up Successful", Toast.LENGTH_LONG).show();
+                            //Intent intent=new Intent()
                         }
                     }
                 });
