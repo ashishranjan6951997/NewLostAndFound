@@ -1,4 +1,4 @@
-package com.example.lostandfound.SecondUi;
+package com.example.lostandfound.View.SecondUi;
 
 import android.os.Bundle;
 import android.view.MenuItem;

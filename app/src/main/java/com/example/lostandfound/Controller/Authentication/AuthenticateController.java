@@ -4,9 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 
+import com.example.lostandfound.Model.DatabaseModel.RealtimeDatabaseDemo;
+import com.example.lostandfound.View.SecondUi.SecondMainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -15,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class AuthenticateController {
     FirebaseAuth mAuth;
     Activity activity;
+    RealtimeDatabaseDemo demo;
     String email, password, confirmPassword;
 
     public AuthenticateController(Activity activity, String[] cred) {
@@ -22,6 +24,7 @@ public class AuthenticateController {
         this.activity = activity;
         this.email = cred[0];
         this.password = cred[1];
+        demo = new RealtimeDatabaseDemo();
         if (cred.length == 3) {
             this.confirmPassword = cred[2];
         }
@@ -37,23 +40,15 @@ public class AuthenticateController {
                     } else {
                         if (mAuth.getCurrentUser().isEmailVerified()) {
                             Toast.makeText(activity, "Your email is verified", Toast.LENGTH_LONG).show();
-
+                            sendIntent();
                         } else {
                             Toast.makeText(activity, "Please verify your email", Toast.LENGTH_LONG).show();
                         }
-//                    IntentDemo demo = new IntentDemo(activity,destActivity);
-//                    demo.transfer();
 
-//                    Intent intent = new Intent(activity,ChooseActivity.this);
-//                    activity.startActivity(intent);
-//                    activity.finish();
-
-//                        Toast.makeText(activity, "Log in Successful", Toast.LENGTH_LONG).show();
                     }
                 }
             });
         } else {
-
             Toast.makeText(activity, "Email or password not present in log in", Toast.LENGTH_LONG).show();
         }
     }
@@ -69,14 +64,11 @@ public class AuthenticateController {
                         if (!task.isSuccessful()) {
                             Toast.makeText(activity, task.getException().toString(), Toast.LENGTH_LONG).show();
                         } else {
-//                    saveData(name);
-//                    Intent intent = new Intent(activity,ChooseActivity.this);
-//                    activity.startActivity(intent);
-//                    activity.finish();
-
+                            demo.saveData();
                             sendVerification();
+                            sendIntent();
                             Toast.makeText(activity, "Sign Up Successful", Toast.LENGTH_LONG).show();
-                            //Intent intent=new Intent()
+
                         }
                     }
                 });
@@ -98,5 +90,11 @@ public class AuthenticateController {
                 }
             }
         });
+    }
+
+    private void sendIntent() {
+        Intent intent = new Intent(activity, SecondMainActivity.class);
+        activity.startActivity(intent);
+        activity.finish();
     }
 }
