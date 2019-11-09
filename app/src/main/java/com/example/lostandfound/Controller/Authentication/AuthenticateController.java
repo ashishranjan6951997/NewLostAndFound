@@ -76,6 +76,7 @@ public class AuthenticateController {
 
                             sendVerification();
                             Toast.makeText(activity, "Sign Up Successful", Toast.LENGTH_LONG).show();
+                            //Intent intent=new Intent()
                         }
                     }
                 });

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+
+    >
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/location_button"
+        android:text="Add the location"
+        android:paddingBottom="20sp"
+        android:layout_centerInParent="true"
+        android:layout_above="@+id/radio_id"/>
+    <RadioGroup
+        android:id="@+id/radio_id"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search Your Lost Item"
+            android:id="@+id/loser_selection"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Post the Found Item"
+            android:id="@+id/founder_selection"/>
+    </RadioGroup>
+
+    <ImageView
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radio_id"
+        android:id="@+id/image_view"
+
+        />
+        <Button
+            android:layout_below="@+id/image_view"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_confirmBtn"
+            android:text="Post this Image"/>
+</RelativeLayout>
