@@ -6,7 +6,6 @@ import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 
-import com.example.lostandfound.Model.DatabaseModel.RealtimeDatabaseDemo;
 import com.example.lostandfound.View.SecondUi.SecondMainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -16,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class AuthenticateController {
     FirebaseAuth mAuth;
     Activity activity;
-    RealtimeDatabaseDemo demo;
     String email, password, confirmPassword;
 
     public AuthenticateController(Activity activity, String[] cred) {
@@ -24,7 +22,6 @@ public class AuthenticateController {
         this.activity = activity;
         this.email = cred[0];
         this.password = cred[1];
-        demo = new RealtimeDatabaseDemo();
         if (cred.length == 3) {
             this.confirmPassword = cred[2];
         }
@@ -64,7 +61,6 @@ public class AuthenticateController {
                         if (!task.isSuccessful()) {
                             Toast.makeText(activity, task.getException().toString(), Toast.LENGTH_LONG).show();
                         } else {
-                            demo.saveData();
                             sendVerification();
                             sendIntent();
                             Toast.makeText(activity, "Sign Up Successful", Toast.LENGTH_LONG).show();
