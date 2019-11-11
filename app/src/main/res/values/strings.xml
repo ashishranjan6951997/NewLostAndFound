@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">LostAndFound</string>
+    <string name="Lost">Lost</string>
+    <string name="Received">Received</string>
+    <string name="title_home">Settings</string>
+    <string name="title_dashboard">Matches</string>
+    <string name="title_notifications">Chat</string>
     <string name="title_activity_main2">Main2Activity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
 </resources>

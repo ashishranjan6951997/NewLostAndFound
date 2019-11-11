@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <EditText
-            android:hint="Name"
             android:id="@+id/name_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="Name" />
 
         <Button
-            android:paddingTop="@dimen/activity_horizontal_margin"
             android:id="@+id/location_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:paddingTop="@dimen/activity_horizontal_margin"
             android:paddingBottom="20sp"
             android:text="Add the location" />
 
         <RadioGroup
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:id="@+id/radio_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/location_button"
-            android:layout_centerInParent="true">
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/activity_horizontal_margin">
 
             <RadioButton
                 android:id="@+id/loser_selection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Search Your Lost Item" />
+                android:text="@string/Lost" />
 
             <RadioButton
                 android:id="@+id/founder_selection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Post the Found Item" />
+                android:text="@string/Received" />
         </RadioGroup>
 
         <ImageView
-            android:src="@drawable/common_google_signin_btn_text_dark"
             android:id="@+id/image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/radio_id"
-            android:layout_centerInParent="true"></ImageView>
-
+            android:layout_centerInParent="true"
+            android:src="@drawable/common_google_signin_btn_text_dark"></ImageView>
 
         <Button
             android:id="@+id/image_confirmBtn"
@@ -61,6 +61,15 @@
             android:layout_below="@+id/image_view"
             android:layout_centerInParent="true"
             android:text="Post this Image" />
+
+        <Button
+            android:text="Save"
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            app:srcCompat="@drawable/ic_icon" />
 
     </LinearLayout>
 </ScrollView>
