@@ -6,6 +6,7 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.lostandfound.NameClass;
 import com.example.lostandfound.Observer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -19,9 +20,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.lostandfound.NameClass.IMAGE_URI;
 import static com.example.lostandfound.NameClass.NAME;
 import static com.example.lostandfound.NameClass.USERS;
 import static com.example.lostandfound.NameClass.nameForStoringDatabase;
+import static com.example.lostandfound.NameClass.profileImageUri;
 import static com.example.lostandfound.NameClass.radioButtonText;
 
 public class RealtimeDatabaseDemoModel {
@@ -47,6 +50,8 @@ public class RealtimeDatabaseDemoModel {
         reference = reference.child(radioText);
         String name = (String) dataMap.get(nameForStoringDatabase);
         map.put(NAME,name);
+        String imageUri = (String) dataMap.get(NameClass.profileImageUri);
+        map.put(IMAGE_URI,imageUri);
         reference.child(uId).setValue(map);
     }
 

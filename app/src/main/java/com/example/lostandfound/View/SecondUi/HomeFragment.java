@@ -1,8 +1,11 @@
 package com.example.lostandfound.View.SecondUi;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,16 +25,23 @@ import com.example.lostandfound.Controller.DatabaseController.SaveDataController
 import com.example.lostandfound.Model.DatabaseModel.RealtimeDatabaseDemoModel;
 import com.example.lostandfound.Observer;
 import com.example.lostandfound.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 import static com.example.lostandfound.NameClass.nameForStoringDatabase;
+import static com.example.lostandfound.NameClass.profileImageUri;
 import static com.example.lostandfound.NameClass.radioButtonText;
 
-public class HomeFragment extends Fragment implements Observer {
+public class HomeFragment extends Fragment implements Observer
+{
 
     View rootView;
     RadioButton radioButton;
@@ -43,6 +53,8 @@ public class HomeFragment extends Fragment implements Observer {
     SaveDataController controller;
     RealtimeDatabaseDemoModel demo;
     ImageView imageView;
+    Uri uri;
+    Map map;
 
     @Nullable
     @Override
@@ -56,8 +68,8 @@ public class HomeFragment extends Fragment implements Observer {
 
 
     public void init() {
-        final Map map = new HashMap();
-        controller = new SaveDataController();
+        map = new HashMap();
+        controller = new SaveDataController(this);
 
         saveButton = rootView.findViewById(R.id.fab);
         saveButton.setEnabled(false);
@@ -71,7 +83,8 @@ public class HomeFragment extends Fragment implements Observer {
             }
         });
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
 
@@ -80,20 +93,19 @@ public class HomeFragment extends Fragment implements Observer {
                 radioText = radioButton.getText().toString();
                 nameText = rootView.findViewById(R.id.name_text);
                 name = nameText.getText().toString();
-
-                map.put(nameForStoringDatabase, name);
-                map.put(radioButtonText, radioText);
+                String[] inputArray = {name,radioText};
 
                 controller.setMap(map);
-                controller.saveData();
+                controller.saveData(inputArray,uri);
                 demo.notifyObserver();
             }
         });
 
-
-        imageView.setOnClickListener(new View.OnClickListener() {
+        imageView.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/");
                 getActivity().startActivityForResult(intent, 1);
@@ -107,17 +119,17 @@ public class HomeFragment extends Fragment implements Observer {
     }
 
     @Override
-    public void loadImage()
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
-
-        //Glide.with(getActivity()).load(imageUri).into(imageView);
+        if (requestCode == 1 && resultCode == RESULT_OK)
+        {
+            uri = data.getData();
+            Glide.with(this).load(uri).into(imageView);
+        }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
-        if (requestCode == 1 && resultCode == RESULT_OK)
-
-            Glide.with(this).load(data.getData()).into(imageView);
+    public void photoUploadError()
+    {
+        Toast.makeText(getActivity(), "Photo Upload Error", Toast.LENGTH_LONG).show();
     }
 }
