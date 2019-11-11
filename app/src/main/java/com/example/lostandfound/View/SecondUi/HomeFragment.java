@@ -116,8 +116,8 @@ public class HomeFragment extends Fragment implements Observer {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-        if (requestCode == 1 && resultCode == RESULT_OK)
-
+        if (requestCode == 1 && resultCode == RESULT_OK) {
             Glide.with(this).load(data.getData()).into(imageView);
+        }
     }
 }
