@@ -51,4 +51,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 
+    //Swipe Card dependency
+    implementation 'com.lorentzos.swipecards:library:1.0.9'
 }
