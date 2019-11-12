@@ -47,16 +47,14 @@ public class SaveDataController
 
     public void saveData(String[] array,Uri uri)
     {
-        map.put(nameForStoringDatabase, array[0]);
-        map.put(radioButtonText, array[1]);
+
        // map.put(profileImageUri,);
         //getPhotoUri(uri);
-        map.put(profileImageUri,getPhotoUri(uri));
-        databaseDemo.saveData(map);
+        getPhotoUri(uri,array);
     }
 
 
-    public String getPhotoUri(Uri uri)
+    public void getPhotoUri(Uri uri, final String[] array)
     {
         final String[] str = new String[1];
         Bitmap bitmap = null;
@@ -100,8 +98,23 @@ public class SaveDataController
                 Log.e("Error--", e.getMessage());
             }
         }
-        Log.v("Modified URkkkkI--",str[0]+"");
-        return str[0];
+
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        // your code here
+
+                        map.put(nameForStoringDatabase, array[0]);
+                        map.put(radioButtonText, array[1]);
+                        map.put(profileImageUri,str[0]);
+                        databaseDemo.saveData(map);
+                        Log.v("Modified URkkkkI--",str[0]+"");
+                    }
+                },
+                10000);
+
+
     }
 
 

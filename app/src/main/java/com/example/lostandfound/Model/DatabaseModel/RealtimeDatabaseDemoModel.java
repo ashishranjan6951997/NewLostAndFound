@@ -55,7 +55,6 @@ public class RealtimeDatabaseDemoModel {
         reference.child(uId).setValue(map);
     }
 
-
     // Code for subscriber publisher pattern
 
     public void register(Observer observer)
