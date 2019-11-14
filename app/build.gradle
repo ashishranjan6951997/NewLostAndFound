@@ -53,4 +53,6 @@ dependencies {
 
     //Swipe Card dependency
     implementation 'com.lorentzos.swipecards:library:1.0.9'
+
+
 }
