@@ -1,6 +1,8 @@
 package com.example.lostandfound.View.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,23 +16,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.lostandfound.Model.CardPOJO.Card;
 import com.example.lostandfound.R;
+import com.example.lostandfound.View.Chat.ChatActivity;
 
 import java.util.List;
+import static com.example.lostandfound.NameClass.CHAT_ID;
 
 public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHolder> {
     Context context;
     List objects;
 
-    public MatchesAdapter(@NonNull Context context, @NonNull List objects)
-    {
+    public MatchesAdapter(@NonNull Context context, @NonNull List objects) {
         this.context = context;
         this.objects = objects;
     }
 
     @NonNull
     @Override
-    public MatchesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
+    public MatchesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.items_match_fragment, parent, false);
         return new ViewHolder(view);
@@ -39,8 +42,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull MatchesAdapter.ViewHolder holder, int position)
     {
-
-        Card card = (Card) objects.get(position);
+        final Card card = (Card) objects.get(position);
         holder.nameText.setText(card.getId());
         holder.descText.setText(card.getDesc());
         holder.timeText.setText("Date :" + card.getDate() + "  " + "Time :" + card.getTime());
@@ -55,6 +57,16 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
                 break;
         }
 
+        holder.chatIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,ChatActivity.class);
+                Bundle b = new Bundle();
+                b.putString(CHAT_ID,card.getId());
+                intent.putExtras(b);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -64,18 +76,17 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imageView;
+        ImageView imageView, chatIcon;
         TextView nameText, descText, timeText;
 
-        public ViewHolder(View view)
-        {
+        public ViewHolder(View view) {
             super(view);
 
             imageView = view.findViewById(R.id.image);
             nameText = view.findViewById(R.id.name);
             descText = view.findViewById(R.id.desc);
             timeText = view.findViewById(R.id.time);
+            chatIcon = view.findViewById(R.id.chat);
         }
-
     }
 }

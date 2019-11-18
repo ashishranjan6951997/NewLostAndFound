@@ -47,7 +47,7 @@ public class RealtimeDatabaseDemoModel {
         Map map = new HashMap();
         String uId = FirebaseAuth.getInstance().getUid();
         String radioText = (String) dataMap.get(radioButtonText);
-        reference = reference.child(radioText);
+        //reference = reference.child(radioText);
         String name = (String) dataMap.get(nameForStoringDatabase);
         map.put(NAME,name);
         String imageUri = (String) dataMap.get(NameClass.profileImageUri);

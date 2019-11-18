@@ -37,7 +37,7 @@ public class MatchFragmentDatabaseModel
     public void setArrayList()
     {
         final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(USERS).child("Lost");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(USERS);
         final Card[] item = {null};
         reference.addChildEventListener(new ChildEventListener()
         {

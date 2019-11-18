@@ -1,14 +1,11 @@
 package com.example.lostandfound.View.SecondUi;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,18 +13,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lostandfound.Controller.SwipeCardController.CardController;
-import com.example.lostandfound.Model.CardPOJO.Card;
+import com.example.lostandfound.Controller.CardController.CardController;
 import com.example.lostandfound.R;
 import com.example.lostandfound.View.Adapter.MatchesAdapter;
-import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import static com.example.lostandfound.NameClass.DOUBLE_RENDER_TIME;
+import static com.example.lostandfound.NameClass.RECEIVED_TIME;
 
 
 public class MatchesFragment extends Fragment {
@@ -102,30 +94,18 @@ public class MatchesFragment extends Fragment {
                 }
             }
         });
-
-
     }
 
     private void showData()
     {
         progressBar.setVisibility(View.VISIBLE);
-//
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run()
-//            {
-//                  adapter.notifyDataSetChanged();
-//                  progressBar.setVisibility(View.GONE);
-//            }
-//        },7000);
-
 
         Thread timer = new Thread(){
 
             @Override
             public void run() {
                 try {
-                    sleep(7000);
+                    sleep(RECEIVED_TIME);
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -138,19 +118,6 @@ public class MatchesFragment extends Fragment {
                 }
             }
         };
-
         timer.start();
-
-//        new java.util.Timer().schedule(
-//                new java.util.TimerTask() {
-//                    @Override
-//                    public void run() {
-//                        // your code here
-//                        adapter.notifyDataSetChanged();
-//                        progressBar.setVisibility(View.GONE);
-//                    }
-//                },
-//                DOUBLE_RENDER_TIME + 1000
-//        );
     }
 }
