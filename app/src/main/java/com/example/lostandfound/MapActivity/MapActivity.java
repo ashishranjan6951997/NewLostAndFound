@@ -143,26 +143,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
     }
 
-
-
-
-
-
     private void setUpSource(@NonNull Style loadedMapStyle) {
         loadedMapStyle.addSource(new GeoJsonSource(geojsonSourceLayerId));
     }
-    private void setupLayer(@NonNull Style loadedMapStyle) {
-
-
-
-
+    private void setupLayer(@NonNull Style loadedMapStyle)
+    {
 
         loadedMapStyle.addLayer(new SymbolLayer("SYMBOL_LAYER_ID", geojsonSourceLayerId).withProperties(
                 iconImage(symbolIconId),
                 iconOffset(new Float[] {0f, -8f})
         ));
     }
-
 
     @Override
     public void onPermissionResult(boolean granted) {
@@ -268,10 +259,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             //Setting the title manually
             alert.setTitle("AlertDialogExample");
             alert.show();
-
-
-
-
 
         }*/
     }

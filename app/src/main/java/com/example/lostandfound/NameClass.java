@@ -23,16 +23,6 @@ public class NameClass
     public static String MatchesFragmentTAG = "MatchesFragment";
     public static String MessageFragmentTAG = "MessageFragment";
 
-    // Left or Right Swipe
-    public static String LEFT_SWIPE = "leftSwipe";
-    public static String RIGHT_SWIPE = "rightSwipe";
-
-    // Strings for Map
-
-    public static String YES = "yes";
-    public static String NO = "no";
-    public static String CONNECTIONS = "connections";
-
 
     // integers to denote time to delay
     public static int RENDER_TIME = 2000;
@@ -45,4 +35,5 @@ public class NameClass
     public static String CHAT ="chat";
     public static String CREATED_BY = "createdBy";
     public static String TEXT = "text";
+    public static String CONNECTIONS = "CONNECTIONS";
 }

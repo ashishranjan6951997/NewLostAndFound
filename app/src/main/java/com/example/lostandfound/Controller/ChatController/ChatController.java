@@ -21,8 +21,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import static com.example.lostandfound.NameClass.CHAT;
 import static com.example.lostandfound.NameClass.CHAT_ID;
+import static com.example.lostandfound.NameClass.CONNECTIONS;
 import static com.example.lostandfound.NameClass.CREATED_BY;
 import static com.example.lostandfound.NameClass.DOUBLE_RENDER_TIME;
 import static com.example.lostandfound.NameClass.RENDER_TIME;
@@ -34,23 +36,27 @@ public class ChatController {
     ChatActivityDetailsModel model;
     DatabaseReference referenceUser, referenceChat;
     String chatId;
+    final String currentUser;
 
     public ChatController(ChatActivity chatActivity, String user) {
         context = chatActivity;
         referenceUser = FirebaseDatabase.getInstance().getReference().child(USERS);
         referenceChat = FirebaseDatabase.getInstance().getReference().child(CHAT);
+        currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         chatId = user;
         model = new ChatActivityDetailsModel();
-        createChatId(chatId);
+        createChatId(user);
     }
 
-    private void getChatId(String user) {
-        referenceUser = referenceUser.child(user).child(CHAT_ID);
+    private void getChatId(String user)
+    {
+        referenceUser = referenceUser.child(currentUser).child(CONNECTIONS).child(user).child(CHAT_ID);
         referenceUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 chatId = dataSnapshot.getValue().toString();
-//                Log.v("CHAT[0] PREVIOUS",chatId+"");
+//              Log.v("CHAT[0] PREVIOUS",chatId+"");
                 int k = 9;
             }
 
@@ -61,14 +67,16 @@ public class ChatController {
         });
     }
 
-    public void send(final String user, final String text) {
+    public void send(final String user, final String text)
+    {
         getChatId(user);
+
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
                         Map map = new HashMap();
-                        map.put(CREATED_BY, user);
+                        map.put(CREATED_BY, currentUser);
                         map.put(TEXT, text);
 
                         referenceChat = referenceChat.child(chatId).push();
@@ -76,13 +84,10 @@ public class ChatController {
                     }
                 }, RENDER_TIME
         );
-
-
-        getList();
+       // getList();
     }
 
-    private void getList()
-    {
+    private void getList() {
         model.getChatMessage(chatId);
         int k = 8;
 //        new java.util.Timer().schedule(
@@ -99,26 +104,43 @@ public class ChatController {
         context.bindRecyclerView(model.getList());
     }
 
-    public void createChatId(final String user) {
-        final String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        final String key = FirebaseDatabase.getInstance().getReference().child(CHAT).push().getKey();
-
-        int a = 9;
-        DatabaseReference database = referenceUser.child(currentUser).child(user);
-
-        database.addListenerForSingleValueEvent(new ValueEventListener() {
+    public void createChatId(final String user)
+    {
+        referenceUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.v("VALUE", referenceUser.child(user).child(CHAT_ID) + "");
+                if (!dataSnapshot.child(user).child(CHAT_ID).exists()) {
+                    Log.v("LATER VALUE", referenceUser.child(user).child(CHAT_ID) + "");
+                    final String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    final String key = FirebaseDatabase.getInstance().getReference().child(CHAT).push().getKey();
 
-                if (dataSnapshot.exists()) {
-                    referenceUser.child(currentUser).child(dataSnapshot.getKey()).child(CHAT_ID).setValue(key);
-                    referenceUser.child(dataSnapshot.getKey()).child(currentUser).child(CHAT_ID).setValue(key);
+                    int a = 9;
+                    DatabaseReference database = referenceUser;
+
+                    database.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            if (dataSnapshot.exists()) {
+                                referenceUser.child(user).child(CONNECTIONS).child(currentUser).child(CHAT_ID).setValue(key);
+                                referenceUser.child(currentUser).child(CONNECTIONS).child(user).child(CHAT_ID).setValue(key);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        }
+                    });
+
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
+
     }
 }

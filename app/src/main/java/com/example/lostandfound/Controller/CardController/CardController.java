@@ -16,11 +16,8 @@ import java.util.Map;
 
 import static com.example.lostandfound.NameClass.CONNECTIONS;
 import static com.example.lostandfound.NameClass.DOUBLE_RENDER_TIME;
-import static com.example.lostandfound.NameClass.LEFT_SWIPE;
-import static com.example.lostandfound.NameClass.NO;
-import static com.example.lostandfound.NameClass.RIGHT_SWIPE;
 import static com.example.lostandfound.NameClass.USERS;
-import static com.example.lostandfound.NameClass.YES;
+
 
 public class CardController {
     DatabaseReference databaseReference;

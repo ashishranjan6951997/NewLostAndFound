@@ -30,7 +30,8 @@ public class ChatActivityDetailsModel {
         referenceChat = FirebaseDatabase.getInstance().getReference().child(CHAT);
     }
 
-    public void getChatMessage(String chatId) {
+    public void getChatMessage(String chatId)
+    {
         referenceChat = referenceChat.child(chatId);
         Log.v("Beginning","IN BEGINNING");
         final String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();

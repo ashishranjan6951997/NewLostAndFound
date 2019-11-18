@@ -15,13 +15,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
-import static com.example.lostandfound.NameClass.CONNECTIONS;
 import static com.example.lostandfound.NameClass.IMAGE_URI;
 import static com.example.lostandfound.NameClass.NAME;
-import static com.example.lostandfound.NameClass.NO;
 import static com.example.lostandfound.NameClass.RENDER_TIME;
 import static com.example.lostandfound.NameClass.USERS;
-import static com.example.lostandfound.NameClass.YES;
 
 public class MatchFragmentDatabaseModel {
 
@@ -33,7 +30,7 @@ public class MatchFragmentDatabaseModel {
     }
 
     public void setArrayList() {
-        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(USERS);
         final Card[] item = {null};
         reference.addChildEventListener(new ChildEventListener() {
@@ -45,13 +42,15 @@ public class MatchFragmentDatabaseModel {
 
                     Log.e("ERROR IS -->", dataSnapshot.child(IMAGE_URI).toString());
 
-                    if (dataSnapshot.child(IMAGE_URI).getValue() == null || dataSnapshot.child(IMAGE_URI).getValue().equals(profileImage)) {
-                        item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(NAME).getValue().toString(), profileImage);
-                        list.add(item[0]);
-                    } else {
-                        profileImage = dataSnapshot.child(IMAGE_URI).getValue().toString();
-                        item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(NAME).getValue().toString(), profileImage);
-                        list.add(item[0]);
+                    if (!dataSnapshot.getKey().equals(currentUser)) {
+                        if (dataSnapshot.child(IMAGE_URI).getValue() == null || dataSnapshot.child(IMAGE_URI).getValue().equals(profileImage)) {
+                            item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(NAME).getValue().toString(), profileImage);
+                            list.add(item[0]);
+                        } else {
+                            profileImage = dataSnapshot.child(IMAGE_URI).getValue().toString();
+                            item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(NAME).getValue().toString(), profileImage);
+                            list.add(item[0]);
+                        }
                     }
 
                     Log.v("Item[0] value is ", item[0] + "");
