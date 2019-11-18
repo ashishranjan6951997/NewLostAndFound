@@ -1,7 +1,6 @@
-package com.example.lostandfound.Controller.SwipeCardController;
+package com.example.lostandfound.Controller.CardController;
 
 import android.util.Log;
-import android.view.View;
 
 import com.example.lostandfound.Model.CardPOJO.Card;
 import com.example.lostandfound.Model.DatabaseForMatchFragment.MatchFragmentDatabaseModel;
@@ -38,39 +37,9 @@ public class CardController {
         model = new MatchFragmentDatabaseModel(list);
     }
 
-    public void control(String type, Object obj) {
-        Map map = new HashMap();
-        Card card = (Card) obj;
-        String id = card.getId();
-        String desc = card.getDesc();
-        String date = card.getDate();
-        String time = card.getTime();
-        String location = card.getLocation();
-
-        if (type.equals(LEFT_SWIPE)) {
-            databaseReference.child(id).child(CONNECTIONS).child(NO).child(currentUser).setValue(true);
-        }
-        if (type.equals(RIGHT_SWIPE)) {
-            databaseReference.child(id).child(CONNECTIONS).child(YES).child(currentUser).setValue(true);
-        }
-    }
 
     public void setRecyclerView() {
         model.setArrayList();
-//
-//        new java.util.Timer().schedule(
-//                new java.util.TimerTask() {
-//                    @Override
-//                    public void run() {
-//                        // your code here
-//                        fragment.setRecyclerView(model.getList());
-//                        Log.v("Size from controller ",list.size()+"");
-//                    }
-//                },
-//                DOUBLE_RENDER_TIME
-//        );
-
-
         Thread timer = new Thread() {
 
             @Override

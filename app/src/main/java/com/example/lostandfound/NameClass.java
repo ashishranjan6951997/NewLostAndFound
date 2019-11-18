@@ -35,7 +35,14 @@ public class NameClass
 
 
     // integers to denote time to delay
-    public static int RENDER_TIME = 3000;
-    public static int DOUBLE_RENDER_TIME = 6000;
+    public static int RENDER_TIME = 2000;
+    public static int DOUBLE_RENDER_TIME = 2 * RENDER_TIME;
+    public static int RECEIVED_TIME = DOUBLE_RENDER_TIME + 1000;
 
+
+    // Chatter Id
+    public static String CHAT_ID = "chatId";
+    public static String CHAT ="chat";
+    public static String CREATED_BY = "createdBy";
+    public static String TEXT = "text";
 }

@@ -121,7 +121,6 @@ public class HomeFragment extends Fragment implements Observer
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
-
         if (requestCode == 1 && resultCode == RESULT_OK)
         {
             uri = data.getData();
@@ -132,8 +131,6 @@ public class HomeFragment extends Fragment implements Observer
     public void photoUploadError()
     {
         Toast.makeText(getActivity(), "Photo Upload Error", Toast.LENGTH_LONG).show();
-
-
         //Glide.with(getActivity()).load(imageUri).into(imageView);
     }
 }
