@@ -23,45 +23,54 @@ import static com.example.lostandfound.NameClass.RENDER_TIME;
 import static com.example.lostandfound.NameClass.USERS;
 import static com.example.lostandfound.NameClass.YES;
 
-public class MatchFragmentDatabaseModel
-{
+public class MatchFragmentDatabaseModel {
 
     public List list;
 
-    public MatchFragmentDatabaseModel(List list)
-    {
+    public MatchFragmentDatabaseModel(List list) {
 
         this.list = list;
     }
 
-    public void setArrayList()
-    {
+    public void setArrayList() {
         final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(USERS);
         final Card[] item = {null};
-        reference.addChildEventListener(new ChildEventListener()
-        {
+        reference.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
-            {
-                if (dataSnapshot.exists() && !dataSnapshot.child(CONNECTIONS).child(NO).hasChild(userId) && !dataSnapshot.child(CONNECTIONS).child(YES).hasChild(userId)) {
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if (dataSnapshot.exists()) {
 
                     String profileImage = "default";
 
                     Log.e("ERROR IS -->", dataSnapshot.child(IMAGE_URI).toString());
 
-                    if (dataSnapshot.child(IMAGE_URI).getValue() == null  || dataSnapshot.child(IMAGE_URI).getValue().equals(profileImage) )
-                    {
+                    if (dataSnapshot.child(IMAGE_URI).getValue() == null || dataSnapshot.child(IMAGE_URI).getValue().equals(profileImage)) {
                         item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(NAME).getValue().toString(), profileImage);
+                        list.add(item[0]);
                     } else {
                         profileImage = dataSnapshot.child(IMAGE_URI).getValue().toString();
                         item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(NAME).getValue().toString(), profileImage);
+                        list.add(item[0]);
                     }
 
-                    Log.v("Item[0] value is ",item[0]+"");
+                    Log.v("Item[0] value is ", item[0] + "");
                     //list.add(item);
+//
+//                    new java.util.Timer().schedule(
+//                            new java.util.TimerTask() {
+//                                @Override
+//                                public void run() {
+//                                    // your code here
+//                                    Log.v("LATER item[0] value is ",item[0]+"");
+//                                    list.add(item[0]);
+//                                    Log.v("Size",list.size()+"");
+//                                }
+//                            },
+//                            RENDER_TIME
+//                    );
                     int k = 9;
-                   // ar.notifyDataSetChanged();
+                    // ar.notifyDataSetChanged();
                 } else {
                     //Log.d("ERROR IS----->>>", "");
                 }
@@ -88,24 +97,22 @@ public class MatchFragmentDatabaseModel
             }
         });
 
-
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        // your code here
-
-                        Log.v("LATER item[0] value is ",item[0]+"");
-                        list.add(item[0]);
-                        Log.v("List Size",list.size()+"");
-                    }
-                },
-                RENDER_TIME
-        );
+//
+//        new java.util.Timer().schedule(
+//                new java.util.TimerTask() {
+//                    @Override
+//                    public void run() {
+//                        // your code here
+//                        Log.v("LATER item[0] value is ",item[0]+"");
+//                        list.add(item[0]);
+//                        Log.v("List Size",list.size()+"");
+//                    }
+//                },
+//                RENDER_TIME
+//        );
     }
 
-    public List getList()
-    {
+    public List getList() {
         return list;
     }
 }

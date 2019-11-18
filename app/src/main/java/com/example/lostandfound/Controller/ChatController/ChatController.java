@@ -78,12 +78,12 @@ public class ChatController {
         );
 
 
-      //  getList();
+        getList();
     }
 
     private void getList()
     {
-        model.getChatMessage(referenceChat);
+        model.getChatMessage(chatId);
         int k = 8;
 //        new java.util.Timer().schedule(
 //                new java.util.TimerTask()
@@ -103,6 +103,7 @@ public class ChatController {
         final String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final String key = FirebaseDatabase.getInstance().getReference().child(CHAT).push().getKey();
 
+        int a = 9;
         DatabaseReference database = referenceUser.child(currentUser).child(user);
 
         database.addListenerForSingleValueEvent(new ValueEventListener() {

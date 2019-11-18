@@ -40,8 +40,8 @@ public class CardController {
 
     public void setRecyclerView() {
         model.setArrayList();
-        Thread timer = new Thread() {
-
+        Thread timer = new Thread()
+        {
             @Override
             public void run() {
                 try {
