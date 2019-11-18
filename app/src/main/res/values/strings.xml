@@ -6,4 +6,7 @@
     <string name="title_dashboard">Matches</string>
     <string name="title_notifications">Chat</string>
     <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="access_token">pk.eyJ1IjoiYW51YXNoaXNoNjk1IiwiYSI6ImNrMjM4MW4zNzBwbXIzY2s1ZmExbzUxb3YifQ.OP1yz2OfS02xJLgTzuiWKA</string>
+
 </resources>

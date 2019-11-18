@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.lostandfound.Controller.DatabaseController.SaveDataController;
+import com.example.lostandfound.MapActivity.MapActivity;
 import com.example.lostandfound.Model.DatabaseModel.RealtimeDatabaseDemoModel;
 import com.example.lostandfound.Observer;
 import com.example.lostandfound.R;
@@ -55,6 +56,7 @@ public class HomeFragment extends Fragment implements Observer
     ImageView imageView;
     Uri uri;
     Map map;
+    Button locationButton;
 
     @Nullable
     @Override
@@ -70,7 +72,7 @@ public class HomeFragment extends Fragment implements Observer
     public void init() {
         map = new HashMap();
         controller = new SaveDataController(this);
-
+        locationButton=rootView.findViewById(R.id.location_button);
         saveButton = rootView.findViewById(R.id.fab);
         saveButton.setEnabled(false);
         radioGroup = rootView.findViewById(R.id.radio_id);
@@ -80,6 +82,13 @@ public class HomeFragment extends Fragment implements Observer
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 saveButton.setEnabled(true);
+            }
+        });
+        locationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(), MapActivity.class);
+                startActivity(intent);
             }
         });
 

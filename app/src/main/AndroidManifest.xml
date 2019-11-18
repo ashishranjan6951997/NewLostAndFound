@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".View.SecondUi.SecondMainActivity" />
+        <activity android:name=".MapActivity.MapActivity" />
     </application>
 
 </manifest>
