@@ -54,5 +54,7 @@ dependencies {
     //Swipe Card dependency
     implementation 'com.lorentzos.swipecards:library:1.0.9'
 
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
 
 }
