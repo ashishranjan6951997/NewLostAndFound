@@ -45,15 +45,13 @@ public class ChatController {
 
     }
 
-    private void getChatId(String user)
-    {
+    private void getChatId(String user) {
         referenceUser = FirebaseDatabase.getInstance().getReference().child(USERS);
         referenceChat = FirebaseDatabase.getInstance().getReference().child(CHAT);
         currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         createChatId(user);
         referenceUser = referenceUser.child(currentUser).child(CONNECTIONS).child(user).child(CHAT_ID);
-        referenceUser.addValueEventListener(new ValueEventListener()
-        {
+        referenceUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -76,22 +74,40 @@ public class ChatController {
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     @Override
-                    public void run() {
-                        Map map = new HashMap();
-                        map.put(CREATED_BY, currentUser);
-                        map.put(TEXT, text);
+                    public void run()
+                    {
+                        if (!text.equals("") || !text.isEmpty())
+                        {
+                            Map map = new HashMap();
+                            map.put(CREATED_BY, currentUser);
+                            map.put(TEXT, text);
 
-                        referenceChat = referenceChat.child(chatId).push();
-                        referenceChat.setValue(map);
+                            referenceChat = referenceChat.child(chatId).push();
+                            referenceChat.setValue(map);
+                        }
                     }
                 }, RENDER_TIME
         );
-        getList();
+
+
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+
+                        getList();
+                    }
+                }, DOUBLE_RENDER_TIME
+        );
     }
 
-    private void getList() {
+    private void getList()
+    {
+        int k = 9;
+        Log.d("LATER CHAT ID", chatId);
         model.getChatMessage(chatId);
-        int k = 8;
+
+
 //        new java.util.Timer().schedule(
 //                new java.util.TimerTask()
 //                {
@@ -103,11 +119,29 @@ public class ChatController {
 //                    }
 //                }, DOUBLE_RENDER_TIME + 1000
 //        );
-        context.bindRecyclerView(model.getList());
+
+        Thread timer = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    sleep(DOUBLE_RENDER_TIME);
+                    context.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            context.bindRecyclerView(model.getList());
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        timer.start();
     }
 
-    public void createChatId(final String user)
-    {
+
+    public void createChatId(final String user) {
         referenceUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

@@ -42,10 +42,11 @@ public class ChatActivityDetailsModel {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Log.v("IN DATA_SNAPSHOT", dataSnapshot.exists() + "");
                 int k = 0;
-                if (dataSnapshot.exists()) {
+                if (dataSnapshot.exists())
+                {
 
-                    final String[] message = {};
-                    final String[] createdByUser = {};
+                    final String[] message = new String[1];
+                    final String[] createdByUser = new String[1];
 
                     Log.v("child(TEXT)", dataSnapshot.child(TEXT).getValue() + "");
 
@@ -60,7 +61,8 @@ public class ChatActivityDetailsModel {
 
 
                     if (message[0] != null && createdByUser[0] != null) {
-                        final Boolean currentUserBoolean[] = {};
+                        final Boolean currentUserBoolean[] = new Boolean[1];
+                        currentUserBoolean[0] = false;
                         if (createdByUser[0].equals(currentUser)) {
                             currentUserBoolean[0] = true;
                         }
@@ -78,6 +80,8 @@ public class ChatActivityDetailsModel {
 
                         Chat c = new Chat(message[0], currentUserBoolean[0]);
                         list.add(c);
+
+                        Log.v("SIZE[0]", list.size() + "");
                     }
                 }
             }
@@ -102,10 +106,12 @@ public class ChatActivityDetailsModel {
 
             }
         });
+       // Log.v("LATER SIZE[0]", list.size() + "");
     }
 
-    public List getList() {
-        Log.v("SIZE[0]", list.size() + "");
+    public List getList()
+    {
+        Log.v("SIZE[0] LIST", list.size() + "");
         return list;
     }
 }
