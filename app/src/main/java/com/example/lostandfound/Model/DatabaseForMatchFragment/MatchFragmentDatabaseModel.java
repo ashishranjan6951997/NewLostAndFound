@@ -29,10 +29,12 @@ public class MatchFragmentDatabaseModel {
         this.list = list;
     }
 
-    public void setArrayList() {
+    public void setArrayList()
+    {
         final String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(USERS);
         final Card[] item = {null};
+
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -42,7 +44,8 @@ public class MatchFragmentDatabaseModel {
 
                     Log.e("ERROR IS -->", dataSnapshot.child(IMAGE_URI).toString());
 
-                    if (!dataSnapshot.getKey().equals(currentUser)) {
+                    if (!dataSnapshot.getKey().equals(currentUser))
+                    {
                         if (dataSnapshot.child(IMAGE_URI).getValue() == null || dataSnapshot.child(IMAGE_URI).getValue().equals(profileImage)) {
                             item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(NAME).getValue().toString(), profileImage);
                             list.add(item[0]);

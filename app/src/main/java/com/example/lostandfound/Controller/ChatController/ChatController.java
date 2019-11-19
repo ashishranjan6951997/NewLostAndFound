@@ -36,22 +36,24 @@ public class ChatController {
     ChatActivityDetailsModel model;
     DatabaseReference referenceUser, referenceChat;
     String chatId;
-    final String currentUser;
+    String currentUser;
 
     public ChatController(ChatActivity chatActivity, String user) {
         context = chatActivity;
-        referenceUser = FirebaseDatabase.getInstance().getReference().child(USERS);
-        referenceChat = FirebaseDatabase.getInstance().getReference().child(CHAT);
-        currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         chatId = user;
         model = new ChatActivityDetailsModel();
-        createChatId(user);
+
     }
 
     private void getChatId(String user)
     {
+        referenceUser = FirebaseDatabase.getInstance().getReference().child(USERS);
+        referenceChat = FirebaseDatabase.getInstance().getReference().child(CHAT);
+        currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        createChatId(user);
         referenceUser = referenceUser.child(currentUser).child(CONNECTIONS).child(user).child(CHAT_ID);
-        referenceUser.addValueEventListener(new ValueEventListener() {
+        referenceUser.addValueEventListener(new ValueEventListener()
+        {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -84,7 +86,7 @@ public class ChatController {
                     }
                 }, RENDER_TIME
         );
-       // getList();
+        getList();
     }
 
     private void getList() {
@@ -110,7 +112,7 @@ public class ChatController {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Log.v("VALUE", referenceUser.child(user).child(CHAT_ID) + "");
-                if (!dataSnapshot.child(user).child(CHAT_ID).exists()) {
+                if (!dataSnapshot.child(currentUser).child(CONNECTIONS).child(user).child(CHAT_ID).exists()) {
                     Log.v("LATER VALUE", referenceUser.child(user).child(CHAT_ID) + "");
                     final String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     final String key = FirebaseDatabase.getInstance().getReference().child(CHAT).push().getKey();
