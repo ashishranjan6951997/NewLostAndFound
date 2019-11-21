@@ -57,7 +57,11 @@ public class HomeFragment extends Fragment implements Observer
     Uri uri;
     Map map;
     Button locationButton;
-
+    double choosenLongitude;
+    double choosenLatitude;
+    Bundle bundle;
+    int imagwViewRequestCode=1;
+    int locationRequestCode=2;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,6 +69,7 @@ public class HomeFragment extends Fragment implements Observer
         demo = new RealtimeDatabaseDemoModel();
         demo.register(this);
         init();
+        bundle = this.getArguments();
         return rootView;
     }
 
@@ -88,7 +93,7 @@ public class HomeFragment extends Fragment implements Observer
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getActivity(), MapActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,locationRequestCode);
             }
         });
 
@@ -102,10 +107,12 @@ public class HomeFragment extends Fragment implements Observer
                 radioText = radioButton.getText().toString();
                 nameText = rootView.findViewById(R.id.name_text);
                 name = nameText.getText().toString();
-                String[] inputArray = {name,radioText};
+                String[] inputArray = {name,radioText,Double.toString(choosenLatitude),Double.toString(choosenLongitude)};
 
                 controller.setMap(map);
                 controller.saveData(inputArray,uri);
+
+
                 demo.notifyObserver();
             }
         });
@@ -117,23 +124,29 @@ public class HomeFragment extends Fragment implements Observer
             {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/");
-                getActivity().startActivityForResult(intent, 1);
+                getActivity().startActivityForResult(intent, imagwViewRequestCode);
             }
         });
     }
 
     @Override
     public void updateToast() {
-        Toast.makeText(getActivity(), "Data Saved Successfully", Toast.LENGTH_LONG).show();
+         Toast.makeText(getActivity(), "Data Saved Successfully", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
-        if (requestCode == 1 && resultCode == RESULT_OK)
+        if (requestCode == imagwViewRequestCode && resultCode == RESULT_OK)
         {
             uri = data.getData();
             Glide.with(this).load(uri).into(imageView);
+        }
+        if(requestCode == locationRequestCode && resultCode==RESULT_OK)
+        {
+             choosenLongitude  = data.getDoubleExtra("choosenLongitude", 0);
+             choosenLatitude=data.getDoubleExtra("choosenLatitude", 0);
+            Toast.makeText(getActivity(),choosenLatitude+"ok"+ choosenLongitude,Toast.LENGTH_LONG).show();
         }
     }
 

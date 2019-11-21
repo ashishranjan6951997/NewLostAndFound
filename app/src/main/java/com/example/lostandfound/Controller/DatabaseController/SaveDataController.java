@@ -20,6 +20,10 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.util.Map;
 
+import static com.example.lostandfound.NameClass.LatitudeStorageInDatabase;
+
+import static com.example.lostandfound.NameClass.LongitudeStorageInDatabase;
+
 import static com.example.lostandfound.NameClass.nameForStoringDatabase;
 import static com.example.lostandfound.NameClass.profileImageUri;
 import static com.example.lostandfound.NameClass.radioButtonText;
@@ -108,6 +112,8 @@ public class SaveDataController
                         map.put(nameForStoringDatabase, array[0]);
                         map.put(radioButtonText, array[1]);
                         map.put(profileImageUri,str[0]);
+                        map.put(LatitudeStorageInDatabase,array[2]);
+                        map.put(LongitudeStorageInDatabase,array[3]);
                         databaseDemo.saveData(map);
                         Log.v("Modified URkkkkI--",str[0]+"");
                     }

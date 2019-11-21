@@ -20,7 +20,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.lostandfound.NameClass.DETAILS;
 import static com.example.lostandfound.NameClass.IMAGE_URI;
+import static com.example.lostandfound.NameClass.LatitudeStorageInDatabase;
+
+import static com.example.lostandfound.NameClass.LongitudeStorageInDatabase;
 import static com.example.lostandfound.NameClass.NAME;
 import static com.example.lostandfound.NameClass.USERS;
 import static com.example.lostandfound.NameClass.nameForStoringDatabase;
@@ -52,7 +56,11 @@ public class RealtimeDatabaseDemoModel {
         map.put(NAME,name);
         String imageUri = (String) dataMap.get(NameClass.profileImageUri);
         map.put(IMAGE_URI,imageUri);
-        reference.child(uId).setValue(map);
+        String Latitute=(String)dataMap.get(LatitudeStorageInDatabase);
+        map.put(LatitudeStorageInDatabase,Latitute);
+        String Longitude=(String)dataMap.get(LongitudeStorageInDatabase);
+        map.put(LongitudeStorageInDatabase,Longitude);
+        reference.child(uId).child(DETAILS).setValue(map);
     }
 
     // Code for subscriber publisher pattern

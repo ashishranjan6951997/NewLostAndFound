@@ -26,7 +26,61 @@
                 android:hint="Name" />
 
         </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            app:cardBackgroundColor="#EEF9FA"
+            app:cardCornerRadius="8dp">
+        <RadioGroup
+            android:id="@+id/radio_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            >
 
+            <RadioButton
+                android:id="@+id/loser_selection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:text="@string/Lost"
+                android:layout_marginRight="30dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/founder_selection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:text="@string/Received"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </RadioGroup>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            app:cardBackgroundColor="#EEF9FA"
+            app:cardCornerRadius="8dp">
+        <Button
+            android:id="@+id/location_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:background="@drawable/custom_button"
+            android:text="Add the location"
+            android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,41 +95,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <RadioGroup
-                    android:id="@+id/radio_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp">
-
-                    <RadioButton
-                        android:id="@+id/loser_selection"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/colorPrimaryDark"
-                        android:text="@string/Lost"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/founder_selection"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/colorPrimaryDark"
-                        android:text="@string/Received"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-                </RadioGroup>
-
-                <Button
-                    android:id="@+id/location_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/custom_button"
-                    android:text="Add the location"
-                    android:textStyle="bold" />
 
 
                 <ImageView
@@ -97,6 +116,45 @@
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/custom_button"
                     android:text="Post this Image" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            app:cardBackgroundColor="#EEF9FA"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+
+                <EditText
+                    android:id="@+id/editDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:layout_centerInParent="true"
+                    android:padding="10dp"
+                    android:hint="Add the Description of the Item "
+                    />
+
+                <Button
+                    android:id="@+id/addDecsriptionButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/custom_button"
+                    android:text="Post this Description" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

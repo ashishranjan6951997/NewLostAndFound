@@ -46,6 +46,7 @@ public class MatchFragmentDatabaseModel {
                     Log.e("ERROR IS -->", dataSnapshot.child(IMAGE_URI).toString());
 
                     if (dataSnapshot.child(IMAGE_URI).getValue() == null || dataSnapshot.child(IMAGE_URI).getValue().equals(profileImage)) {
+
                         item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(NAME).getValue().toString(), profileImage);
                         list.add(item[0]);
                     } else {

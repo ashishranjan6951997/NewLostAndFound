@@ -16,6 +16,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lostandfound.R;
+import com.example.lostandfound.View.SecondUi.HomeFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.api.geocoding.v5.GeocodingCriteria;
@@ -43,6 +47,7 @@ import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 
 import java.util.List;
 
+import static com.example.lostandfound.NameClass.USERS;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconOffset;
 
@@ -55,6 +60,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private String symbolIconId = "symbolIconId";
     EditText locationText;
     Button addLocationButton;
+    double SelectedLatitude;
+    double SelectedLongitude;
     Button closeButton;
     AlertDialog.Builder builder;
     @Override
@@ -71,6 +78,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+
     } @Override
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
@@ -190,8 +198,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             locationText.setText(selectedCarmenFeature.text());
 // Create a new FeatureCollection and add a new Feature to it using selectedCarmenFeature above.
 // Then retrieve and update the source designated for showing a selected location's symbol layer icon
-            Toast.makeText(MapActivity.this,((Point) selectedCarmenFeature.geometry()).latitude() + "ok"+
-                    ((Point) selectedCarmenFeature.geometry()).longitude(),Toast.LENGTH_LONG).show();
+             SelectedLatitude=((Point) selectedCarmenFeature.geometry()).latitude();
+             SelectedLongitude=((Point) selectedCarmenFeature.geometry()).longitude();
+
+
             if (mapboxMap != null) {
                 Style style = mapboxMap.getStyle();
                 if (style != null) {
@@ -220,6 +230,24 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
+    private void sendLocationData() {
+        Intent result=new Intent();
+        result.putExtra("choosenLongitude", SelectedLongitude);
+        result.putExtra("choosenLatitude",SelectedLatitude);
+       setResult(RESULT_OK,result);
+
+
+
+        /*
+        String uId = FirebaseAuth.getInstance().getUid();
+        FirebaseDatabase.getInstance().getReference().child(USERS).child(uId).child("Latitude").setValue(SelectedLatitude);
+
+        FirebaseDatabase.getInstance().getReference().child(USERS).child(uId).child("Longitude").setValue(SelectedLongitude);
+        Toast.makeText(this,"done",Toast.LENGTH_LONG).show();
+        */
+        //FirebaseDatabase.getInstance().getReference().
+    }
+
     // Add the mapView lifecycle to the activity's lifecycle methods
     @Override
     public void onResume() {
@@ -236,6 +264,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             addLocationButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    sendLocationData();
                     finish();
                 }
             });
@@ -317,4 +346,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         permissionsManager.onRequestPermissionsResult(requestCode,permissions,grantResults);
     }
+
+
 }

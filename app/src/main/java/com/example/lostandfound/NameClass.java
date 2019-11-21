@@ -8,7 +8,9 @@ public class NameClass
     public static String nameForStoringDatabase = "name";
     public static String radioButtonText = "category";
     public static String profileImageUri = "profileImageUri";
-
+    public static String LatitudeStorageInDatabase="Latitude";
+    public static String LongitudeStorageInDatabase="Longitude";
+    public static String DETAILS="details";
 
     // For Map used in storing firebase database
     public static String USERS = "Users";

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
@@ -23,7 +24,7 @@ import static com.example.lostandfound.NameClass.RECEIVED_TIME;
 
 
 public class MatchesFragment extends Fragment {
-
+    Button button;
     boolean isScrolling;
     View rootView;
     CardController controller;
@@ -54,7 +55,13 @@ public class MatchesFragment extends Fragment {
         progressBar = rootView.findViewById(R.id.progress);
         controller = new CardController(this);
         //controller.setFlingContainer();
+        button=rootView.findViewById(R.id.fragmentLocationButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
 //        Card card = new Card("123","Sayan","default");
 //        List list1 = new ArrayList();
 //        list1.add(card);

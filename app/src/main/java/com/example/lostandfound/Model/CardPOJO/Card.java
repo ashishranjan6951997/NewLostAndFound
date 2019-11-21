@@ -22,6 +22,7 @@ public class Card
         this.id = id;
         this.desc = desc;
         this.profileImageUrl = profileImageUrl;
+     //   this.location=location;
     }
 
     public String getId() {
