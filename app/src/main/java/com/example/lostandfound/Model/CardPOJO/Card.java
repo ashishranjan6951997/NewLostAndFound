@@ -24,6 +24,12 @@ public class Card
         this.profileImageUrl = profileImageUrl;
     }
 
+    public Card(String key, String name)
+    {
+        this.id = key;
+        this.desc = name;
+    }
+
     public String getId() {
         return id;
     }

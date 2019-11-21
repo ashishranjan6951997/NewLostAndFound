@@ -95,8 +95,8 @@ public class MatchesFragment extends FragmentInterface
     {
         progressBar.setVisibility(View.VISIBLE);
 
-        Thread timer = new Thread(){
-
+        Thread timer = new Thread()
+        {
             @Override
             public void run() {
                 try {

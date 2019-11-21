@@ -145,7 +145,8 @@ public class FragmentDatabaseModel {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                             String name = (String) dataSnapshot.child(key).child(NAME).getValue();
-                            list.add(name);
+                            Card c = new Card(key,name);
+                            list.add(c);
                             Log.v("Previous List Size",list.size()+"");
                         }
 
