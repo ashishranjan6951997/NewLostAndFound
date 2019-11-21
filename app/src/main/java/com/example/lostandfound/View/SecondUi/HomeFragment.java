@@ -43,7 +43,6 @@ import static com.example.lostandfound.NameClass.radioButtonText;
 
 public class HomeFragment extends Fragment implements Observer
 {
-
     View rootView;
     RadioButton radioButton;
     Button saveButton;
@@ -57,6 +56,7 @@ public class HomeFragment extends Fragment implements Observer
     Uri uri;
     Map map;
     Button locationButton;
+    Double lat,lng;
 
     @Nullable
     @Override
@@ -141,5 +141,11 @@ public class HomeFragment extends Fragment implements Observer
     {
         Toast.makeText(getActivity(), "Photo Upload Error", Toast.LENGTH_LONG).show();
         //Glide.with(getActivity()).load(imageUri).into(imageView);
+    }
+
+    public void setLatLng(Double lat,Double lng)
+    {
+        this.lat = lat;
+        this.lng = lng;
     }
 }

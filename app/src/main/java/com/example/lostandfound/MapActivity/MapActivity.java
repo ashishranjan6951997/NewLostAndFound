@@ -14,8 +14,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.lostandfound.R;
+import com.example.lostandfound.View.SecondUi.HomeFragment;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.api.geocoding.v5.GeocodingCriteria;
@@ -57,6 +59,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     Button addLocationButton;
     Button closeButton;
     AlertDialog.Builder builder;
+    Fragment homeFragment;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,13 +70,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Mapbox.getInstance(this, getString(R.string.access_token));
         // This contains the MapView in XML and needs to be called after the access token is configured.
         setContentView(R.layout.map_activity);
+
+        homeFragment = new HomeFragment();
         builder = new AlertDialog.Builder(this);
-        locationText=(EditText)findViewById(R.id.searchText);
-        addLocationButton=(Button) findViewById(R.id.addLocationButton);
+        locationText = (EditText) findViewById(R.id.searchText);
+        addLocationButton = (Button) findViewById(R.id.addLocationButton);
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
-    } @Override
+    }
+
+    @Override
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
         //enableLocation();
@@ -96,7 +105,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
     }
 
-    @SuppressWarnings( {"MissingPermission"})
+    @SuppressWarnings({"MissingPermission"})
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
         // Check if permissions are enabled and if not request
         if (PermissionsManager.areLocationPermissionsGranted(this)) {
@@ -146,12 +155,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void setUpSource(@NonNull Style loadedMapStyle) {
         loadedMapStyle.addSource(new GeoJsonSource(geojsonSourceLayerId));
     }
-    private void setupLayer(@NonNull Style loadedMapStyle)
-    {
+
+    private void setupLayer(@NonNull Style loadedMapStyle) {
 
         loadedMapStyle.addLayer(new SymbolLayer("SYMBOL_LAYER_ID", geojsonSourceLayerId).withProperties(
                 iconImage(symbolIconId),
-                iconOffset(new Float[] {0f, -8f})
+                iconOffset(new Float[]{0f, -8f})
         ));
     }
 
@@ -181,15 +190,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             locationText.setText(selectedCarmenFeature.text());
 // Create a new FeatureCollection and add a new Feature to it using selectedCarmenFeature above.
 // Then retrieve and update the source designated for showing a selected location's symbol layer icon
-            Toast.makeText(MapActivity.this,((Point) selectedCarmenFeature.geometry()).latitude() + "ok"+
-                    ((Point) selectedCarmenFeature.geometry()).longitude(),Toast.LENGTH_LONG).show();
+            Toast.makeText(MapActivity.this, ((Point) selectedCarmenFeature.geometry()).latitude() + " " +
+                    ((Point) selectedCarmenFeature.geometry()).longitude(), Toast.LENGTH_LONG).show();
             if (mapboxMap != null) {
                 Style style = mapboxMap.getStyle();
                 if (style != null) {
                     GeoJsonSource source = style.getSourceAs(geojsonSourceLayerId);
                     if (source != null) {
                         source.setGeoJson(FeatureCollection.fromFeatures(
-                                new Feature[] {Feature.fromJson(selectedCarmenFeature.toJson())}));
+                                new Feature[]{Feature.fromJson(selectedCarmenFeature.toJson())}));
                     }
 
 // Move map camera to the selected location
@@ -222,21 +231,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     protected void onStart() {
         super.onStart();
         mapView.onStart();
-        if(locationText!=null)
-        {
+        if (locationText != null) {
             addLocationButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     finish();
                 }
             });
         }
         /*else
         {
-
-
-
-
             builder.setMessage("Please Add the location for the Item")
                     .setCancelable(false)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -295,13 +300,20 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onExplanationNeeded(List<String> permissionsToExplain) {
-        Toast.makeText(this,"enable this would make your work easier",Toast.LENGTH_LONG).show();
-
+        Toast.makeText(this, "enable this would make your work easier", Toast.LENGTH_LONG).show();
     }
 
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        permissionsManager.onRequestPermissionsResult(requestCode,permissions,grantResults);
+        permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+
     }
 }
