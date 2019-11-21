@@ -1,11 +1,10 @@
 package com.example.lostandfound.View.SecondUi;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,24 +25,16 @@ import com.example.lostandfound.MapActivity.MapActivity;
 import com.example.lostandfound.Model.DatabaseModel.RealtimeDatabaseDemoModel;
 import com.example.lostandfound.Observer;
 import com.example.lostandfound.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
-import static com.example.lostandfound.NameClass.nameForStoringDatabase;
-import static com.example.lostandfound.NameClass.profileImageUri;
-import static com.example.lostandfound.NameClass.radioButtonText;
+import static com.example.lostandfound.NameClass.MESSAGE;
+import static com.example.lostandfound.NameClass.TITLE;
 
-public class HomeFragment extends Fragment implements Observer
-{
-
+public class HomeFragment extends Fragment implements Observer {
     View rootView;
     RadioButton radioButton;
     Button saveButton;
@@ -57,11 +48,16 @@ public class HomeFragment extends Fragment implements Observer
     Uri uri;
     Map map;
     Button locationButton;
+<<<<<<< HEAD
     double choosenLongitude;
     double choosenLatitude;
     Bundle bundle;
     int imagwViewRequestCode=1;
     int locationRequestCode=2;
+=======
+    Double lat, lng;
+
+>>>>>>> 8affb9430ea79e1fa105946d2bb30001cabc392d
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -77,7 +73,7 @@ public class HomeFragment extends Fragment implements Observer
     public void init() {
         map = new HashMap();
         controller = new SaveDataController(this);
-        locationButton=rootView.findViewById(R.id.location_button);
+        locationButton = rootView.findViewById(R.id.location_button);
         saveButton = rootView.findViewById(R.id.fab);
         saveButton.setEnabled(false);
         radioGroup = rootView.findViewById(R.id.radio_id);
@@ -92,13 +88,17 @@ public class HomeFragment extends Fragment implements Observer
         locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+<<<<<<< HEAD
                 Intent intent=new Intent(getActivity(), MapActivity.class);
                 startActivityForResult(intent,locationRequestCode);
+=======
+                Intent intent = new Intent(getActivity(), MapActivity.class);
+                startActivity(intent);
+>>>>>>> 8affb9430ea79e1fa105946d2bb30001cabc392d
             }
         });
 
-        saveButton.setOnClickListener(new View.OnClickListener()
-        {
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -107,6 +107,7 @@ public class HomeFragment extends Fragment implements Observer
                 radioText = radioButton.getText().toString();
                 nameText = rootView.findViewById(R.id.name_text);
                 name = nameText.getText().toString();
+<<<<<<< HEAD
                 String[] inputArray = {name,radioText,Double.toString(choosenLatitude),Double.toString(choosenLongitude)};
 
                 controller.setMap(map);
@@ -114,14 +115,30 @@ public class HomeFragment extends Fragment implements Observer
 
 
                 demo.notifyObserver();
+=======
+                final String[] inputArray = {name, radioText};
+
+                new AlertDialog.Builder(getActivity())
+                        .setTitle(TITLE)
+                        .setMessage(MESSAGE)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                controller.setMap(map);
+                                controller.saveData(inputArray, uri);
+                                demo.notifyObserver();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no,null)
+                        .show();
+
+>>>>>>> 8affb9430ea79e1fa105946d2bb30001cabc392d
             }
         });
 
-        imageView.setOnClickListener(new View.OnClickListener()
-        {
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/");
                 getActivity().startActivityForResult(intent, imagwViewRequestCode);
@@ -135,10 +152,15 @@ public class HomeFragment extends Fragment implements Observer
     }
 
     @Override
+<<<<<<< HEAD
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
         if (requestCode == imagwViewRequestCode && resultCode == RESULT_OK)
         {
+=======
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+>>>>>>> 8affb9430ea79e1fa105946d2bb30001cabc392d
             uri = data.getData();
             Glide.with(this).load(uri).into(imageView);
         }
@@ -150,9 +172,13 @@ public class HomeFragment extends Fragment implements Observer
         }
     }
 
-    public void photoUploadError()
-    {
+    public void photoUploadError() {
         Toast.makeText(getActivity(), "Photo Upload Error", Toast.LENGTH_LONG).show();
         //Glide.with(getActivity()).load(imageUri).into(imageView);
+    }
+
+    public void setLatLng(Double lat, Double lng) {
+        this.lat = lat;
+        this.lng = lng;
     }
 }

@@ -36,6 +36,7 @@ public class ChatActivity extends AppCompatActivity {
         chatId = (String) b.get(CHAT_ID);
         controller = new ChatController(this,chatId);
 
+        controller.send(chatId,"");
         recyclerView = findViewById(R.id.recycler);
         editText = findViewById(R.id.chatText);
         sendBtn = findViewById(R.id.send);
@@ -47,6 +48,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String strText = editText.getText().toString();
                 controller.send(chatId,strText);
+                editText.setText("");
 
             }
         });
@@ -68,5 +70,4 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(chatAdapter);
     }
-
 }
