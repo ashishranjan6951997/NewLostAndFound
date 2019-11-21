@@ -23,13 +23,8 @@ import java.util.List;
 import static com.example.lostandfound.NameClass.RECEIVED_TIME;
 
 
-<<<<<<< HEAD
-public class MatchesFragment extends Fragment {
-    Button button;
-=======
 public class MatchesFragment extends FragmentInterface
 {
->>>>>>> 8affb9430ea79e1fa105946d2bb30001cabc392d
     boolean isScrolling;
     View rootView;
     CardController controller;
@@ -37,7 +32,7 @@ public class MatchesFragment extends FragmentInterface
     RecyclerView recyclerView;
     ProgressBar progressBar;
     int currentItems,totalItems,scrollOutItems;
-
+    Button button;
 
     @Nullable
     @Override
@@ -59,7 +54,6 @@ public class MatchesFragment extends FragmentInterface
         recyclerView = rootView.findViewById(R.id.recycler);
         progressBar = rootView.findViewById(R.id.progress);
         controller = new CardController(this);
-<<<<<<< HEAD
         //controller.setFlingContainer();
         button=rootView.findViewById(R.id.fragmentLocationButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -72,8 +66,7 @@ public class MatchesFragment extends FragmentInterface
 //        List list1 = new ArrayList();
 //        list1.add(card);
 //        setFlingContainer(list1);
-=======
->>>>>>> 8affb9430ea79e1fa105946d2bb30001cabc392d
+
         controller.setRecyclerView();
     }
 

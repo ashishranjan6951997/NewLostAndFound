@@ -48,18 +48,17 @@ public class HomeFragment extends Fragment implements Observer {
     Uri uri;
     Map map;
     Button locationButton;
-<<<<<<< HEAD
+
     double choosenLongitude;
     double choosenLatitude;
     Bundle bundle;
-    int imagwViewRequestCode=1;
-    int locationRequestCode=2;
-=======
+    int imagwViewRequestCode = 1;
+    int locationRequestCode = 2;
     Double lat, lng;
 
->>>>>>> 8affb9430ea79e1fa105946d2bb30001cabc392d
     @Nullable
     @Override
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.home_fragment, container, false);
         demo = new RealtimeDatabaseDemoModel();
@@ -88,13 +87,9 @@ public class HomeFragment extends Fragment implements Observer {
         locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-<<<<<<< HEAD
-                Intent intent=new Intent(getActivity(), MapActivity.class);
-                startActivityForResult(intent,locationRequestCode);
-=======
+
                 Intent intent = new Intent(getActivity(), MapActivity.class);
-                startActivity(intent);
->>>>>>> 8affb9430ea79e1fa105946d2bb30001cabc392d
+                startActivityForResult(intent, locationRequestCode);
             }
         });
 
@@ -107,16 +102,8 @@ public class HomeFragment extends Fragment implements Observer {
                 radioText = radioButton.getText().toString();
                 nameText = rootView.findViewById(R.id.name_text);
                 name = nameText.getText().toString();
-<<<<<<< HEAD
-                String[] inputArray = {name,radioText,Double.toString(choosenLatitude),Double.toString(choosenLongitude)};
 
-                controller.setMap(map);
-                controller.saveData(inputArray,uri);
-
-
-                demo.notifyObserver();
-=======
-                final String[] inputArray = {name, radioText};
+                final String[] inputArray = {name, radioText, Double.toString(choosenLatitude), Double.toString(choosenLongitude)};
 
                 new AlertDialog.Builder(getActivity())
                         .setTitle(TITLE)
@@ -129,10 +116,9 @@ public class HomeFragment extends Fragment implements Observer {
                                 demo.notifyObserver();
                             }
                         })
-                        .setNegativeButton(android.R.string.no,null)
+                        .setNegativeButton(android.R.string.no, null)
                         .show();
 
->>>>>>> 8affb9430ea79e1fa105946d2bb30001cabc392d
             }
         });
 
@@ -148,27 +134,20 @@ public class HomeFragment extends Fragment implements Observer {
 
     @Override
     public void updateToast() {
-         Toast.makeText(getActivity(), "Data Saved Successfully", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Data Saved Successfully", Toast.LENGTH_LONG).show();
     }
 
     @Override
-<<<<<<< HEAD
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
-    {
-        if (requestCode == imagwViewRequestCode && resultCode == RESULT_OK)
-        {
-=======
+
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == 1 && resultCode == RESULT_OK) {
->>>>>>> 8affb9430ea79e1fa105946d2bb30001cabc392d
+        if (requestCode == imagwViewRequestCode && resultCode == RESULT_OK) {
             uri = data.getData();
             Glide.with(this).load(uri).into(imageView);
         }
-        if(requestCode == locationRequestCode && resultCode==RESULT_OK)
-        {
-             choosenLongitude  = data.getDoubleExtra("choosenLongitude", 0);
-             choosenLatitude=data.getDoubleExtra("choosenLatitude", 0);
-            Toast.makeText(getActivity(),choosenLatitude+"ok"+ choosenLongitude,Toast.LENGTH_LONG).show();
+        if (requestCode == locationRequestCode && resultCode == RESULT_OK) {
+            choosenLongitude = data.getDoubleExtra("choosenLongitude", 0);
+            choosenLatitude = data.getDoubleExtra("choosenLatitude", 0);
+            Toast.makeText(getActivity(), choosenLatitude + "ok" + choosenLongitude, Toast.LENGTH_LONG).show();
         }
     }
 

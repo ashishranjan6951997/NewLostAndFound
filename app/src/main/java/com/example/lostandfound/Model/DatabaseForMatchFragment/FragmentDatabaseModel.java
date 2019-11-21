@@ -19,6 +19,7 @@ import java.util.List;
 
 import static com.example.lostandfound.NameClass.CHAT;
 import static com.example.lostandfound.NameClass.CONNECTIONS;
+import static com.example.lostandfound.NameClass.DETAILS;
 import static com.example.lostandfound.NameClass.IMAGE_URI;
 import static com.example.lostandfound.NameClass.NAME;
 import static com.example.lostandfound.NameClass.RENDER_TIME;
@@ -29,7 +30,6 @@ public class FragmentDatabaseModel {
     public List list;
 
     public FragmentDatabaseModel(List list) {
-
         this.list = list;
     }
 
@@ -38,7 +38,8 @@ public class FragmentDatabaseModel {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(USERS);
         final Card[] item = new Card[1];
 
-        reference.addChildEventListener(new ChildEventListener(){
+        //reference = reference.child(currentUser).child(DETAILS);
+        reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 if (dataSnapshot.exists()) {
@@ -47,26 +48,15 @@ public class FragmentDatabaseModel {
 
                     Log.e("ERROR IS -->", dataSnapshot.child(IMAGE_URI).toString());
 
-<<<<<<< HEAD:app/src/main/java/com/example/lostandfound/Model/DatabaseForMatchFragment/MatchFragmentDatabaseModel.java
-                    if (dataSnapshot.child(IMAGE_URI).getValue() == null || dataSnapshot.child(IMAGE_URI).getValue().equals(profileImage)) {
-
-                        item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(NAME).getValue().toString(), profileImage);
-                        list.add(item[0]);
-                    } else {
-                        profileImage = dataSnapshot.child(IMAGE_URI).getValue().toString();
-                        item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(NAME).getValue().toString(), profileImage);
-                        list.add(item[0]);
-=======
                     if (!dataSnapshot.getKey().equals(currentUser)) {
-                        if (dataSnapshot.child(IMAGE_URI).getValue() == null || dataSnapshot.child(IMAGE_URI).getValue().equals(profileImage)) {
-                            item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(NAME).getValue().toString(), profileImage);
+                        if (dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue() == null || dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue().equals(profileImage)) {
+                            item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(DETAILS).child(NAME).getValue().toString(), profileImage);
                             list.add(item[0]);
                         } else {
-                            profileImage = dataSnapshot.child(IMAGE_URI).getValue().toString();
-                            item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(NAME).getValue().toString(), profileImage);
+                            profileImage = dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue().toString();
+                            item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(DETAILS).child(NAME).getValue().toString(), profileImage);
                             list.add(item[0]);
                         }
->>>>>>> 8affb9430ea79e1fa105946d2bb30001cabc392d:app/src/main/java/com/example/lostandfound/Model/DatabaseForMatchFragment/FragmentDatabaseModel.java
                     }
 
                     Log.v("Item[0] value is ", item[0] + "");
@@ -86,10 +76,9 @@ public class FragmentDatabaseModel {
 //                    );
                     int k = 9;
                     // ar.notifyDataSetChanged();
-                } else {
-                    //Log.d("ERROR IS----->>>", "");
                 }
             }
+
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -155,10 +144,10 @@ public class FragmentDatabaseModel {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                            String name = (String) dataSnapshot.child(key).child(NAME).getValue();
-                            Card c = new Card(key,name);
+                            String name = (String) dataSnapshot.child(key).child(DETAILS).child(NAME).getValue();
+                            Card c = new Card(key, name);
                             list.add(c);
-                            Log.v("Previous List Size",list.size()+"");
+                            Log.v("Previous List Size", list.size() + "");
                         }
 
                         @Override
@@ -191,9 +180,8 @@ public class FragmentDatabaseModel {
         });
     }
 
-    public List getListForMessage()
-    {
-        Log.v("Later List Size",list.size()+"");
+    public List getListForMessage() {
+        Log.v("Later List Size", list.size() + "");
         return list;
     }
 }

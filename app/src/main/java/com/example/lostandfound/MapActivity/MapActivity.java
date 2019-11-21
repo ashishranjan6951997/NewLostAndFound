@@ -18,12 +18,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.lostandfound.R;
 import com.example.lostandfound.View.SecondUi.HomeFragment;
-<<<<<<< HEAD
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-=======
->>>>>>> 8affb9430ea79e1fa105946d2bb30001cabc392d
+
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.api.geocoding.v5.GeocodingCriteria;
@@ -87,14 +86,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
-<<<<<<< HEAD
 
-    } @Override
-=======
     }
 
     @Override
->>>>>>> 8affb9430ea79e1fa105946d2bb30001cabc392d
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
         //enableLocation();
@@ -204,15 +199,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             locationText.setText(selectedCarmenFeature.text());
 // Create a new FeatureCollection and add a new Feature to it using selectedCarmenFeature above.
 // Then retrieve and update the source designated for showing a selected location's symbol layer icon
-<<<<<<< HEAD
+
              SelectedLatitude=((Point) selectedCarmenFeature.geometry()).latitude();
              SelectedLongitude=((Point) selectedCarmenFeature.geometry()).longitude();
 
 
-=======
             Toast.makeText(MapActivity.this, ((Point) selectedCarmenFeature.geometry()).latitude() + " " +
                     ((Point) selectedCarmenFeature.geometry()).longitude(), Toast.LENGTH_LONG).show();
->>>>>>> 8affb9430ea79e1fa105946d2bb30001cabc392d
             if (mapboxMap != null) {
                 Style style = mapboxMap.getStyle();
                 if (style != null) {
@@ -274,11 +267,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             addLocationButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-<<<<<<< HEAD
-                    sendLocationData();
-=======
 
->>>>>>> 8affb9430ea79e1fa105946d2bb30001cabc392d
+                    sendLocationData();
                     finish();
                 }
             });
