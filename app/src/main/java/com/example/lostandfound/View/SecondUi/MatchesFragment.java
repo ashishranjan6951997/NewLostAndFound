@@ -22,8 +22,8 @@ import java.util.List;
 import static com.example.lostandfound.NameClass.RECEIVED_TIME;
 
 
-public class MatchesFragment extends Fragment {
-
+public class MatchesFragment extends FragmentInterface
+{
     boolean isScrolling;
     View rootView;
     CardController controller;
@@ -53,15 +53,10 @@ public class MatchesFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.recycler);
         progressBar = rootView.findViewById(R.id.progress);
         controller = new CardController(this);
-        //controller.setFlingContainer();
-
-//        Card card = new Card("123","Sayan","default");
-//        List list1 = new ArrayList();
-//        list1.add(card);
-//        setFlingContainer(list1);
         controller.setRecyclerView();
     }
 
+    @Override
     public void setRecyclerView(final List list)
     {
         adapter = new MatchesAdapter(getContext(), list);

@@ -149,21 +149,21 @@ public class ChatController {
         );
 
         // Log.v("AFTER FLOW","send");
-//        new java.util.Timer().schedule(
-//                new java.util.TimerTask() {
-//                    @Override
-//                    public void run() {
-//
-//                        getList();
-//                    }
-//                }, DOUBLE_RENDER_TIME
-//        );
+
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+
+                        getList();
+                    }
+                }, DOUBLE_RENDER_TIME
+        );
     }
 
     private void getList() {
         int k = 9;
-        Log.d("LATER CHAT ID", chatId);
-        model.getChatMessage(chatId);
+        model.getChatMessage(key);
 
 //        new java.util.Timer().schedule(
 //                new java.util.TimerTask()
