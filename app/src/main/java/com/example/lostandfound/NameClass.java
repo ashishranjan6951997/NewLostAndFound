@@ -20,7 +20,7 @@ public class NameClass
     public static String TIME = "time";
     public static String DATE = "date";
     public static String TITLE = "Save Entry";
-    public static String MESSAGE = "Are you sure to save this entry?fr";
+    public static String MESSAGE = "Are you sure to save this entry?";
 
     // Fragment Tag
     public static String HomeFragmentTAG = "HomeFragment";

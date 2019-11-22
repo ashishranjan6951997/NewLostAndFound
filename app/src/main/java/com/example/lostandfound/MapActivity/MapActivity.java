@@ -204,9 +204,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
              SelectedLongitude=((Point) selectedCarmenFeature.geometry()).longitude();
 
 
-            Toast.makeText(MapActivity.this, ((Point) selectedCarmenFeature.geometry()).latitude() + " " +
-                    ((Point) selectedCarmenFeature.geometry()).longitude(), Toast.LENGTH_LONG).show();
-            if (mapboxMap != null) {
+                if (mapboxMap != null) {
                 Style style = mapboxMap.getStyle();
                 if (style != null) {
                     GeoJsonSource source = style.getSourceAs(geojsonSourceLayerId);

@@ -1,5 +1,6 @@
 package com.example.lostandfound.View.SecondUi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,16 +17,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lostandfound.Controller.CardController.CardController;
+import com.example.lostandfound.MapActivity.MapActivity;
 import com.example.lostandfound.R;
 import com.example.lostandfound.View.Adapter.MatchesAdapter;
 
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
 import static com.example.lostandfound.NameClass.RECEIVED_TIME;
 
 
 public class MatchesFragment extends FragmentInterface
-{
+{   int locationRequestCode=1;
     boolean isScrolling;
     View rootView;
     CardController controller;
@@ -33,7 +37,8 @@ public class MatchesFragment extends FragmentInterface
     ProgressBar progressBar;
     int currentItems,totalItems,scrollOutItems;
     Button button;
-
+    double choosenLongitude;
+    double choosenLatitude;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
@@ -59,14 +64,15 @@ public class MatchesFragment extends FragmentInterface
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getActivity(), MapActivity.class);
+                startActivityForResult(intent, locationRequestCode);
             }
         });
 //        Card card = new Card("123","Sayan","default");
 //        List list1 = new ArrayList();
 //        list1.add(card);
 //        setFlingContainer(list1);
-
+        controller.setLatLang(choosenLongitude,choosenLatitude);
         controller.setRecyclerView();
     }
 
@@ -104,7 +110,16 @@ public class MatchesFragment extends FragmentInterface
             }
         });
     }
+    @Override
 
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if (requestCode == locationRequestCode && resultCode == RESULT_OK) {
+            choosenLongitude = data.getDoubleExtra("choosenLongitude", 0);
+            choosenLatitude = data.getDoubleExtra("choosenLatitude", 0);
+            Toast.makeText(getActivity(), choosenLatitude + "ok" + choosenLongitude, Toast.LENGTH_LONG).show();
+        }
+    }
     private void showData()
     {
         progressBar.setVisibility(View.VISIBLE);

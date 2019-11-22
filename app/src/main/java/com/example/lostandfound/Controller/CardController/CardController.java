@@ -23,7 +23,8 @@ public class CardController {
     FragmentDatabaseModel model;
     FragmentInterface fragment;
     List list;
-
+    double choosenLongitude;
+    double choosenLatitude;
     public CardController(Fragment fragment) {
         this.databaseReference = FirebaseDatabase.getInstance().getReference().child(USERS);
         this.currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -34,7 +35,7 @@ public class CardController {
 
 
     public void setRecyclerView() {
-        model.setArrayList();
+        model.setArrayList(choosenLongitude,choosenLatitude);
 
         Thread timer = new Thread()
         {
@@ -80,5 +81,10 @@ public class CardController {
             }
         };
         timer.start();
+    }
+
+    public void setLatLang(double choosenLongitude, double choosenLatitude) {
+        this.choosenLongitude=choosenLongitude;
+        this.choosenLatitude=choosenLatitude;
     }
 }

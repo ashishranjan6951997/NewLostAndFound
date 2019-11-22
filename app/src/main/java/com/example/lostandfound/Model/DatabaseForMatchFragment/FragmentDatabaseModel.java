@@ -26,14 +26,18 @@ import static com.example.lostandfound.NameClass.RENDER_TIME;
 import static com.example.lostandfound.NameClass.USERS;
 
 public class FragmentDatabaseModel {
-
+    public double choosenLatitude;
+    public double choosenLongitude;
     public List list;
 
     public FragmentDatabaseModel(List list) {
         this.list = list;
     }
 
-    public void setArrayList() {
+    public void setArrayList(double longitude, double latitude) {
+        this.choosenLongitude = longitude;
+        this.choosenLatitude = latitude;
+
         final String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(USERS);
         final Card[] item = new Card[1];
@@ -46,16 +50,28 @@ public class FragmentDatabaseModel {
 
                     String profileImage = "default";
 
-                    Log.e("ERROR IS -->", dataSnapshot.child(IMAGE_URI).toString());
+                    Log.e("ERROR IS -->", dataSnapshot.child(DETAILS).child(IMAGE_URI).toString());
 
                     if (!dataSnapshot.getKey().equals(currentUser)) {
-                        if (dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue() == null || dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue().equals(profileImage)) {
-                            item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(DETAILS).child(NAME).getValue().toString(), profileImage);
-                            list.add(item[0]);
-                        } else {
-                            profileImage = dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue().toString();
-                            item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(DETAILS).child(NAME).getValue().toString(), profileImage);
-                            list.add(item[0]);
+                        String stringLatitude = (String) dataSnapshot.child(DETAILS).child("Latitude").getValue();
+                        String stringLongitude = (String) dataSnapshot.child(DETAILS).child("Longitude").getValue();
+                        Log.v("Out of IF CONDITION", stringLatitude);
+                        if (stringLatitude != null && stringLongitude != null) {
+                            Log.v("In IF CONDITION", stringLatitude);
+                            double currentUserLatitude = Double.parseDouble(stringLatitude);
+                            double currentUserLongitude = Double.parseDouble(stringLongitude);
+                            if ((currentUserLatitude >= choosenLatitude + 0.5) && (currentUserLatitude <= choosenLatitude - 0.5)
+                                    && (currentUserLongitude >= choosenLongitude + 0.5) && (currentUserLongitude <= choosenLatitude - 0.5)
+                            ) {
+                                if (dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue() == null || dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue().equals(profileImage)) {
+                                    item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(DETAILS).child(NAME).getValue().toString(), profileImage);
+                                    list.add(item[0]);
+                                } else {
+                                    profileImage = dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue().toString();
+                                    item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(DETAILS).child(NAME).getValue().toString(), profileImage);
+                                    list.add(item[0]);
+                                }
+                            }
                         }
                     }
 
