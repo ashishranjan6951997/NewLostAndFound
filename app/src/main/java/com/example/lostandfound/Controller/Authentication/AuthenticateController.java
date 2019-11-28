@@ -15,10 +15,11 @@ import com.google.firebase.auth.FirebaseAuth;
 public class AuthenticateController {
     FirebaseAuth mAuth;
     Activity activity;
-    String email, password, confirmPassword;
+    String email, password, confirmPassword,userName;
 
     public AuthenticateController(Activity activity, String[] cred) {
         mAuth = FirebaseAuth.getInstance();
+        this.userName=cred[4];
         this.activity = activity;
         this.email = cred[0];
         this.password = cred[1];
@@ -61,6 +62,7 @@ public class AuthenticateController {
                         if (!task.isSuccessful()) {
                             Toast.makeText(activity, task.getException().toString(), Toast.LENGTH_LONG).show();
                         } else {
+                            ///here use model class
                             sendVerification();
                             sendIntent();
                             Toast.makeText(activity, "Sign Up Successful", Toast.LENGTH_LONG).show();

@@ -57,21 +57,25 @@ public class FragmentDatabaseModel {
                         String stringLongitude = (String) dataSnapshot.child(DETAILS).child("Longitude").getValue();
                         Log.v("Out of IF CONDITION", stringLatitude);
                         if (stringLatitude != null && stringLongitude != null) {
-                            Log.v("In IF CONDITION", stringLatitude);
+
                             double currentUserLatitude = Double.parseDouble(stringLatitude);
                             double currentUserLongitude = Double.parseDouble(stringLongitude);
-                            if ((currentUserLatitude >= choosenLatitude + 0.5) && (currentUserLatitude <= choosenLatitude - 0.5)
-                                    && (currentUserLongitude >= choosenLongitude + 0.5) && (currentUserLongitude <= choosenLatitude - 0.5)
-                            ) {
+                            Log.v("In IF CONDITION", currentUserLatitude +"   "+ choosenLatitude);
+                            if ((choosenLatitude  >=currentUserLatitude - 0.5) && (choosenLatitude <=currentUserLatitude + 0.5))
+                            { if ((choosenLongitude  >=currentUserLongitude - 0.5) && (choosenLatitude <= currentUserLongitude + 0.5))
+                            {
+                                Log.v("In IF CONDITION", stringLatitude);
+
                                 if (dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue() == null || dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue().equals(profileImage)) {
                                     item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(DETAILS).child(NAME).getValue().toString(), profileImage);
                                     list.add(item[0]);
+                                    Log.v("added","doneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
                                 } else {
                                     profileImage = dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue().toString();
                                     item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(DETAILS).child(NAME).getValue().toString(), profileImage);
                                     list.add(item[0]);
                                 }
-                            }
+                            }}
                         }
                     }
 

@@ -17,7 +17,7 @@ import com.example.lostandfound.R;
 import static com.example.lostandfound.NameClass.logIn;
 
 public class SignUpFragment extends Fragment
-{
+{   EditText userName;
     View rootView;
     EditText editEmail;
     EditText editPass;
@@ -41,7 +41,7 @@ public class SignUpFragment extends Fragment
     }
 
     private void initUi()
-    {
+    {   userName=rootView.findViewById(R.id.userName);
         editEmail=rootView.findViewById(R.id.email);
         editPass=rootView.findViewById(R.id.password);
         editConfirmPass=rootView.findViewById(R.id.ConfirmPassword);
@@ -66,8 +66,8 @@ public class SignUpFragment extends Fragment
                 String emailText = editEmail.getText().toString();
                 String passwordText = editPass.getText().toString();
                 String confirmText = editConfirmPass.getText().toString();
-
-                String cred[] = {emailText,passwordText,confirmText};
+                String userNameString=userName.getText().toString();
+                String cred[] = {emailText,passwordText,confirmText,userNameString};
 
                 controller = new AuthenticateController(getActivity(),cred);
                 controller.signUp();

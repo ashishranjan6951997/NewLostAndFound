@@ -72,8 +72,8 @@ public class MatchesFragment extends FragmentInterface
 //        List list1 = new ArrayList();
 //        list1.add(card);
 //        setFlingContainer(list1);
-        controller.setLatLang(choosenLongitude,choosenLatitude);
-        controller.setRecyclerView();
+//        controller.setLatLang(choosenLongitude,choosenLatitude);
+//        controller.setRecyclerView();
     }
 
     @Override
@@ -118,6 +118,10 @@ public class MatchesFragment extends FragmentInterface
             choosenLongitude = data.getDoubleExtra("choosenLongitude", 0);
             choosenLatitude = data.getDoubleExtra("choosenLatitude", 0);
             Toast.makeText(getActivity(), choosenLatitude + "ok" + choosenLongitude, Toast.LENGTH_LONG).show();
+
+            controller.setLatLang(choosenLongitude,choosenLatitude);
+            controller.setRecyclerView();
+
         }
     }
     private void showData()
