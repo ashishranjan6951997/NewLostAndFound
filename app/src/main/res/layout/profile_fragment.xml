@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linear_layout_image_and_number_of_post"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+
+
+            android:id="@+id/profile_imageView"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ashishranjan"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:orientation="vertical"
+            android:layout_marginLeft="30dp"
+            android:gravity="center_vertical"
+            >
+
+            <TextView
+                android:id="@+id/number_of_posts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="23"
+                android:textColor="#000"
+                android:layout_gravity="center"
+                android:textSize="19dp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/Posts"
+                android:textColor="#000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Posts"
+                android:textSize="15dp"
+                 />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:orientation="vertical"
+            android:layout_marginLeft="30dp"
+            android:gravity="center_vertical"
+            >
+
+            <TextView
+                android:id="@+id/number_of_lost_posts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12"
+                android:textColor="#000"
+                android:layout_gravity="center"
+                android:textSize="19dp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/lostPosts"
+                android:textColor="#000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Losts"
+                android:textSize="15dp"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:orientation="vertical"
+            android:layout_marginLeft="30dp"
+            android:gravity="center_vertical"
+            >
+
+            <TextView
+                android:id="@+id/number_of_found_posts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="11"
+                android:textColor="#000"
+                android:layout_gravity="center"
+                android:textSize="19dp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/foundPosts"
+                android:textColor="#000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Founds"
+                android:textSize="15dp"
+                />
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ashish Ranjan"
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"/>
+
+    <Button
+        android:layout_width="105dp"
+        android:layout_height="wrap_content"
+
+        android:text="Edit Profile"
+        android:textSize="10dp"
+        android:layout_marginStart="20dp"/>
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:elevation="1dp"
+        android:background="@color/colorPrimaryDark"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="10dp"
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        />
+
+
+
+
+
+
+</LinearLayout>

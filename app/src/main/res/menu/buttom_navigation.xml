@@ -12,4 +12,8 @@
         android:id="@+id/nav_messages"
         android:icon="@drawable/ic_message_black_24dp"
         android:title="Messages" />
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_account_box_black_24dp"
+        android:title="Profile"/>
 </menu>

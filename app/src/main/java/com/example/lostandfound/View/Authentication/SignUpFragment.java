@@ -66,8 +66,8 @@ public class SignUpFragment extends Fragment
                 String emailText = editEmail.getText().toString();
                 String passwordText = editPass.getText().toString();
                 String confirmText = editConfirmPass.getText().toString();
-                String userNameString=userName.getText().toString();
-                String cred[] = {emailText,passwordText,confirmText,userNameString};
+
+                String cred[] = {emailText,passwordText,confirmText};
 
                 controller = new AuthenticateController(getActivity(),cred);
                 controller.signUp();

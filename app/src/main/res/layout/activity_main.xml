@@ -15,6 +15,7 @@
         android:layout_height="220dp"
         android:layout_gravity="center"
         android:minWidth="0dp"
+        android:elevation="10dp"
         android:minHeight="0dp"
         android:scaleType="fitCenter"
         android:src="@drawable/lostandfound" />

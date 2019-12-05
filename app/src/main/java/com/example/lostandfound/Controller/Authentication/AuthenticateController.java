@@ -19,11 +19,11 @@ public class AuthenticateController {
 
     public AuthenticateController(Activity activity, String[] cred) {
         mAuth = FirebaseAuth.getInstance();
-        this.userName=cred[4];
+
         this.activity = activity;
         this.email = cred[0];
         this.password = cred[1];
-        if (cred.length == 3) {
+        if (cred.length == 4) {
             this.confirmPassword = cred[2];
         }
     }

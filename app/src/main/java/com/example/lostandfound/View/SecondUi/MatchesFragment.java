@@ -55,7 +55,7 @@ public class MatchesFragment extends FragmentInterface
     }
 
     private void init()
-    {
+    { getActivity().setTitle("Search Your Item");
         recyclerView = rootView.findViewById(R.id.recycler);
         progressBar = rootView.findViewById(R.id.progress);
         controller = new CardController(this);

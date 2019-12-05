@@ -1,31 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
     <androidx.cardview.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="66dp"
+        android:padding="5dp"
+        tools:ignore="RedundantNamespace"
+        card_view:cardCornerRadius="8dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            >
+            android:background="#ffff"
+            android:layout_gravity="left">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:tag="image_tag"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:src="@mipmap/ic_launcher"/>
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_marginLeft="10dp"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/imageView"
+                    android:layout_width="61dp"
+                    android:layout_height="61dp"
+                    android:src="@drawable/ashishranjan"
+                    app:civ_border_width="1dp"
+                    app:civ_border_color="#FF000000"/>
+
+
+
+
+
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_height="match_parent"
+                android:gravity="left"
                 android:layout_weight="2"
                 android:orientation="vertical"
                 >
@@ -34,12 +49,30 @@
                     android:id="@+id/textViewName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
+                    android:layout_margin="7dp"
+                    android:gravity="center"
                     android:text="Person Name"
-                    android:textStyle="bold"
-                    android:textAppearance="?android:attr/textAppearanceLarge"/>
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#616161"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:orientation="vertical"
+                android:gravity="end">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_margin="7dp"
+                    android:contentDescription="deleteMatches"
+                    android:src="@drawable/delete_button"
+                    android:tint="#616161"
+                    />
 
             </LinearLayout>
         </LinearLayout>

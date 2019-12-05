@@ -43,6 +43,8 @@ public class SecondMainActivity extends AppCompatActivity {
                         case R.id.nav_messages:
                             selectedfragment = new MessageFragment();
                             break;
+                        case R.id.nav_profile:
+                            selectedfragment = new ProfileFragment();
 
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();

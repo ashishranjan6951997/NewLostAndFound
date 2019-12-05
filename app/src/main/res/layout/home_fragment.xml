@@ -10,30 +10,17 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="30dp"
-            app:cardBackgroundColor="#EEF9FA"
-            app:cardCornerRadius="8dp">
 
-            <EditText
-                android:id="@+id/name_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Name" />
 
-        </androidx.cardview.widget.CardView>
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
-            app:cardBackgroundColor="#EEF9FA"
-            app:cardCornerRadius="8dp">
+            app:cardBackgroundColor="#ffff"
+            >
         <RadioGroup
             android:id="@+id/radio_id"
             android:layout_width="wrap_content"
@@ -63,32 +50,29 @@
         </RadioGroup>
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <Button
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
-            app:cardBackgroundColor="#EEF9FA"
-            app:cardCornerRadius="8dp">
-        <Button
+
             android:id="@+id/location_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
+            android:backgroundTint="#ffff"
+            android:textColor="@color/colorPrimary"
             android:background="@drawable/custom_button"
             android:text="Add the location"
             android:textStyle="bold" />
-        </androidx.cardview.widget.CardView>
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
-            app:cardBackgroundColor="#EEF9FA"
-            app:cardCornerRadius="8dp">
+            app:cardBackgroundColor="#fff"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
