@@ -48,17 +48,15 @@ public class HomeFragment extends Fragment implements Observer {
     Uri uri;
     Map map;
     Button locationButton;
-
     double choosenLongitude;
     double choosenLatitude;
     Bundle bundle;
-    int imagwViewRequestCode = 1;
-    int locationRequestCode = 2;
+    int imagwViewRequestCode=1;
+    int locationRequestCode=2;
     Double lat, lng;
 
     @Nullable
     @Override
-
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.home_fragment, container, false);
         demo = new RealtimeDatabaseDemoModel();
@@ -87,9 +85,8 @@ public class HomeFragment extends Fragment implements Observer {
         locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(getActivity(), MapActivity.class);
-                startActivityForResult(intent, locationRequestCode);
+                Intent intent=new Intent(getActivity(), MapActivity.class);
+                startActivityForResult(intent,locationRequestCode);
             }
         });
 
@@ -100,10 +97,9 @@ public class HomeFragment extends Fragment implements Observer {
                 int id = radioGroup.getCheckedRadioButtonId();
                 radioButton = rootView.findViewById(id);
                 radioText = radioButton.getText().toString();
-
+                nameText = rootView.findViewById(R.id.name_text);
                 name = nameText.getText().toString();
-
-                final String[] inputArray = {name, radioText, Double.toString(choosenLatitude), Double.toString(choosenLongitude)};
+                final String[] inputArray = {name, radioText,Double.toString(choosenLatitude),Double.toString(choosenLongitude)};
 
                 new AlertDialog.Builder(getActivity())
                         .setTitle(TITLE)
@@ -116,7 +112,7 @@ public class HomeFragment extends Fragment implements Observer {
                                 demo.notifyObserver();
                             }
                         })
-                        .setNegativeButton(android.R.string.no, null)
+                        .setNegativeButton(android.R.string.no,null)
                         .show();
 
             }
@@ -134,20 +130,22 @@ public class HomeFragment extends Fragment implements Observer {
 
     @Override
     public void updateToast() {
-        Toast.makeText(getActivity(), "Data Saved Successfully", Toast.LENGTH_LONG).show();
+         Toast.makeText(getActivity(), "Data Saved Successfully", Toast.LENGTH_LONG).show();
     }
 
     @Override
-
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == imagwViewRequestCode && resultCode == RESULT_OK) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    {
+        if (requestCode == imagwViewRequestCode && resultCode == RESULT_OK)
+        {
             uri = data.getData();
             Glide.with(this).load(uri).into(imageView);
         }
-        if (requestCode == locationRequestCode && resultCode == RESULT_OK) {
-            choosenLongitude = data.getDoubleExtra("choosenLongitude", 0);
-            choosenLatitude = data.getDoubleExtra("choosenLatitude", 0);
-            Toast.makeText(getActivity(), choosenLatitude + "ok" + choosenLongitude, Toast.LENGTH_LONG).show();
+        if(requestCode == locationRequestCode && resultCode==RESULT_OK)
+        {
+             choosenLongitude  = data.getDoubleExtra("choosenLongitude", 0);
+             choosenLatitude=data.getDoubleExtra("choosenLatitude", 0);
+            Toast.makeText(getActivity(),choosenLatitude+"ok"+ choosenLongitude,Toast.LENGTH_LONG).show();
         }
     }
 
