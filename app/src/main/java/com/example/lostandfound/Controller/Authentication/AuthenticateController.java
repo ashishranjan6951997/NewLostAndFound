@@ -23,7 +23,7 @@ public class AuthenticateController {
         this.activity = activity;
         this.email = cred[0];
         this.password = cred[1];
-        if (cred.length == 4) {
+        if (cred.length == 3) {
             this.confirmPassword = cred[2];
         }
     }

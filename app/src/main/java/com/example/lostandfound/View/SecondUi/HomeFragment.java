@@ -97,8 +97,8 @@ public class HomeFragment extends Fragment implements Observer {
                 int id = radioGroup.getCheckedRadioButtonId();
                 radioButton = rootView.findViewById(id);
                 radioText = radioButton.getText().toString();
-                nameText = rootView.findViewById(R.id.name_text);
-                name = nameText.getText().toString();
+
+                name ="Ashish";
                 final String[] inputArray = {name, radioText,Double.toString(choosenLatitude),Double.toString(choosenLongitude)};
 
                 new AlertDialog.Builder(getActivity())
