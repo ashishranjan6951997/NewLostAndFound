@@ -19,7 +19,6 @@ public class AuthenticateController {
 
     public AuthenticateController(Activity activity, String[] cred) {
         mAuth = FirebaseAuth.getInstance();
-
         this.activity = activity;
         this.email = cred[0];
         this.password = cred[1];

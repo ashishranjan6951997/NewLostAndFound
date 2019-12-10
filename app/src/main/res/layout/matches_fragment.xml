@@ -7,16 +7,45 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/lin"
+        android:layout_marginStart="15dp"
+        >
+
+        <ImageView
+            android:layout_marginTop="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_location_black_24dp"
+            />
+        <EditText
+            android:id="@+id/fragmentLocationButton"
+            android:clickable="true"
+            android:focusable="false"
+            android:layout_marginEnd="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search in location"/>
+    </LinearLayout>
+
+
+    <!--
+
     <Button
+        android:layout_below="@+id/lin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add The Location "
         android:id="@+id/fragmentLocationButton"
 
         android:textStyle="bold"/>
-
+    -->
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="10dp"
+        android:layout_below="@+id/lin"
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

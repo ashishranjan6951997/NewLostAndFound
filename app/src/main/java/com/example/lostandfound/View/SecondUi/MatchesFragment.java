@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -36,7 +37,7 @@ public class MatchesFragment extends FragmentInterface
     RecyclerView recyclerView;
     ProgressBar progressBar;
     int currentItems,totalItems,scrollOutItems;
-    Button button;
+    EditText button;
     double choosenLongitude;
     double choosenLatitude;
     @Nullable

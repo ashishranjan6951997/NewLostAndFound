@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -62,7 +63,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private String geojsonSourceLayerId = "geojsonSourceLayerId";
     private String symbolIconId = "symbolIconId";
     EditText locationText;
-    Button addLocationButton;
+    ImageView addLocationButton;
     double SelectedLatitude;
     double SelectedLongitude;
     Button closeButton;
@@ -73,6 +74,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // Mapbox access token is configured here. This needs to be called either in your application
         // object or in the same activity which contains the mapview.
         Mapbox.getInstance(this, getString(R.string.access_token));
@@ -82,10 +84,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         homeFragment = new HomeFragment();
         builder = new AlertDialog.Builder(this);
         locationText = (EditText) findViewById(R.id.searchText);
-        addLocationButton = (Button) findViewById(R.id.addLocationButton);
+        addLocationButton = (ImageView) findViewById(R.id.addLocationButton);
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+       setTitle("Map");
 
     }
 
@@ -146,7 +149,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void initSearchFab() {
         findViewById(R.id.searchText).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+                public void onClick(View view) {
                 Intent intent = new PlaceAutocomplete.IntentBuilder()
                         .accessToken(Mapbox.getAccessToken() != null ? Mapbox.getAccessToken() : getString(R.string.access_token))
                         .placeOptions(PlaceOptions.builder()

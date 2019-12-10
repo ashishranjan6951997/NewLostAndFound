@@ -88,6 +88,7 @@ public class ChatController {
                 {
                     key = FirebaseDatabase.getInstance().getReference().child(CHAT).push().getKey();
                     referenceChat = referenceChat.child(key);
+
                 }
             }
 
@@ -133,6 +134,7 @@ public class ChatController {
 
 
         new java.util.Timer().schedule(
+
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
