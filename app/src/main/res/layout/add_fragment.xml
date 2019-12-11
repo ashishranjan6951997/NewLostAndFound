@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/image_and_name"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_imageView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="2"
+                android:src="@drawable/ashishranjan" />
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/user_name"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/post"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/postWrite"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:hint="Type Here..."
+                android:textSize="30dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:textSize="20dp"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:text="Add to your post.."
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"/>
+
+            <ImageView
+                android:id="@+id/postImage"
+                android:src="@drawable/natural_landscape"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

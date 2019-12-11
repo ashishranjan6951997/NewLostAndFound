@@ -18,6 +18,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.lostandfound.NameClass.LatitudeStorageInDatabase;
@@ -42,16 +43,12 @@ public class SaveDataController
         databaseDemo = new RealtimeDatabaseDemoModel(map);
         storageReference = FirebaseStorage.getInstance().getReference().child(profileImageUri).child(userId);
         this.homeFragment = homeFragment;
+        map = new HashMap();
     }
 
-    public void setMap(Map map)
-    {
-        this.map = map;
-    }
 
     public void saveData(String[] array,Uri uri)
     {
-
        // map.put(profileImageUri,);
         //getPhotoUri(uri);
         getPhotoUri(uri,array);
@@ -119,10 +116,7 @@ public class SaveDataController
                     }
                 },
                 10000);
-
-
     }
-
 
     private String addUri(String toString)
     {

@@ -8,6 +8,13 @@
         android:id="@+id/nav_matches"
         android:icon="@drawable/ic_wc_black_24dp"
         android:title="Matches" />
+
+    <item
+        android:id="@+id/nav_add"
+        android:icon="@drawable/add"
+        android:title="Add"
+        ></item>
+
     <item
         android:id="@+id/nav_messages"
         android:icon="@drawable/ic_message_black_24dp"

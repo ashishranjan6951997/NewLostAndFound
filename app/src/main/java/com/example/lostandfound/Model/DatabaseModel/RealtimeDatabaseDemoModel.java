@@ -36,7 +36,8 @@ public class RealtimeDatabaseDemoModel {
     Map map;
     List<Observer> observers;
 
-    public RealtimeDatabaseDemoModel(Map map) {
+    public RealtimeDatabaseDemoModel(Map map)
+    {
         reference = FirebaseDatabase.getInstance().getReference(USERS);
         this.map = map;
     }
@@ -52,14 +53,27 @@ public class RealtimeDatabaseDemoModel {
         String uId = FirebaseAuth.getInstance().getUid();
         String radioText = (String) dataMap.get(radioButtonText);
         //reference = reference.child(radioText);
-        String name = (String) dataMap.get(nameForStoringDatabase);
-        map.put(NAME,name);
-        String imageUri = (String) dataMap.get(NameClass.profileImageUri);
-        map.put(IMAGE_URI,imageUri);
-        String Latitute=(String)dataMap.get(LatitudeStorageInDatabase);
-        map.put(LatitudeStorageInDatabase,Latitute);
-        String Longitude=(String)dataMap.get(LongitudeStorageInDatabase);
-        map.put(LongitudeStorageInDatabase,Longitude);
+
+        if(dataMap.get(nameForStoringDatabase) != null) {
+            String name = (String) dataMap.get(nameForStoringDatabase);
+            map.put(NAME, name);
+        }
+
+        if(dataMap.get(profileImageUri) != null) {
+            String imageUri = (String) dataMap.get(NameClass.profileImageUri);
+            map.put(IMAGE_URI, imageUri);
+        }
+
+        if(dataMap.get(LatitudeStorageInDatabase) !=null) {
+            String Latitute = (String) dataMap.get(LatitudeStorageInDatabase);
+            map.put(LatitudeStorageInDatabase, Latitute);
+        }
+
+        if(dataMap.get(LongitudeStorageInDatabase) !=null) {
+            String Longitude = (String) dataMap.get(LongitudeStorageInDatabase);
+            map.put(LongitudeStorageInDatabase, Longitude);
+        }
+        int k = 1;
         reference.child(uId).child(DETAILS).setValue(map);
     }
 

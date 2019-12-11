@@ -28,7 +28,6 @@ import com.example.lostandfound.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 import static com.example.lostandfound.NameClass.MESSAGE;
@@ -46,7 +45,6 @@ public class HomeFragment extends Fragment implements Observer {
     RealtimeDatabaseDemoModel demo;
     ImageView imageView;
     Uri uri;
-    Map map;
     Button locationButton;
     double choosenLongitude;
     double choosenLatitude;
@@ -68,7 +66,7 @@ public class HomeFragment extends Fragment implements Observer {
 
 
     public void init() {
-        map = new HashMap();
+
         controller = new SaveDataController(this);
         locationButton = rootView.findViewById(R.id.location_button);
         saveButton = rootView.findViewById(R.id.fab);
@@ -107,7 +105,6 @@ public class HomeFragment extends Fragment implements Observer {
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                controller.setMap(map);
                                 controller.saveData(inputArray, uri);
                                 demo.notifyObserver();
                             }

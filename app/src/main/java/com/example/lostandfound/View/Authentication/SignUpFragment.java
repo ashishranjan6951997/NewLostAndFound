@@ -16,9 +16,9 @@ import com.example.lostandfound.R;
 
 import static com.example.lostandfound.NameClass.logIn;
 
-public class SignUpFragment extends Fragment
-{   EditText userName;
+public class SignUpFragment extends Fragment {
     View rootView;
+    EditText editUser;
     EditText editEmail;
     EditText editPass;
     EditText editConfirmPass;
@@ -30,30 +30,29 @@ public class SignUpFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView=inflater.inflate(R.layout.sign_up,container,false);
+        rootView = inflater.inflate(R.layout.sign_up, container, false);
         initUi();
         return rootView;
     }
 
-    public void setCallBackInterface(CallBackInterface callBackInterface)
-    {
-        this.callBackInterface=callBackInterface;
+    public void setCallBackInterface(CallBackInterface callBackInterface) {
+        this.callBackInterface = callBackInterface;
     }
 
     private void initUi()
-    {   userName=rootView.findViewById(R.id.userName);
-        editEmail=rootView.findViewById(R.id.email);
-        editPass=rootView.findViewById(R.id.password);
-        editConfirmPass=rootView.findViewById(R.id.ConfirmPassword);
+    {
+        editUser = rootView.findViewById(R.id.userName);
+        editEmail = rootView.findViewById(R.id.email);
+        editPass = rootView.findViewById(R.id.password);
+        editConfirmPass = rootView.findViewById(R.id.ConfirmPassword);
 
-        btnlogin=rootView.findViewById(R.id.login);
-        btnSignup=rootView.findViewById(R.id.SignUp);
+        btnlogin = rootView.findViewById(R.id.login);
+        btnSignup = rootView.findViewById(R.id.SignUp);
 
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(callBackInterface!=null)
-                {
+                if (callBackInterface != null) {
                     callBackInterface.callBackMethod(logIn);
                 }
             }
@@ -61,15 +60,15 @@ public class SignUpFragment extends Fragment
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
+                String userText = editUser.getText().toString();
                 String emailText = editEmail.getText().toString();
                 String passwordText = editPass.getText().toString();
                 String confirmText = editConfirmPass.getText().toString();
 
-                String cred[] = {emailText,passwordText,confirmText};
+                String cred[] = {emailText, passwordText, confirmText, userText};
 
-                controller = new AuthenticateController(getActivity(),cred);
+                controller = new AuthenticateController(getActivity(), cred);
                 controller.signUp();
             }
         });

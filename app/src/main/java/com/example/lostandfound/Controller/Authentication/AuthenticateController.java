@@ -6,11 +6,17 @@ import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 
+import com.example.lostandfound.Model.DatabaseModel.RealtimeDatabaseDemoModel;
 import com.example.lostandfound.View.SecondUi.SecondMainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.example.lostandfound.NameClass.nameForStoringDatabase;
 
 public class AuthenticateController {
     FirebaseAuth mAuth;
@@ -22,8 +28,9 @@ public class AuthenticateController {
         this.activity = activity;
         this.email = cred[0];
         this.password = cred[1];
-        if (cred.length == 3) {
+        if (cred.length == 4) {
             this.confirmPassword = cred[2];
+            this.userName = cred[3];
         }
     }
 
@@ -62,6 +69,12 @@ public class AuthenticateController {
                             Toast.makeText(activity, task.getException().toString(), Toast.LENGTH_LONG).show();
                         } else {
                             ///here use model class
+
+                            Map map = new HashMap();
+                            map.put(nameForStoringDatabase,userName);
+                            RealtimeDatabaseDemoModel model = new RealtimeDatabaseDemoModel();
+                            model.saveData(map);
+
                             sendVerification();
                             sendIntent();
                             Toast.makeText(activity, "Sign Up Successful", Toast.LENGTH_LONG).show();

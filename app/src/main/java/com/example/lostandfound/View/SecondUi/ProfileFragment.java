@@ -11,8 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lostandfound.R;
+
+import java.util.List;
 
 public class ProfileFragment extends FragmentInterface {
     View rootView;
@@ -20,6 +23,8 @@ public class ProfileFragment extends FragmentInterface {
     LinearLayout linearLayout;
     ImageView profileImageView;
     TextView numberOfPosts;
+    RecyclerView recyclerView;
+    LinearLayout layout;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,8 +38,24 @@ public class ProfileFragment extends FragmentInterface {
         numberOfPosts=rootView.findViewById(R.id.number_of_posts);
         linearLayout=rootView.findViewById(R.id.linear_layout_image_and_number_of_post);
         profileImageView=rootView.findViewById(R.id.profile_imageView);
+        recyclerView = rootView.findViewById(R.id.recycler);
+        layout = rootView.findViewById(R.id.substitute_linear_profile);
+
         getActivity().setTitle("Ashish Ranjan");
     }
 
 
+    public void setRecyclerViewForProfile(List list)
+    {
+        if(list.size() == 0)
+        {
+            layout.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }
+        else
+        {
+            layout.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+    }
 }
