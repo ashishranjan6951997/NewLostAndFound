@@ -17,19 +17,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 class AddFragment extends FragmentInterface
 {
-
     View rootView;
     CircleImageView imageView;
     TextView nameText;
     EditText postText;
     ImageView imgView;
 
-
-
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
         rootView = inflater.inflate(R.layout.add_fragment,container,false);
         init();
         return rootView;
@@ -41,6 +38,5 @@ class AddFragment extends FragmentInterface
         nameText = rootView.findViewById(R.id.user_name);
         postText = rootView.findViewById(R.id.postWrite);
         imgView = rootView.findViewById(R.id.postImage);
-
     }
 }

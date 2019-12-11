@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
 import com.example.lostandfound.Model.DatabaseModel.RealtimeDatabaseDemoModel;
@@ -15,13 +16,15 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.example.lostandfound.NameClass.nameForStoringDatabase;
 
 public class AuthenticateController {
     FirebaseAuth mAuth;
     Activity activity;
-    String email, password, confirmPassword,userName;
+    String email, password, confirmPassword, userName;
 
     public AuthenticateController(Activity activity, String[] cred) {
         mAuth = FirebaseAuth.getInstance();
@@ -70,10 +73,20 @@ public class AuthenticateController {
                         } else {
                             ///here use model class
 
-                            Map map = new HashMap();
-                            map.put(nameForStoringDatabase,userName);
-                            RealtimeDatabaseDemoModel model = new RealtimeDatabaseDemoModel();
-                            model.saveData(map);
+
+                            new java.util.Timer().schedule(
+                                    new java.util.TimerTask() {
+                                        @Override
+                                        public void run() {
+
+                                            Map map = new HashMap();
+                                            map.put(nameForStoringDatabase, userName);
+                                            RealtimeDatabaseDemoModel model = new RealtimeDatabaseDemoModel();
+                                            model.saveData(map);
+
+                                        }
+                                    }, 1000);
+
 
                             sendVerification();
                             sendIntent();

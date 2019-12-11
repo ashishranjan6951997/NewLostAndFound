@@ -115,7 +115,7 @@ public class SaveDataController
                         Log.v("Modified URkkkkI--",str[0]+"");
                     }
                 },
-                10000);
+                1000);
     }
 
     private String addUri(String toString)
