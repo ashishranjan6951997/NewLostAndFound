@@ -72,8 +72,6 @@ public class AuthenticateController {
                             Toast.makeText(activity, task.getException().toString(), Toast.LENGTH_LONG).show();
                         } else {
                             ///here use model class
-
-
                             new java.util.Timer().schedule(
                                     new java.util.TimerTask() {
                                         @Override
@@ -83,9 +81,8 @@ public class AuthenticateController {
                                             map.put(nameForStoringDatabase, userName);
                                             RealtimeDatabaseDemoModel model = new RealtimeDatabaseDemoModel();
                                             model.saveData(map);
-
                                         }
-                                    }, 1000);
+                                    }, 10000);
 
 
                             sendVerification();

@@ -17,9 +17,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import static com.example.lostandfound.NameClass.HomeFragmentTAG;
 
-public class SecondMainActivity extends AppCompatActivity {
+public class SecondMainActivity extends AppCompatActivity
+{
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second_main);
         BottomNavigationView bottomNavigationView = findViewById(R.id.button_navigation);
@@ -45,8 +47,10 @@ public class SecondMainActivity extends AppCompatActivity {
                             break;
                         case R.id.nav_profile:
                             selectedfragment = new ProfileFragment();
+                            break;
                         case R.id.nav_add:
                             selectedfragment = new AddFragment();
+                            break;
 
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
@@ -56,7 +60,8 @@ public class SecondMainActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    {
         super.onActivityResult(requestCode, resultCode, data);
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(HomeFragmentTAG);
         if (fragment != null) {

@@ -70,7 +70,8 @@ public class CardController {
                     sleep(DOUBLE_RENDER_TIME);
                     fragment.getActivity().runOnUiThread(new Runnable() {
                         @Override
-                        public void run() {
+                        public void run()
+                        {
                             fragment.setRecyclerView(model.getListForMessage());
                             Log.v("Size from controller ", list.size() + "");
                         }

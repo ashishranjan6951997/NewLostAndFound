@@ -1,6 +1,7 @@
 package com.example.lostandfound.Model.DatabaseModel;
 
 import android.content.Intent;
+import android.util.Log;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -27,34 +28,34 @@ import static com.example.lostandfound.NameClass.LatitudeStorageInDatabase;
 import static com.example.lostandfound.NameClass.LongitudeStorageInDatabase;
 import static com.example.lostandfound.NameClass.NAME;
 import static com.example.lostandfound.NameClass.USERS;
+import static com.example.lostandfound.NameClass.bioForStoringDatabase;
+import static com.example.lostandfound.NameClass.emailForStroringDatabase;
 import static com.example.lostandfound.NameClass.nameForStoringDatabase;
+import static com.example.lostandfound.NameClass.phoneForStoringDatabase;
 import static com.example.lostandfound.NameClass.profileImageUri;
 import static com.example.lostandfound.NameClass.radioButtonText;
 
 public class RealtimeDatabaseDemoModel {
     DatabaseReference reference;
-    Map map;
     List<Observer> observers;
-
-    public RealtimeDatabaseDemoModel(Map map)
-    {
-        reference = FirebaseDatabase.getInstance().getReference(USERS);
-        this.map = map;
-    }
 
     public RealtimeDatabaseDemoModel()
     {
+        reference = FirebaseDatabase.getInstance().getReference(USERS);
         observers = new ArrayList<>();
     }
 
+
     public void saveData(Map dataMap)
     {
+        Log.e("REFERENCE",String.valueOf(reference));
         Map map = new HashMap();
         String uId = FirebaseAuth.getInstance().getUid();
         String radioText = (String) dataMap.get(radioButtonText);
         //reference = reference.child(radioText);
 
-        if(dataMap.get(nameForStoringDatabase) != null) {
+        if(dataMap.get(nameForStoringDatabase) != null)
+        {
             String name = (String) dataMap.get(nameForStoringDatabase);
             map.put(NAME, name);
         }
@@ -73,6 +74,23 @@ public class RealtimeDatabaseDemoModel {
             String Longitude = (String) dataMap.get(LongitudeStorageInDatabase);
             map.put(LongitudeStorageInDatabase, Longitude);
         }
+
+        if(dataMap.get(bioForStoringDatabase) !=null)
+        {
+            String bio = (String) dataMap.get(bioForStoringDatabase);
+            map.put(bioForStoringDatabase,bio);
+        }
+        if(dataMap.get(emailForStroringDatabase) != null)
+        {
+            String email = (String) dataMap.get(emailForStroringDatabase);
+            map.put(emailForStroringDatabase,email);
+        }
+        if(dataMap.get(phoneForStoringDatabase) !=null)
+        {
+            String phone = (String) dataMap.get(phoneForStoringDatabase);
+            map.put(phoneForStoringDatabase,phone);
+        }
+
         int k = 1;
         reference.child(uId).child(DETAILS).setValue(map);
     }

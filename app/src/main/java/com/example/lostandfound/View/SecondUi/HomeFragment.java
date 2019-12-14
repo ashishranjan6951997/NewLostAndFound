@@ -31,6 +31,7 @@ import java.util.HashMap;
 
 import static android.app.Activity.RESULT_OK;
 import static com.example.lostandfound.NameClass.MESSAGE;
+import static com.example.lostandfound.NameClass.POST;
 import static com.example.lostandfound.NameClass.TITLE;
 
 public class HomeFragment extends Fragment implements Observer {
@@ -67,7 +68,8 @@ public class HomeFragment extends Fragment implements Observer {
 
     public void init() {
 
-        controller = new SaveDataController(this);
+        controller = new SaveDataController(getContext());
+
         locationButton = rootView.findViewById(R.id.location_button);
         saveButton = rootView.findViewById(R.id.fab);
         saveButton.setEnabled(false);
@@ -105,7 +107,7 @@ public class HomeFragment extends Fragment implements Observer {
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                controller.saveData(inputArray, uri);
+                                controller.saveData(inputArray, uri,POST);
                                 demo.notifyObserver();
                             }
                         })

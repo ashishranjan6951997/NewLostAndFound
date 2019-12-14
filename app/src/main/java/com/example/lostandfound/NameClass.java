@@ -6,7 +6,12 @@ public class NameClass
     public static String signUp = "SignUp";
 
     public static String nameForStoringDatabase = "name";
+    public static  String bioForStoringDatabase = "bio";
+    public static String emailForStroringDatabase = "email";
+    public static String phoneForStoringDatabase = "phone";
+
     public static String radioButtonText = "category";
+    public static String postImageUri = "postImageUri";
     public static String profileImageUri = "profileImageUri";
     public static String LatitudeStorageInDatabase="Latitude";
     public static String LongitudeStorageInDatabase="Longitude";
@@ -29,7 +34,7 @@ public class NameClass
 
 
     // integers to denote time to delay
-    public static int RENDER_TIME = 2000;
+    public static int RENDER_TIME = 1000;
     public static int DOUBLE_RENDER_TIME = 2 * RENDER_TIME;
     public static int RECEIVED_TIME = DOUBLE_RENDER_TIME + 1000;
 
@@ -40,4 +45,8 @@ public class NameClass
     public static String CREATED_BY = "createdBy";
     public static String TEXT = "text";
     public static String CONNECTIONS = "CONNECTIONS";
+
+
+    public static String POST = "post";
+    public static String EDIT = "edit";
 }

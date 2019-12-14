@@ -55,27 +55,27 @@ public class FragmentDatabaseModel {
                     if (!dataSnapshot.getKey().equals(currentUser)) {
                         String stringLatitude = (String) dataSnapshot.child(DETAILS).child("Latitude").getValue();
                         String stringLongitude = (String) dataSnapshot.child(DETAILS).child("Longitude").getValue();
-                        Log.v("Out of IF CONDITION", stringLatitude);
+
                         if (stringLatitude != null && stringLongitude != null) {
 
                             double currentUserLatitude = Double.parseDouble(stringLatitude);
                             double currentUserLongitude = Double.parseDouble(stringLongitude);
-                            Log.v("In IF CONDITION", currentUserLatitude +"   "+ choosenLatitude);
-                            if ((choosenLatitude  >=currentUserLatitude - 0.5) && (choosenLatitude <=currentUserLatitude + 0.5))
-                            { if ((choosenLongitude  >=currentUserLongitude - 0.5) && (choosenLatitude <= currentUserLongitude + 0.5))
-                            {
-                                Log.v("In IF CONDITION", stringLatitude);
+                            Log.v("In IF CONDITION", currentUserLatitude + "   " + choosenLatitude);
+                            if ((choosenLatitude >= currentUserLatitude - 0.5) && (choosenLatitude <= currentUserLatitude + 0.5)) {
+                                if ((choosenLongitude >= currentUserLongitude - 0.5) && (choosenLatitude <= currentUserLongitude + 0.5)) {
+                                    Log.v("In IF CONDITION", stringLatitude);
 
-                                if (dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue() == null || dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue().equals(profileImage)) {
-                                    item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(DETAILS).child(NAME).getValue().toString(), profileImage);
-                                    list.add(item[0]);
-                                    Log.v("added","doneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-                                } else {
-                                    profileImage = dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue().toString();
-                                    item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(DETAILS).child(NAME).getValue().toString(), profileImage);
-                                    list.add(item[0]);
+                                    if (dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue() == null || dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue().equals(profileImage)) {
+                                        item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(DETAILS).child(NAME).getValue().toString(), profileImage);
+                                        list.add(item[0]);
+                                        Log.v("added", "doneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+                                    } else {
+                                        profileImage = dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue().toString();
+                                        item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(DETAILS).child(NAME).getValue().toString(), profileImage);
+                                        list.add(item[0]);
+                                    }
                                 }
-                            }}
+                            }
                         }
                     }
 
@@ -98,7 +98,6 @@ public class FragmentDatabaseModel {
                     // ar.notifyDataSetChanged();
                 }
             }
-
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
