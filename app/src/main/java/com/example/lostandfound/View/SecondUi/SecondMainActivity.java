@@ -45,6 +45,7 @@ public class SecondMainActivity extends AppCompatActivity {
                             break;
                         case R.id.nav_profile:
                             selectedfragment = new ProfileFragment();
+                            break;
                         case R.id.nav_add:
                             selectedfragment = new AddFragment();
 

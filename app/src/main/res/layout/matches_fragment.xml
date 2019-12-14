@@ -55,16 +55,16 @@
         app:layout_constraintRight_toLeftOf="parent"
         app:rotation_degrees="15.5" />
 
-    <ProgressBar
-        android:visibility="gone"
-        android:id="@+id/progress"
-        android:layout_width="70dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="168dp"
-        android:layout_marginLeft="168dp"
-        android:layout_marginTop="664dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/recycler" />
+    <!--<ProgressBar-->
+        <!--android:visibility="gone"-->
+        <!--android:id="@+id/progress"-->
+        <!--android:layout_width="70dp"-->
+        <!--android:layout_height="47dp"-->
+        <!--android:layout_marginStart="168dp"-->
+        <!--android:layout_marginLeft="168dp"-->
+        <!--android:layout_marginTop="664dp"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/recycler" />-->
 
 
 
@@ -76,10 +76,10 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_gravity="center"
-            android:src="@drawable/empty_box"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:src="@drawable/empty_box" />
 
         <TextView
             android:textColor="#000000"

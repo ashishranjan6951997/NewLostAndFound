@@ -113,7 +113,7 @@ public class MatchesFragment extends FragmentInterface {
                     scrollOutItems = ((LinearLayoutManager) manager).findFirstVisibleItemPosition();
 
                     if (isScrolling == true && currentItems + scrollOutItems == totalItems) {
-                        showData();
+                        //showData();
                     }
                 }
             });
