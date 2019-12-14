@@ -55,7 +55,7 @@ public class FragmentDatabaseModel {
                     if (!dataSnapshot.getKey().equals(currentUser)) {
                         String stringLatitude = (String) dataSnapshot.child(DETAILS).child("Latitude").getValue();
                         String stringLongitude = (String) dataSnapshot.child(DETAILS).child("Longitude").getValue();
-
+                       // Log.v("Out of IF CONDITION", stringLatitude);
                         if (stringLatitude != null && stringLongitude != null) {
 
                             double currentUserLatitude = Double.parseDouble(stringLatitude);

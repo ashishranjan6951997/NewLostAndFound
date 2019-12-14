@@ -64,4 +64,7 @@ dependencies {
 
     //circularImageView
     implementation 'de.hdodenhof:circleimageview:3.0.1'
+
+    //sliding up panel layout
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
 }

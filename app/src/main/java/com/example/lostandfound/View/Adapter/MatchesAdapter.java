@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,8 +46,11 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
         final Card card = (Card) objects.get(position);
         holder.nameText.setText(card.getId());
         holder.descText.setText(card.getDesc());
-        holder.timeText.setText("Date :" + card.getDate() + "  " + "Time :" + card.getTime());
-        Log.v("CARD Details", card.getId() + "  " + card.getDesc());
+        //String str="Date :" + card.getDate() + "  " + "Time :" + card.getTime();
+
+        String s="null";
+        holder.timeText.setText(s);
+       //Log.v("CARD Details", card.getId() + "  " + card.getDesc());
 
         switch (card.getProfileImageUrl()) {
             case "default":
@@ -57,7 +61,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
                 break;
         }
 
-        holder.chatIcon.setOnClickListener(new View.OnClickListener() {
+        holder.chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context,ChatActivity.class);
@@ -76,7 +80,8 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imageView, chatIcon;
+        ImageView imageView;
+        Button chat;
         TextView nameText, descText, timeText;
 
         public ViewHolder(View view) {
@@ -85,8 +90,8 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
             imageView = view.findViewById(R.id.image);
             nameText = view.findViewById(R.id.name);
             descText = view.findViewById(R.id.desc);
-            timeText = view.findViewById(R.id.time);
-            chatIcon = view.findViewById(R.id.chat);
+            timeText = view.findViewById(R.id.date);
+            chat = view.findViewById(R.id.chat);
         }
     }
 }

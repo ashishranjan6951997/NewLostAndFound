@@ -1,61 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sothree.slidinguppanel.SlidingUpPanelLayout
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sliding_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    app:umanoDragView="@id/dragView"
+    app:umanoPanelHeight="69dp"
+    android:layout_gravity="bottom"
+    android:gravity="bottom"
 
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    app:umanoOverlay="false"
+    app:umanoParallaxOffset="19dp"
+    app:umanoShadowHeight="4dp"
+    >
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
 
         <LinearLayout
-            android:id="@+id/image_and_name"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="10dp"
                 android:id="@+id/profile_imageView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="2"
-                android:src="@drawable/ashishranjan" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:src="@drawable/ashishranjan"/>
 
-            <LinearLayout
+
+            <TextView
+                android:layout_weight="4"
+                android:layout_marginStart="10dp"
+                android:gravity="left"
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:text="Ashish Ranjan"
+                android:textColor="#000"
+                android:id="@+id/user_name"
+                android:textSize="15dp"
+                android:textStyle="bold"/>
+            <Button
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="end"
+                android:text="Post"
+                android:backgroundTint="#fff"
+                android:textColor="#000"/>
 
-                <TextView
-                    android:id="@+id/user_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:hint="Name" />
 
-                <Button
-                    android:id="@+id/date"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
 
-                <Button
-                    android:id="@+id/time"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp" />
 
-            </LinearLayout>
+
         </LinearLayout>
-
-
+        <Spinner
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerItems"
+            android:entries="@array/Spinner_items"
+            ></Spinner>
         <LinearLayout
             android:id="@+id/post"
             android:layout_width="match_parent"
@@ -64,39 +78,118 @@
             android:orientation="horizontal">
 
             <EditText
+
                 android:id="@+id/postWrite"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:hint="Type Here..."
-                android:textSize="30dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/image"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:gravity="center"
-                android:text="Add to your post.."
-                android:textColor="#000000"
-                android:textSize="20dp" />
-
+                android:gravity="start"
+                android:hint="Type the description..."
+                android:textSize="23dp" />
             <ImageView
-                android:id="@+id/postImage"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/natural_landscape" />
-
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pickedImage"/>
         </LinearLayout>
+
 
 
     </LinearLayout>
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/dragView"
+        android:orientation="vertical"
+        android:focusable="false"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_gravity="center"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_keyboard_arrow_up_black_24dp"/>
+
+        <RelativeLayout
+            android:id="@+id/rel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="2dp"
+              android:backgroundTint="#000"
+              android:background="@color/colorPrimary"/>
+           <LinearLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+
+               android:id="@+id/locationClicked"
+               android:orientation="horizontal">
+               <ImageView
+                   android:layout_gravity="center"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/ic_add_location_black_24dp"
+                   />
+               <Button
+                   android:gravity="center"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                    android:backgroundTint="#ffff"
+                   android:textColor="#000"
+                   android:text="location Picker"
+                   android:textStyle="bold"
+                  />
+
+
+
+           </LinearLayout>
+            <View
+                android:layout_below="@+id/locationClicked"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:id="@+id/view"
+                android:backgroundTint="#000"
+                android:background="@color/colorPrimary"/>
+            <LinearLayout
+                android:layout_below="@+id/view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/imageFromGalary">
+
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_photo_black_24dp"/>
+                <Button
+                    android:gravity="center"
+                    android:backgroundTint="#ffff"
+                    android:textColor="#000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Photo"
+                    />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+        <View
+            android:layout_below="@+id/rel"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:id="@+id/view1"
+            android:backgroundTint="#000"
+            android:background="@color/colorPrimary"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_gravity="right"
+
+            app:backgroundTint="#FDFBFB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_black_24dp"
+            />
+    </LinearLayout>
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>
