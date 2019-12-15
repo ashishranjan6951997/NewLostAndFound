@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.sothree.slidinguppanel.SlidingUpPanelLayout
 
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sliding_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:umanoDragView="@id/dragView"
-    app:umanoPanelHeight="69dp"
     android:layout_gravity="bottom"
     android:gravity="bottom"
     app:umanoOverlay="false"
+    app:umanoDragView="@id/dragView"
+    app:umanoPanelHeight="69dp"
     app:umanoParallaxOffset="19dp"
-    app:umanoShadowHeight="4dp"
-    >
-    <LinearLayout android:layout_width="match_parent"
+    app:umanoShadowHeight="4dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
@@ -25,25 +27,25 @@
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_marginTop="3dp"
-                android:layout_marginStart="10dp"
                 android:id="@+id/profile_imageView"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="3dp"
                 android:layout_weight="1"
-                android:src="@drawable/ashishranjan"/>
+                android:src="@drawable/ashishranjan" />
 
 
             <TextView
-                android:layout_weight="4"
-                android:layout_marginStart="10dp"
-                android:gravity="left"
-                android:layout_gravity="center"
+                android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_weight="4"
+                android:gravity="left"
                 android:text="Ashish Ranjan"
                 android:textColor="#000"
-                android:id="@+id/user_name"
                 android:textSize="15dp"
                 android:textStyle="bold"/>
             <TextView
@@ -51,58 +53,62 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/location_display"/>
             <Button
-                android:textStyle="bold"
-                android:layout_weight="1"
+                android:id="@+id/postButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_gravity="end"
-                android:text="Post"
+                android:layout_weight="1"
                 android:backgroundTint="#fff"
-                android:textColor="#000"/>
-
-
-
+                android:gravity="center"
+                android:text="Post"
+                android:textColor="#000"
+                android:textStyle="bold" />
 
 
         </LinearLayout>
+
         <Spinner
-            android:layout_marginTop="10dp"
+            android:id="@+id/spinnerItems"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/spinnerItems"
-            android:entries="@array/Spinner_items"
-            ></Spinner>
+            android:layout_marginTop="10dp"
+            android:entries="@array/Spinner_items"></Spinner>
+
+
         <LinearLayout
             android:id="@+id/post"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="8"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="10dp">
 
             <EditText
-
                 android:id="@+id/postWrite"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="#ffff"
                 android:gravity="start"
                 android:hint="Type the description..."
-                android:textSize="23dp" />
+                android:textSize="20dp" />
+
             <ImageView
-                android:layout_width="wrap_content"
+                android:id="@+id/pickedImage"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/pickedImage"/>
+               />
         </LinearLayout>
 
 
-
     </LinearLayout>
+
     <LinearLayout
-        android:layout_width="match_parent"
         android:id="@+id/dragView"
-        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:focusable="false"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
+
         <ImageView
             android:layout_gravity="center"
 
@@ -135,6 +141,7 @@
                    />
                <Button
                    android:gravity="center"
+                   android:id="@+id/locationButton"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                     android:backgroundTint="#ffff"
@@ -144,31 +151,33 @@
                   />
 
 
+            </LinearLayout>
 
-           </LinearLayout>
+
 
             <LinearLayout
-                android:layout_below="@+id/locationClicked"
+                android:id="@+id/imageFromGalary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/imageFromGalary">
+                android:layout_below="@+id/locationClicked"
+                android:orientation="horizontal">
 
 
                 <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_photo_black_24dp"/>
+                    android:src="@drawable/ic_photo_black_24dp" />
+
                 <Button
-                    android:gravity="center"
-                    android:backgroundTint="#ffff"
-                    android:textColor="#000"
+                    android:id="@+id/photoButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
+                    android:backgroundTint="#ffff"
+                    android:gravity="center"
                     android:text="Photo"
-                    />
+                    android:textColor="#000"
+                    android:textStyle="bold" />
 
             </LinearLayout>
             <LinearLayout
@@ -230,4 +239,4 @@
 
 
     </LinearLayout>
-</com.sothree.slidinguppanel.SlidingUpPanelLayout>
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
