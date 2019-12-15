@@ -194,6 +194,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             CarmenFeature selectedCarmenFeature = PlaceAutocomplete.getPlace(data);
             searchText=selectedCarmenFeature.text();
             locationText.setText(searchText);
+            SelectedLatitude=((Point) selectedCarmenFeature.geometry()).latitude();
+            SelectedLongitude=((Point) selectedCarmenFeature.geometry()).longitude();
 // Create a new FeatureCollection and add a new Feature to it using selectedCarmenFeature above.
 // Then retrieve and update the source designated for showing a selected location's symbol layer icon
             Toast.makeText(MapActivity.this, ((Point) selectedCarmenFeature.geometry()).latitude() + " " +
