@@ -1,6 +1,7 @@
 package com.example.lostandfound.View.SecondUi;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -84,6 +86,7 @@ public class ProfileFragment extends FragmentInterface {
                 name[0] = dataSnapshot.getValue().toString();
                 Log.e("SNAPSHOT LATER", name[0]);
                 getActivity().setTitle(name[0]);
+                getActivity().setTitleColor(Color.WHITE);
             }
 
             @Override

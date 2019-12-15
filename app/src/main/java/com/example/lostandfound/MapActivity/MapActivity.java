@@ -63,6 +63,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private String geojsonSourceLayerId = "geojsonSourceLayerId";
     private String symbolIconId = "symbolIconId";
     EditText locationText;
+    String stringLocationText;
     ImageView addLocationButton;
     double SelectedLatitude;
     double SelectedLongitude;
@@ -199,7 +200,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 // Retrieve selected location's CarmenFeature
             CarmenFeature selectedCarmenFeature = PlaceAutocomplete.getPlace(data);
-            locationText.setText(selectedCarmenFeature.text());
+            stringLocationText=selectedCarmenFeature.text();
+            locationText.setText(stringLocationText);
 // Create a new FeatureCollection and add a new Feature to it using selectedCarmenFeature above.
 // Then retrieve and update the source designated for showing a selected location's symbol layer icon
 
@@ -239,6 +241,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Intent result=new Intent();
         result.putExtra("choosenLongitude", SelectedLongitude);
         result.putExtra("choosenLatitude",SelectedLatitude);
+        result.putExtra("StringText",stringLocationText);
        setResult(RESULT_OK,result);
 
 
@@ -347,6 +350,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
 
 
     }
