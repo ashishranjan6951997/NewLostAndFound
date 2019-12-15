@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -52,12 +53,13 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconOffset;
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, PermissionsListener {
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
     private MapView mapView;
+    String searchText;
     private MapboxMap mapboxMap;
     private PermissionsManager permissionsManager;//mapbox default helper class to provide permission
     private String geojsonSourceLayerId = "geojsonSourceLayerId";
     private String symbolIconId = "symbolIconId";
     EditText locationText;
-    Button addLocationButton;
+    ImageView addLocationButton;
     double SelectedLatitude;
     double SelectedLongitude;
     Button closeButton;
@@ -77,7 +79,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         homeFragment = new HomeFragment();
         builder = new AlertDialog.Builder(this);
         locationText = (EditText) findViewById(R.id.searchText);
-        addLocationButton = (Button) findViewById(R.id.addLocationButton);
+        addLocationButton = (ImageView) findViewById(R.id.addLocationButton);
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -190,7 +192,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 // Retrieve selected location's CarmenFeature
             CarmenFeature selectedCarmenFeature = PlaceAutocomplete.getPlace(data);
-            locationText.setText(selectedCarmenFeature.text());
+            searchText=selectedCarmenFeature.text();
+            locationText.setText(searchText);
 // Create a new FeatureCollection and add a new Feature to it using selectedCarmenFeature above.
 // Then retrieve and update the source designated for showing a selected location's symbol layer icon
             Toast.makeText(MapActivity.this, ((Point) selectedCarmenFeature.geometry()).latitude() + " " +
@@ -227,6 +230,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Intent result=new Intent();
         result.putExtra("choosenLongitude", SelectedLongitude);
         result.putExtra("choosenLatitude",SelectedLatitude);
+        result.putExtra("StringText",searchText);
        setResult(RESULT_OK,result);
 
 
@@ -256,6 +260,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             addLocationButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    sendLocationData();
                     finish();
                 }
             });
