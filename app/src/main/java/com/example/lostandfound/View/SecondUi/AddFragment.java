@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +25,8 @@ import androidx.slidingpanelayout.widget.SlidingPaneLayout;
 import com.bumptech.glide.Glide;
 import com.example.lostandfound.Controller.DatabaseController.SaveDataController;
 import com.example.lostandfound.MapActivity.MapActivity;
+import com.example.lostandfound.Model.DatabaseModel.RealtimeDatabaseDemoModel;
+import com.example.lostandfound.Observer;
 import com.example.lostandfound.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -43,6 +46,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static android.app.Activity.RESULT_OK;
 import static com.example.lostandfound.NameClass.DETAILS;
 import static com.example.lostandfound.NameClass.EDIT;
+import static com.example.lostandfound.NameClass.IMAGE_URI;
 import static com.example.lostandfound.NameClass.POST;
 import static com.example.lostandfound.NameClass.USERS;
 import static com.example.lostandfound.NameClass.descriptionForStoringDatabase;
@@ -50,7 +54,8 @@ import static com.example.lostandfound.NameClass.locationForStoringDatabase;
 import static com.example.lostandfound.NameClass.nameForStoringDatabase;
 import static com.example.lostandfound.NameClass.photoUriForStoringDatabase;
 
-class AddFragment extends FragmentInterface {
+class AddFragment extends FragmentInterface implements Observer
+{
     View rootView;
     TextView dateDisplay;
     TextView locationDisplay;
@@ -69,7 +74,7 @@ class AddFragment extends FragmentInterface {
     Uri uri;
     Button postBtn;
     SaveDataController controller;
-
+    RealtimeDatabaseDemoModel demo;
 
     static int LOCATION_REQUEST = 1;
     static int PHOTO_REQUEST = 2;
@@ -98,22 +103,32 @@ class AddFragment extends FragmentInterface {
         locationDisplay=rootView.findViewById(R.id.location_display);
         //locationBtn = rootView.findViewById(R.id.);
 
+        demo = new RealtimeDatabaseDemoModel();
+        demo.register(this);
+
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
         final String[] userName = new String[1];
+        final String[] userPhoto = new String[1];
 
         databaseUser = FirebaseDatabase.getInstance().getReference()
                 .child(USERS)
                 .child(userId)
                 .child(DETAILS)
-                .child(EDIT)
-                .child(nameForStoringDatabase);
+                .child(EDIT);
 
         databaseUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                userName[0] = (String) dataSnapshot.getValue();
+                userName[0] = (String) dataSnapshot.child(nameForStoringDatabase).getValue();
                 nameText.setText(userName[0]);
+
+                if(dataSnapshot.child(IMAGE_URI).getValue() !=null) {
+                    userPhoto[0] = (String) dataSnapshot.child(IMAGE_URI).getValue();
+
+                    Glide.with(getActivity()).load(Uri.parse(userPhoto[0])).into(imageView);
+
+                }
             }
 
             @Override
@@ -147,9 +162,11 @@ class AddFragment extends FragmentInterface {
                 String array[] = {desc,location, String.valueOf(choosenLatitude), String.valueOf(choosenLongitude)};
 
                 controller.saveData(array,uri,POST);
+                demo.notifyObserver();
             }
         });
-        dateClickedButton.setOnClickListener(new View.OnClickListener() {
+        dateClickedButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view) {
                 dateFunction();
@@ -158,13 +175,13 @@ class AddFragment extends FragmentInterface {
 
     }
 
-    private void dateFunction() {
+    private void dateFunction()
+    {
         Calendar mcurrentDate=Calendar.getInstance();
         int day,year,month;
         day=mcurrentDate.get(Calendar.DAY_OF_MONTH);
         month=mcurrentDate.get(Calendar.MONTH);
         year=mcurrentDate.get(Calendar.YEAR);
-
 
         DatePickerDialog datePickerDialog=new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -195,5 +212,12 @@ class AddFragment extends FragmentInterface {
             Glide.with(this).load(uri).into(imageViewOfItem);
             descriptionOfItem.setHint("Say Something about Photo");
         }
+    }
+
+    @Override
+    public void updateToast()
+    {
+        Toast.makeText(getActivity(), "Data Posted Successfully", Toast.LENGTH_LONG).show();
+        postBtn.setEnabled(false);
     }
 }

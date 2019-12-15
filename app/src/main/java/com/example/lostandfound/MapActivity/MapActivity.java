@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -57,7 +58,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private String geojsonSourceLayerId = "geojsonSourceLayerId";
     private String symbolIconId = "symbolIconId";
     EditText locationText;
-    Button addLocationButton;
+    ImageView addLocationButton;
     double SelectedLatitude;
     double SelectedLongitude;
     Button closeButton;
@@ -77,7 +78,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         homeFragment = new HomeFragment();
         builder = new AlertDialog.Builder(this);
         locationText = (EditText) findViewById(R.id.searchText);
-        addLocationButton = (Button) findViewById(R.id.addLocationButton);
+        addLocationButton =  findViewById(R.id.addLocationButton);
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -253,7 +254,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onStart();
         mapView.onStart();
         if (locationText != null) {
-            addLocationButton.setOnClickListener(new View.OnClickListener() {
+            addLocationButton.setOnClickListener(
+                    new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     finish();
