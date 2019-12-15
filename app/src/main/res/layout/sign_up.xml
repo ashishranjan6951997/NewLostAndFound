@@ -8,6 +8,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp">
@@ -24,6 +25,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp">
@@ -92,7 +94,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dip"
-        android:background="@color/colorAccent"
+        android:background="@color/buttonBackgroundColor"
+        android:backgroundTint="@color/buttonBackgroundColor"
         android:text="Create Account"
         android:textColor="@android:color/black" />
 
@@ -101,7 +104,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dip"
-        android:background="@color/colorAccent"
+        android:background="@color/buttonBackgroundColor"
+        android:backgroundTint="@color/buttonBackgroundColor"
         android:text="login"
         android:textColor="@android:color/black" />
 </LinearLayout>

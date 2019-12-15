@@ -25,7 +25,7 @@ import static com.example.lostandfound.NameClass.EDIT;
 
 public class EditActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
+
     boolean saved;
     SaveDataController controller;
     EditText userNameEdit;
@@ -42,8 +42,8 @@ public class EditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+
 
         controller = new SaveDataController(this);
 

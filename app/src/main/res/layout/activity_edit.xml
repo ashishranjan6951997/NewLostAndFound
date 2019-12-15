@@ -6,28 +6,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".View.EditUI.EditActivity">
-    `
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+
+        app:cardCornerRadius="10dp"
+        >
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:background="@color/colorPrimary"></androidx.appcompat.widget.Toolbar>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_imageView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginStart="20dp"
+
             android:layout_marginTop="10dp"
-            android:layout_weight="10"
+
             android:src="@drawable/account_photo"
 
 
@@ -35,14 +41,14 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_weight="6">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/userName"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:hint="Name"
                 android:inputType="text"
@@ -52,14 +58,14 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_weight="6">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/bio"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:hint="Bio"
                 android:inputType="text"
@@ -67,21 +73,13 @@
                 android:textColorHint="@android:color/darker_gray" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="6"
-            android:gravity="center_vertical"
-            android:paddingLeft="40dp"
-            android:text="Profile Information"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_weight="6">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email"
@@ -95,21 +93,32 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_waidth="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_weight="6">
+           >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phone"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:hint="Phone"
                 android:inputType="text"
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/darker_gray" />
         </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Save"
+            android:backgroundTint="#fff"
+            android:textColor="#000"
+            android:elevation="2dp"/>
 
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </ScrollView>

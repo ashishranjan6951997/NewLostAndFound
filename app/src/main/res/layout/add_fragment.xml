@@ -10,7 +10,6 @@
     app:umanoPanelHeight="69dp"
     android:layout_gravity="bottom"
     android:gravity="bottom"
-
     app:umanoOverlay="false"
     app:umanoParallaxOffset="19dp"
     app:umanoShadowHeight="4dp"
@@ -47,6 +46,10 @@
                 android:id="@+id/user_name"
                 android:textSize="15dp"
                 android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/location_display"/>
             <Button
                 android:textStyle="bold"
                 android:layout_weight="1"
@@ -106,17 +109,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_keyboard_arrow_up_black_24dp"/>
+        <ImageView
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_keyboard_arrow_down_black_24dp"/>
 
         <RelativeLayout
             android:id="@+id/rel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-          <View
-              android:layout_width="match_parent"
-              android:layout_height="2dp"
-              android:backgroundTint="#000"
-              android:background="@color/colorPrimary"/>
            <LinearLayout
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
@@ -134,7 +138,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                     android:backgroundTint="#ffff"
-                   android:textColor="#000"
+                   android:textColor="#090808"
                    android:text="location Picker"
                    android:textStyle="bold"
                   />
@@ -142,15 +146,9 @@
 
 
            </LinearLayout>
-            <View
-                android:layout_below="@+id/locationClicked"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:id="@+id/view"
-                android:backgroundTint="#000"
-                android:background="@color/colorPrimary"/>
+
             <LinearLayout
-                android:layout_below="@+id/view"
+                android:layout_below="@+id/locationClicked"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -173,23 +171,63 @@
                     />
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_below="@+id/imageFromGalary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/datePicker">
+
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_date_range_black_24dp"/>
+                <Button
+                    android:gravity="center"
+                    android:backgroundTint="#ffff"
+                    android:textColor="#000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Date Picker"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_below="@+id/datePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/timePicker">
+
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_access_time_black_24dp"/>
+                <Button
+                    android:gravity="center"
+                    android:backgroundTint="#ffff"
+                    android:textColor="#111010"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Time Picker"
+                    />
+
+            </LinearLayout>
+
+
+
 
 
         </RelativeLayout>
-        <View
-            android:layout_below="@+id/rel"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:id="@+id/view1"
-            android:backgroundTint="#000"
-            android:background="@color/colorPrimary"/>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_gravity="right"
 
-            app:backgroundTint="#FDFBFB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_add_black_24dp"
-            />
+
     </LinearLayout>
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>

@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".View.EditUI.EditActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
 
         </activity>
         <activity
