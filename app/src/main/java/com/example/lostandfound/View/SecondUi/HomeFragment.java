@@ -144,7 +144,7 @@ public class HomeFragment extends Fragment implements Observer {
         {
              choosenLongitude  = data.getDoubleExtra("choosenLongitude", 0);
              choosenLatitude=data.getDoubleExtra("choosenLatitude", 0);
-            Toast.makeText(getActivity(),choosenLatitude+"ok"+ choosenLongitude,Toast.LENGTH_LONG).show();
+             Toast.makeText(getActivity(),choosenLatitude+"ok"+ choosenLongitude,Toast.LENGTH_LONG).show();
         }
     }
 

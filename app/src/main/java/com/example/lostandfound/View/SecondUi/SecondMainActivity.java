@@ -15,10 +15,16 @@ import com.example.lostandfound.View.Authentication.AuthenticateActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import static com.example.lostandfound.NameClass.AddFragmentTAG;
 import static com.example.lostandfound.NameClass.HomeFragmentTAG;
+import static com.example.lostandfound.NameClass.MatchesFragmentTAG;
+import static com.example.lostandfound.NameClass.MessageFragmentTAG;
+import static com.example.lostandfound.NameClass.ProfileFragmentTAG;
 
 public class SecondMainActivity extends AppCompatActivity
 {
+
+    static String TAG;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -27,7 +33,7 @@ public class SecondMainActivity extends AppCompatActivity
         BottomNavigationView bottomNavigationView = findViewById(R.id.button_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new HomeFragment(), HomeFragmentTAG).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new MatchesFragment(), MatchesFragmentTAG).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -38,22 +44,27 @@ public class SecondMainActivity extends AppCompatActivity
                     switch (menuItem.getItemId()) {
                         case R.id.nav_home:
                             selectedfragment = new HomeFragment();
+                            TAG = HomeFragmentTAG;
                             break;
                         case R.id.nav_matches:
                             selectedfragment = new MatchesFragment();
+                            TAG = MatchesFragmentTAG;
                             break;
                         case R.id.nav_messages:
                             selectedfragment = new MessageFragment();
+                            TAG = MessageFragmentTAG;
                             break;
                         case R.id.nav_profile:
                             selectedfragment = new ProfileFragment();
+                            TAG = ProfileFragmentTAG;
                             break;
                         case R.id.nav_add:
                             selectedfragment = new AddFragment();
+                            TAG = AddFragmentTAG;
                             break;
 
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment,TAG).commit();
                     return true;
                 }
             };
@@ -63,7 +74,7 @@ public class SecondMainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(HomeFragmentTAG);
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(AddFragmentTAG);
         if (fragment != null) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
