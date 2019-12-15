@@ -53,6 +53,7 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconOffset;
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, PermissionsListener {
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
     private MapView mapView;
+    String searchText;
     private MapboxMap mapboxMap;
     private PermissionsManager permissionsManager;//mapbox default helper class to provide permission
     private String geojsonSourceLayerId = "geojsonSourceLayerId";
@@ -191,7 +192,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 // Retrieve selected location's CarmenFeature
             CarmenFeature selectedCarmenFeature = PlaceAutocomplete.getPlace(data);
-            locationText.setText(selectedCarmenFeature.text());
+            searchText=selectedCarmenFeature.text();
+            locationText.setText(searchText);
+            SelectedLatitude=((Point) selectedCarmenFeature.geometry()).latitude();
+            SelectedLongitude=((Point) selectedCarmenFeature.geometry()).longitude();
 // Create a new FeatureCollection and add a new Feature to it using selectedCarmenFeature above.
 // Then retrieve and update the source designated for showing a selected location's symbol layer icon
             Toast.makeText(MapActivity.this, ((Point) selectedCarmenFeature.geometry()).latitude() + " " +
@@ -228,6 +232,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Intent result=new Intent();
         result.putExtra("choosenLongitude", SelectedLongitude);
         result.putExtra("choosenLatitude",SelectedLatitude);
+        result.putExtra("StringText",searchText);
        setResult(RESULT_OK,result);
 
 
@@ -258,6 +263,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    sendLocationData();
                     finish();
                 }
             });

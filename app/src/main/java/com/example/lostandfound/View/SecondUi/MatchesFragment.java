@@ -40,7 +40,7 @@ public class MatchesFragment extends FragmentInterface {
     LinearLayout layout;
     ProgressBar progressBar;
     int currentItems, totalItems, scrollOutItems;
-    TextView searchText;
+    EditText searchText;
     double choosenLongitude;
     double choosenLatitude;
 
