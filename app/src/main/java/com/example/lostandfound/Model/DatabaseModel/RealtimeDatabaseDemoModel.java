@@ -22,16 +22,20 @@ import java.util.List;
 import java.util.Map;
 
 import static com.example.lostandfound.NameClass.DETAILS;
+import static com.example.lostandfound.NameClass.EDIT;
 import static com.example.lostandfound.NameClass.IMAGE_URI;
 import static com.example.lostandfound.NameClass.LatitudeStorageInDatabase;
 
 import static com.example.lostandfound.NameClass.LongitudeStorageInDatabase;
 import static com.example.lostandfound.NameClass.NAME;
+import static com.example.lostandfound.NameClass.POST;
 import static com.example.lostandfound.NameClass.USERS;
 import static com.example.lostandfound.NameClass.bioForStoringDatabase;
+import static com.example.lostandfound.NameClass.descriptionForStoringDatabase;
 import static com.example.lostandfound.NameClass.emailForStroringDatabase;
 import static com.example.lostandfound.NameClass.nameForStoringDatabase;
 import static com.example.lostandfound.NameClass.phoneForStoringDatabase;
+import static com.example.lostandfound.NameClass.photoUriForStoringDatabase;
 import static com.example.lostandfound.NameClass.profileImageUri;
 import static com.example.lostandfound.NameClass.radioButtonText;
 
@@ -39,73 +43,88 @@ public class RealtimeDatabaseDemoModel {
     DatabaseReference reference;
     List<Observer> observers;
 
-    public RealtimeDatabaseDemoModel()
-    {
+    public RealtimeDatabaseDemoModel() {
         reference = FirebaseDatabase.getInstance().getReference(USERS);
         observers = new ArrayList<>();
     }
 
 
-    public void saveData(Map dataMap)
-    {
-        Log.e("REFERENCE",String.valueOf(reference));
+    public void saveData(Map dataMap, String text) {
+        Log.e("REFERENCE", String.valueOf(reference));
         Map map = new HashMap();
         String uId = FirebaseAuth.getInstance().getUid();
         String radioText = (String) dataMap.get(radioButtonText);
         //reference = reference.child(radioText);
 
-        if(dataMap.get(nameForStoringDatabase) != null)
-        {
-            String name = (String) dataMap.get(nameForStoringDatabase);
-            map.put(NAME, name);
+        String key = FirebaseDatabase.getInstance().getReference()
+                .child(USERS)
+                .child(uId)
+                .child(DETAILS)
+                .child(POST)
+                .push()
+                .getKey();
+
+        if (text.equals(POST)) {
+            if (dataMap.get(descriptionForStoringDatabase) != null) {
+                String desc = (String) dataMap.get(descriptionForStoringDatabase);
+                map.put(descriptionForStoringDatabase, desc);
+            }
+            if (dataMap.get(LatitudeStorageInDatabase) != null) {
+                String lat = (String) dataMap.get(LatitudeStorageInDatabase);
+                map.put(LatitudeStorageInDatabase, lat);
+            }
+            if (dataMap.get(LongitudeStorageInDatabase) != null) {
+                String lang = (String) dataMap.get(LongitudeStorageInDatabase);
+                map.put(LongitudeStorageInDatabase, lang);
+            }
+            if (dataMap.get(photoUriForStoringDatabase) != null) {
+                String postUri = (String) dataMap.get(photoUriForStoringDatabase);
+                map.put(photoUriForStoringDatabase, postUri);
+            }
+
+            reference.child(uId).child(DETAILS).child(text).child(key).setValue(map);
         }
 
-        if(dataMap.get(profileImageUri) != null) {
-            String imageUri = (String) dataMap.get(NameClass.profileImageUri);
-            map.put(IMAGE_URI, imageUri);
-        }
 
-        if(dataMap.get(LatitudeStorageInDatabase) !=null) {
-            String Latitute = (String) dataMap.get(LatitudeStorageInDatabase);
-            map.put(LatitudeStorageInDatabase, Latitute);
-        }
+        if (text.equals(EDIT)) {
+            if (dataMap.get(nameForStoringDatabase) != null) {
+                String name = (String) dataMap.get(nameForStoringDatabase);
+                map.put(NAME, name);
+            }
 
-        if(dataMap.get(LongitudeStorageInDatabase) !=null) {
-            String Longitude = (String) dataMap.get(LongitudeStorageInDatabase);
-            map.put(LongitudeStorageInDatabase, Longitude);
-        }
+            if (dataMap.get(bioForStoringDatabase) != null) {
+                String bio = (String) dataMap.get(bioForStoringDatabase);
+                map.put(bioForStoringDatabase, bio);
+            }
+            if (dataMap.get(emailForStroringDatabase) != null) {
+                String email = (String) dataMap.get(emailForStroringDatabase);
+                map.put(emailForStroringDatabase, email);
+            }
+            if (dataMap.get(phoneForStoringDatabase) != null) {
+                String phone = (String) dataMap.get(phoneForStoringDatabase);
+                map.put(phoneForStoringDatabase, phone);
+            }
 
-        if(dataMap.get(bioForStoringDatabase) !=null)
-        {
-            String bio = (String) dataMap.get(bioForStoringDatabase);
-            map.put(bioForStoringDatabase,bio);
-        }
-        if(dataMap.get(emailForStroringDatabase) != null)
-        {
-            String email = (String) dataMap.get(emailForStroringDatabase);
-            map.put(emailForStroringDatabase,email);
-        }
-        if(dataMap.get(phoneForStoringDatabase) !=null)
-        {
-            String phone = (String) dataMap.get(phoneForStoringDatabase);
-            map.put(phoneForStoringDatabase,phone);
+            if (dataMap.get(profileImageUri) != null) {
+                String imageUri = (String) dataMap.get(NameClass.profileImageUri);
+                map.put(IMAGE_URI, imageUri);
+            }
+
+            reference.child(uId).child(DETAILS).child(text).setValue(map);
+
         }
 
         int k = 1;
-        reference.child(uId).child(DETAILS).setValue(map);
     }
 
     // Code for subscriber publisher pattern
 
-    public void register(Observer observer)
-    {
+    public void register(Observer observer) {
         observers.add(observer);
     }
 
-    public void notifyObserver()
-    {
-        for(Observer observer : observers)
-        {
+    public void notifyObserver() {
+        for (Observer observer : observers) {
             observer.updateToast();
         }
     }

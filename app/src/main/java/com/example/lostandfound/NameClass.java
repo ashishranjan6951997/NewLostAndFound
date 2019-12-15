@@ -5,10 +5,16 @@ public class NameClass
     public static String logIn = "LogIn";
     public static String signUp = "SignUp";
 
+    // edit profile
     public static String nameForStoringDatabase = "name";
     public static  String bioForStoringDatabase = "bio";
     public static String emailForStroringDatabase = "email";
     public static String phoneForStoringDatabase = "phone";
+
+    // post
+    public static String descriptionForStoringDatabase = "desc";
+    public static String photoUriForStoringDatabase = "uri";
+    public static String locationForStoringDatabase = "location";
 
     public static String radioButtonText = "category";
     public static String postImageUri = "postImageUri";

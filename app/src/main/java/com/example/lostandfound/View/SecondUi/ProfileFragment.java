@@ -31,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.List;
 
 import static com.example.lostandfound.NameClass.DETAILS;
+import static com.example.lostandfound.NameClass.EDIT;
 import static com.example.lostandfound.NameClass.NAME;
 import static com.example.lostandfound.NameClass.USERS;
 
@@ -77,6 +78,7 @@ public class ProfileFragment extends FragmentInterface {
                 .child(USERS)
                 .child(user)
                 .child(DETAILS)
+                .child(EDIT)
                 .child(NAME);
 
         nameReference.addListenerForSingleValueEvent(new ValueEventListener() {

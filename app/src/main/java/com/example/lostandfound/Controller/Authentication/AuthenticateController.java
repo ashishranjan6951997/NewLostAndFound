@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.example.lostandfound.NameClass.EDIT;
 import static com.example.lostandfound.NameClass.nameForStoringDatabase;
 
 public class AuthenticateController {
@@ -80,7 +81,7 @@ public class AuthenticateController {
                                             Map map = new HashMap();
                                             map.put(nameForStoringDatabase, userName);
                                             RealtimeDatabaseDemoModel model = new RealtimeDatabaseDemoModel();
-                                            model.saveData(map);
+                                            model.saveData(map,EDIT);
                                         }
                                     }, 10000);
 
