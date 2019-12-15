@@ -27,9 +27,11 @@ import static com.example.lostandfound.NameClass.LatitudeStorageInDatabase;
 import static com.example.lostandfound.NameClass.LongitudeStorageInDatabase;
 import static com.example.lostandfound.NameClass.POST;
 import static com.example.lostandfound.NameClass.bioForStoringDatabase;
+import static com.example.lostandfound.NameClass.descriptionForStoringDatabase;
 import static com.example.lostandfound.NameClass.emailForStroringDatabase;
 import static com.example.lostandfound.NameClass.nameForStoringDatabase;
 import static com.example.lostandfound.NameClass.phoneForStoringDatabase;
+import static com.example.lostandfound.NameClass.photoUriForStoringDatabase;
 import static com.example.lostandfound.NameClass.postImageUri;
 import static com.example.lostandfound.NameClass.profileImageUri;
 import static com.example.lostandfound.NameClass.radioButtonText;
@@ -106,13 +108,13 @@ public class SaveDataController {
                         new java.util.TimerTask() {
                             @Override
                             public void run() {
-                                // your code here
-                                map.put(nameForStoringDatabase, array[0]);
-                                map.put(radioButtonText, array[1]);
-                                map.put(profileImageUri, str[0]);
+
+                                map.put(descriptionForStoringDatabase, array[0]);
                                 map.put(LatitudeStorageInDatabase, array[2]);
                                 map.put(LongitudeStorageInDatabase, array[3]);
-                                databaseDemo.saveData(map);
+                                map.put(photoUriForStoringDatabase, str[0]);
+
+                                databaseDemo.saveData(map,POST);
                                 Log.v("Modified URkkkkI--", str[0] + "");
                             }
                         },
@@ -158,7 +160,7 @@ public class SaveDataController {
                                 map.put(phoneForStoringDatabase, array[3]);
                                 map.put(profileImageUri, str[0]);
 
-                                databaseDemo.saveData(map);
+                                databaseDemo.saveData(map,EDIT);
                             }
                         }, 5000);
             }

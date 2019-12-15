@@ -39,8 +39,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
 import static com.example.lostandfound.NameClass.DETAILS;
+import static com.example.lostandfound.NameClass.EDIT;
+import static com.example.lostandfound.NameClass.POST;
 import static com.example.lostandfound.NameClass.USERS;
+import static com.example.lostandfound.NameClass.descriptionForStoringDatabase;
+import static com.example.lostandfound.NameClass.locationForStoringDatabase;
 import static com.example.lostandfound.NameClass.nameForStoringDatabase;
+import static com.example.lostandfound.NameClass.photoUriForStoringDatabase;
 
 class AddFragment extends FragmentInterface {
     View rootView;
@@ -93,6 +98,7 @@ class AddFragment extends FragmentInterface {
                 .child(USERS)
                 .child(userId)
                 .child(DETAILS)
+                .child(EDIT)
                 .child(nameForStoringDatabase);
 
         databaseUser.addValueEventListener(new ValueEventListener() {
@@ -129,15 +135,17 @@ class AddFragment extends FragmentInterface {
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map map = new HashMap();
+                String desc = descriptionOfItem.getText().toString();
+                String location = "kiit";
+                String array[] = {desc,location, String.valueOf(choosenLatitude), String.valueOf(choosenLongitude)};
 
+                controller.saveData(array,uri,POST);
             }
         });
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         Log.v("RESULT CODE", String.valueOf(resultCode));
         Log.v("REQUEST CODE", String.valueOf(requestCode));
         Log.v("RESULT OK CODE", String.valueOf(RESULT_OK));
