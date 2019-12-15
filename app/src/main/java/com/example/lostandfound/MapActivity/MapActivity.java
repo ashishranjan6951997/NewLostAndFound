@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,11 +18,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.lostandfound.R;
 import com.example.lostandfound.View.SecondUi.HomeFragment;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.api.geocoding.v5.GeocodingCriteria;
@@ -63,8 +57,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private String geojsonSourceLayerId = "geojsonSourceLayerId";
     private String symbolIconId = "symbolIconId";
     EditText locationText;
-    String stringLocationText;
-    ImageView addLocationButton;
+    Button addLocationButton;
     double SelectedLatitude;
     double SelectedLongitude;
     Button closeButton;
@@ -75,7 +68,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Mapbox access token is configured here. This needs to be called either in your application
         // object or in the same activity which contains the mapview.
         Mapbox.getInstance(this, getString(R.string.access_token));
@@ -85,12 +77,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         homeFragment = new HomeFragment();
         builder = new AlertDialog.Builder(this);
         locationText = (EditText) findViewById(R.id.searchText);
-        addLocationButton = (ImageView) findViewById(R.id.addLocationButton);
+        addLocationButton = (Button) findViewById(R.id.addLocationButton);
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
-       setTitle("Map");
-
     }
 
     @Override
@@ -150,7 +140,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void initSearchFab() {
         findViewById(R.id.searchText).setOnClickListener(new View.OnClickListener() {
             @Override
-                public void onClick(View view) {
+            public void onClick(View view) {
                 Intent intent = new PlaceAutocomplete.IntentBuilder()
                         .accessToken(Mapbox.getAccessToken() != null ? Mapbox.getAccessToken() : getString(R.string.access_token))
                         .placeOptions(PlaceOptions.builder()
@@ -200,16 +190,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 // Retrieve selected location's CarmenFeature
             CarmenFeature selectedCarmenFeature = PlaceAutocomplete.getPlace(data);
-            stringLocationText=selectedCarmenFeature.text();
-            locationText.setText(stringLocationText);
+            locationText.setText(selectedCarmenFeature.text());
 // Create a new FeatureCollection and add a new Feature to it using selectedCarmenFeature above.
 // Then retrieve and update the source designated for showing a selected location's symbol layer icon
-
-             SelectedLatitude=((Point) selectedCarmenFeature.geometry()).latitude();
-             SelectedLongitude=((Point) selectedCarmenFeature.geometry()).longitude();
-
-
-                if (mapboxMap != null) {
+            Toast.makeText(MapActivity.this, ((Point) selectedCarmenFeature.geometry()).latitude() + " " +
+                    ((Point) selectedCarmenFeature.geometry()).longitude(), Toast.LENGTH_LONG).show();
+            if (mapboxMap != null) {
                 Style style = mapboxMap.getStyle();
                 if (style != null) {
                     GeoJsonSource source = style.getSourceAs(geojsonSourceLayerId);
@@ -241,7 +227,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Intent result=new Intent();
         result.putExtra("choosenLongitude", SelectedLongitude);
         result.putExtra("choosenLatitude",SelectedLatitude);
-        result.putExtra("StringText",stringLocationText);
        setResult(RESULT_OK,result);
 
 
@@ -271,8 +256,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             addLocationButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    sendLocationData();
                     finish();
                 }
             });
@@ -350,7 +333,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
 
 
     }
