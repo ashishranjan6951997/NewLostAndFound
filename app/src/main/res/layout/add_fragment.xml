@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
+
 <com.sothree.slidinguppanel.SlidingUpPanelLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,7 +17,11 @@
     app:umanoParallaxOffset="19dp"
     app:umanoShadowHeight="4dp">
 
+    <androidx.core.widget.NestedScrollView
 
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,32 +39,42 @@
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="3dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:src="@drawable/ashishranjan" />
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="7"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
 
-            <TextView
-                android:id="@+id/user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="10dp"
-                android:layout_weight="4"
-                android:gravity="left"
-                android:text="Ashish Ranjan"
-                android:textColor="#000"
-                android:textSize="15dp"
-                android:textStyle="bold"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/location_display"/>
+                    android:text="Ashish Ranjan"
+                    android:textColor="#000"
+                    android:textSize="15dp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/location_display"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/date_display"
+                    android:textSize="15sp"
+                    />
+            </LinearLayout>
+
             <Button
                 android:id="@+id/postButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_weight="1"
+               android:layout_weight="1.5"
                 android:backgroundTint="#fff"
                 android:gravity="center"
                 android:text="Post"
@@ -68,6 +85,11 @@
         </LinearLayout>
 
         <Spinner
+
+            android:focusable="true"
+            android:outlineAmbientShadowColor="#C7CCCC"
+            android:contextClickable="true"
+            android:layout_margin="10dp"
             android:id="@+id/spinnerItems"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,18 +98,19 @@
 
 
         <LinearLayout
+            android:layout_margin="10dp"
             android:id="@+id/post"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingTop="10dp">
+           >
 
             <EditText
                 android:id="@+id/postWrite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:background="#ffff"
+                android:background="@drawable/custom_button"
                 android:gravity="start"
                 android:hint="Type the description..."
                 android:textSize="20dp" />
@@ -98,9 +121,10 @@
                 android:layout_height="wrap_content"
                />
         </LinearLayout>
-
-
     </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
 
     <LinearLayout
         android:id="@+id/dragView"
@@ -115,12 +139,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_keyboard_arrow_up_black_24dp"/>
-        <ImageView
-            android:layout_gravity="center"
-            android:visibility="invisible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_keyboard_arrow_down_black_24dp"/>
+        <!--<ImageView-->
+            <!--android:layout_gravity="center"-->
+            <!--android:visibility="invisible"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/ic_keyboard_arrow_down_black_24dp"/>-->
 
         <RelativeLayout
             android:id="@+id/rel"
@@ -194,6 +218,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_date_range_black_24dp"/>
                 <Button
+                    android:id="@+id/date_pick"
                     android:gravity="center"
                     android:backgroundTint="#ffff"
                     android:textColor="#000"
@@ -240,3 +265,4 @@
 
     </LinearLayout>
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+

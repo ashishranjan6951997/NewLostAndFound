@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,7 +40,7 @@ public class MatchesFragment extends FragmentInterface {
     LinearLayout layout;
     ProgressBar progressBar;
     int currentItems, totalItems, scrollOutItems;
-    EditText button;
+    TextView searchText;
     double choosenLongitude;
     double choosenLatitude;
 
@@ -63,8 +64,8 @@ public class MatchesFragment extends FragmentInterface {
         progressBar = rootView.findViewById(R.id.progress);
         controller = new CardController(this);
         //controller.setFlingContainer();
-        button = rootView.findViewById(R.id.fragmentLocationButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        searchText = rootView.findViewById(R.id.fragmentLocationButton);
+        searchText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MapActivity.class);
@@ -128,7 +129,7 @@ public class MatchesFragment extends FragmentInterface {
             choosenLongitude = data.getDoubleExtra("choosenLongitude", 0);
             choosenLatitude = data.getDoubleExtra("choosenLatitude", 0);
             Toast.makeText(getActivity(), choosenLatitude + "ok" + choosenLongitude, Toast.LENGTH_LONG).show();
-
+            searchText.setText(data.getStringExtra("StringText"));
             controller.setLatLang(choosenLongitude, choosenLatitude);
             controller.setRecyclerView();
 

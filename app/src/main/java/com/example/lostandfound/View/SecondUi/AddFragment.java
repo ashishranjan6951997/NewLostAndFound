@@ -1,5 +1,6 @@
 package com.example.lostandfound.View.SecondUi;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -32,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,6 +52,8 @@ import static com.example.lostandfound.NameClass.photoUriForStoringDatabase;
 
 class AddFragment extends FragmentInterface {
     View rootView;
+    TextView dateDisplay;
+    TextView locationDisplay;
     CircleImageView imageView;
     TextView nameText;
     Spinner spinner;
@@ -58,6 +63,7 @@ class AddFragment extends FragmentInterface {
     DatabaseReference databaseUser;
     Button locationBtn;
     Button photoBtn;
+    Button dateClickedButton;
     double choosenLongitude;
     double choosenLatitude;
     Uri uri;
@@ -86,9 +92,10 @@ class AddFragment extends FragmentInterface {
         locationBtn = rootView.findViewById(R.id.locationButton);
         photoBtn = rootView.findViewById(R.id.photoButton);
         postBtn = rootView.findViewById(R.id.postButton);
-
+        dateClickedButton=rootView.findViewById(R.id.date_pick);
+        dateDisplay=rootView.findViewById(R.id.date_display);
         controller = new SaveDataController(getActivity());
-
+        locationDisplay=rootView.findViewById(R.id.location_display);
         //locationBtn = rootView.findViewById(R.id.);
 
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
@@ -142,7 +149,34 @@ class AddFragment extends FragmentInterface {
                 controller.saveData(array,uri,POST);
             }
         });
+        dateClickedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dateFunction();
+            }
+        });
+
     }
+
+    private void dateFunction() {
+        Calendar mcurrentDate=Calendar.getInstance();
+        int day,year,month;
+        day=mcurrentDate.get(Calendar.DAY_OF_MONTH);
+        month=mcurrentDate.get(Calendar.MONTH);
+        year=mcurrentDate.get(Calendar.YEAR);
+
+
+        DatePickerDialog datePickerDialog=new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+
+                dateDisplay.setText(i2+"-"+i1+"-"+i);
+
+            }
+        },year,month,day);
+        datePickerDialog.show();
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -153,6 +187,7 @@ class AddFragment extends FragmentInterface {
         if (requestCode == LOCATION_REQUEST) {
             choosenLongitude = data.getDoubleExtra("choosenLongitude", 0);
             choosenLatitude = data.getDoubleExtra("choosenLatitude", 0);
+            locationDisplay.setText(data.getStringExtra("StringText"));
         }
 
         if (requestCode == PHOTO_REQUEST) {
