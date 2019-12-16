@@ -24,8 +24,18 @@ import com.example.lostandfound.Controller.DatabaseController.SaveDataController
 import com.example.lostandfound.Model.DatabaseModel.RealtimeDatabaseDemoModel;
 import com.example.lostandfound.Observer;
 import com.example.lostandfound.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import static com.example.lostandfound.NameClass.DETAILS;
 import static com.example.lostandfound.NameClass.EDIT;
+import static com.example.lostandfound.NameClass.IMAGE_URI;
+import static com.example.lostandfound.NameClass.USERS;
 
 public class EditActivity extends AppCompatActivity implements Observer {
 
@@ -39,12 +49,16 @@ public class EditActivity extends AppCompatActivity implements Observer {
     Uri uri;
     Button saveButton;
     RealtimeDatabaseDemoModel demo;
-    ;
+    DatabaseReference reference;
+    String userId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
+
+        final String profilePhotoUri[] = new String[1];
 
         controller = new SaveDataController(this);
 
@@ -58,7 +72,31 @@ public class EditActivity extends AppCompatActivity implements Observer {
         imageView = findViewById(R.id.profile_imageView);
         saveButton = findViewById(R.id.saveBtn);
 
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+
         imageViewRequestCode = 1;
+
+        reference = FirebaseDatabase.getInstance().getReference()
+                .child(USERS)
+                .child(userId)
+                .child(DETAILS)
+                .child(EDIT);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    profilePhotoUri[0] = (String) dataSnapshot.child(IMAGE_URI).getValue();
+                    Glide.with(EditActivity.this).load(Uri.parse(profilePhotoUri[0])).into(imageView);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

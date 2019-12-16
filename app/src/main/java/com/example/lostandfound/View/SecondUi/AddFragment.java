@@ -116,26 +116,6 @@ class AddFragment extends FragmentInterface implements Observer
                 .child(DETAILS)
                 .child(EDIT);
 
-        databaseUser.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                userName[0] = (String) dataSnapshot.child(nameForStoringDatabase).getValue();
-                nameText.setText(userName[0]);
-
-                if(dataSnapshot.child(IMAGE_URI).getValue() !=null) {
-                    userPhoto[0] = (String) dataSnapshot.child(IMAGE_URI).getValue();
-
-                    Glide.with(getActivity()).load(Uri.parse(userPhoto[0])).into(imageView);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
         locationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
