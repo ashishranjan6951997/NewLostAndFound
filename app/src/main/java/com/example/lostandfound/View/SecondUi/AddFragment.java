@@ -17,11 +17,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-<<<<<<< HEAD
+
 import android.widget.TimePicker;
-=======
+
 import android.widget.Toast;
->>>>>>> 3542a9d50947bf49c9f31de257ea766d44a6a791
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
