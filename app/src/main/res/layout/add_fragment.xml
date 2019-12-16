@@ -62,7 +62,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/date_display"
+                    android:id="@+id/date_time_display"
                     android:textSize="15sp"
                     />
             </LinearLayout>
@@ -223,7 +223,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:text="Date Picker"
+                    android:text="Date"
                     />
 
             </LinearLayout>
@@ -243,13 +243,14 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_access_time_black_24dp"/>
                 <Button
+                    android:id="@+id/time_picker"
                     android:gravity="center"
                     android:backgroundTint="#ffff"
                     android:textColor="#111010"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:text="Time Picker"
+                    android:text="Time"
                     />
 
             </LinearLayout>

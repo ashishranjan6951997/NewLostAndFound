@@ -1,6 +1,7 @@
 package com.example.lostandfound.View.SecondUi;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,7 +17,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+<<<<<<< HEAD
+import android.widget.TimePicker;
+=======
 import android.widget.Toast;
+>>>>>>> 3542a9d50947bf49c9f31de257ea766d44a6a791
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -57,8 +62,10 @@ import static com.example.lostandfound.NameClass.photoUriForStoringDatabase;
 
 class AddFragment extends FragmentInterface implements Observer
 {
+    
+    Button timePicker;
     View rootView;
-    TextView dateDisplay;
+    TextView dateTimeDisplay;
     TextView locationDisplay;
     CircleImageView imageView;
     TextView nameText;
@@ -75,11 +82,14 @@ class AddFragment extends FragmentInterface implements Observer
     Uri uri;
     Button postBtn;
     SaveDataController controller;
+    String format;
+    Calendar mcurrent;
+    int hour, min;
     RealtimeDatabaseDemoModel demo;
 
     static int LOCATION_REQUEST = 1;
     static int PHOTO_REQUEST = 2;
-
+    int day,year,month;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -100,10 +110,17 @@ class AddFragment extends FragmentInterface implements Observer
         photoBtn = rootView.findViewById(R.id.photoButton);
         postBtn = rootView.findViewById(R.id.postButton);
         dateClickedButton=rootView.findViewById(R.id.date_pick);
-        dateDisplay=rootView.findViewById(R.id.date_display);
+        dateTimeDisplay=rootView.findViewById(R.id.date_time_display);
         controller = new SaveDataController(getActivity());
         locationDisplay=rootView.findViewById(R.id.location_display);
         //locationBtn = rootView.findViewById(R.id.);
+        timePicker=rootView.findViewById(R.id.time_picker);
+        mcurrent=Calendar.getInstance();
+        hour=mcurrent.get(Calendar.HOUR_OF_DAY);
+        min=mcurrent.get(Calendar.MINUTE);
+        currentformatTime();
+        currentFormatDate();
+        dateTimeDisplay.setText(day+"-"+month+"-"+year+", "+hour+":"+min+" "+format);
 
         demo = new RealtimeDatabaseDemoModel();
         demo.register(this);
@@ -175,25 +192,66 @@ class AddFragment extends FragmentInterface implements Observer
             @Override
             public void onClick(View view) {
                 dateFunction();
+                dateTimeDisplay.setText(day+"-"+month+"-"+year+", "+hour+" : "+min+" "+format);
+            }
+        });
+        timePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timeFunction();
+                dateTimeDisplay.setText(day+"-"+month+"-"+year+", "+hour+" : "+min+" "+format);
             }
         });
 
     }
 
-    private void dateFunction()
-    {
-        Calendar mcurrentDate=Calendar.getInstance();
-        int day,year,month;
-        day=mcurrentDate.get(Calendar.DAY_OF_MONTH);
-        month=mcurrentDate.get(Calendar.MONTH);
-        year=mcurrentDate.get(Calendar.YEAR);
 
-        DatePickerDialog datePickerDialog=new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+
+    private void currentformatTime()
+    {
+        if(hour==0)
+        {
+            hour+=12;
+            format="AM";
+        }else if (hour==12)
+        {
+            format="PM";
+        }else if (hour>12)
+        {
+            hour-=12;
+            format="PM";
+        }else
+        {
+            format="AM";
+        }
+    }
+    private void currentFormatDate()
+    {
+        day=mcurrent.get(Calendar.DAY_OF_MONTH);
+        month=mcurrent.get(Calendar.MONTH);
+        month=month+1;
+        year=mcurrent.get(Calendar.YEAR);
+    }
+
+    private void timeFunction()
+    {
+        TimePickerDialog timePickerDialog=new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                hour=i;
+                min=i1;
+                currentformatTime();
+            }
+        },hour,min,true);
+        timePickerDialog.show();
+    }
+    private void dateFunction() {
+         DatePickerDialog datePickerDialog=new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-
-                dateDisplay.setText(i2+"-"+i1+"-"+i);
-
+                    year=i;
+                    month=i1+1;
+                    day=i2;
             }
         },year,month,day);
         datePickerDialog.show();
