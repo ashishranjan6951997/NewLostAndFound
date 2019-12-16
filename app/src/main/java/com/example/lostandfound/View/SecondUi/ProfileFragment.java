@@ -2,6 +2,7 @@ package com.example.lostandfound.View.SecondUi;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.lostandfound.R;
 import com.example.lostandfound.View.EditUI.EditActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +34,7 @@ import java.util.List;
 
 import static com.example.lostandfound.NameClass.DETAILS;
 import static com.example.lostandfound.NameClass.EDIT;
+import static com.example.lostandfound.NameClass.IMAGE_URI;
 import static com.example.lostandfound.NameClass.NAME;
 import static com.example.lostandfound.NameClass.USERS;
 
@@ -44,6 +47,7 @@ public class ProfileFragment extends FragmentInterface {
     RecyclerView recyclerView;
     LinearLayout layout;
     Button editBtn;
+    TextView nameText;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,7 +57,8 @@ public class ProfileFragment extends FragmentInterface {
         return rootView;
     }
 
-    private void initView() {
+    private void initView()
+    {
         numberOfPosts = rootView.findViewById(R.id.number_of_posts);
         linearLayout = rootView.findViewById(R.id.linear_layout_image_and_number_of_post);
         profileImageView = rootView.findViewById(R.id.profile_imageView);
@@ -61,7 +66,10 @@ public class ProfileFragment extends FragmentInterface {
         layout = rootView.findViewById(R.id.substitute_linear_profile);
         editBtn = rootView.findViewById(R.id.edit_btn);
 
+        nameText = rootView.findViewById(R.id.userName);
+
         final String[] name = new String[1];
+        final String[] uri = new String[1];
 
 
         editBtn.setOnClickListener(new View.OnClickListener() {
@@ -78,17 +86,20 @@ public class ProfileFragment extends FragmentInterface {
                 .child(USERS)
                 .child(user)
                 .child(DETAILS)
-                .child(EDIT)
-                .child(NAME);
+                .child(EDIT);
 
         nameReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Log.e("SNAPSHOT", dataSnapshot.toString());
-                name[0] = dataSnapshot.getValue().toString();
+                name[0] = dataSnapshot.child(NAME).getValue().toString();
+                uri[0] = dataSnapshot.child(IMAGE_URI).getValue().toString();
                 Log.e("SNAPSHOT LATER", name[0]);
                 getActivity().setTitle(name[0]);
-                getActivity().setTitleColor(Color.WHITE);
+
+                nameText.setText(name[0]);
+                Glide.with(getActivity()).load(Uri.parse(uri[0])).into(profileImageView);
+
             }
 
             @Override

@@ -47,6 +47,7 @@ import static android.app.Activity.RESULT_OK;
 import static com.example.lostandfound.NameClass.DETAILS;
 import static com.example.lostandfound.NameClass.EDIT;
 import static com.example.lostandfound.NameClass.IMAGE_URI;
+import static com.example.lostandfound.NameClass.NAME;
 import static com.example.lostandfound.NameClass.POST;
 import static com.example.lostandfound.NameClass.USERS;
 import static com.example.lostandfound.NameClass.descriptionForStoringDatabase;
@@ -87,7 +88,8 @@ class AddFragment extends FragmentInterface implements Observer
         return rootView;
     }
 
-    private void init() {
+    private void init()
+    {
         descriptionOfItem = rootView.findViewById(R.id.postWrite);
         imageViewOfItem = rootView.findViewById(R.id.pickedImage);
         imageView = rootView.findViewById(R.id.profile_imageView);
@@ -116,6 +118,22 @@ class AddFragment extends FragmentInterface implements Observer
                 .child(DETAILS)
                 .child(EDIT);
 
+        databaseUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userName[0] = (String) dataSnapshot.child(NAME).getValue();
+                userPhoto[0] = (String) dataSnapshot.child(IMAGE_URI).getValue();
+
+                nameText.setText(userName[0]);
+                Glide.with(getActivity()).load(Uri.parse(userPhoto[0])).into(imageView);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
         locationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,15 +152,22 @@ class AddFragment extends FragmentInterface implements Observer
             }
         });
 
-        postBtn.setOnClickListener(new View.OnClickListener() {
+        postBtn.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
                 String desc = descriptionOfItem.getText().toString();
                 String location = "kiit";
                 String array[] = {desc,location, String.valueOf(choosenLatitude), String.valueOf(choosenLongitude)};
 
-                controller.saveData(array,uri,POST);
-                demo.notifyObserver();
+                if(!desc.equals("")) {
+                    controller.saveData(array, uri, POST);
+                    demo.notifyObserver();
+                }
+                else
+                {
+                    Toast.makeText(getActivity(),"Please add some description",Toast.LENGTH_LONG).show();
+                }
             }
         });
         dateClickedButton.setOnClickListener(new View.OnClickListener()

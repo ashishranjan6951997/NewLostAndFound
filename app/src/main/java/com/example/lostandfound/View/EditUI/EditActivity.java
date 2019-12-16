@@ -35,7 +35,11 @@ import com.google.firebase.database.ValueEventListener;
 import static com.example.lostandfound.NameClass.DETAILS;
 import static com.example.lostandfound.NameClass.EDIT;
 import static com.example.lostandfound.NameClass.IMAGE_URI;
+import static com.example.lostandfound.NameClass.NAME;
 import static com.example.lostandfound.NameClass.USERS;
+import static com.example.lostandfound.NameClass.bioForStoringDatabase;
+import static com.example.lostandfound.NameClass.emailForStroringDatabase;
+import static com.example.lostandfound.NameClass.phoneForStoringDatabase;
 
 public class EditActivity extends AppCompatActivity implements Observer {
 
@@ -57,8 +61,6 @@ public class EditActivity extends AppCompatActivity implements Observer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
-
-        final String profilePhotoUri[] = new String[1];
 
         controller = new SaveDataController(this);
 
@@ -86,8 +88,19 @@ public class EditActivity extends AppCompatActivity implements Observer {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
-                    profilePhotoUri[0] = (String) dataSnapshot.child(IMAGE_URI).getValue();
-                    Glide.with(EditActivity.this).load(Uri.parse(profilePhotoUri[0])).into(imageView);
+                    String profilePhotoUri = (String) dataSnapshot.child(IMAGE_URI).getValue();
+                    String userName = (String) dataSnapshot.child(NAME).getValue();
+                    String bio = (String) dataSnapshot.child(bioForStoringDatabase).getValue();
+                    String email = (String) dataSnapshot.child(emailForStroringDatabase).getValue();
+                    String phone = (String) dataSnapshot.child(phoneForStoringDatabase).getValue();
+
+                    Glide.with(EditActivity.this).load(Uri.parse(profilePhotoUri)).into(imageView);
+
+                    userNameEdit.setText(userName);
+                    bioNameEdit.setText(bio);
+                    emailEdit.setText(email);
+                    phoneNoEdit.setText(phone);
+
                 }
             }
 

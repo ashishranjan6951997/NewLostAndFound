@@ -132,7 +132,7 @@ public class SaveDataController {
                                 Log.v("Modified URkkkkI--", str[0] + "");
                             }
                         },
-                        5000);
+                        10000);
             }
 
             if (text.equals(EDIT)) {
@@ -175,7 +175,7 @@ public class SaveDataController {
 
                                 databaseDemo.saveData(map,EDIT,null);
                             }
-                        }, 5000);
+                        }, 10000);
             }
         }
     }
