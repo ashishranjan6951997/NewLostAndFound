@@ -200,6 +200,7 @@ class AddFragment extends FragmentInterface {
     {
         day=mcurrent.get(Calendar.DAY_OF_MONTH);
         month=mcurrent.get(Calendar.MONTH);
+        month=month+1;
         year=mcurrent.get(Calendar.YEAR);
     }
 
@@ -220,7 +221,7 @@ class AddFragment extends FragmentInterface {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                     year=i;
-                    month=i1;
+                    month=i1+1;
                     day=i2;
             }
         },year,month,day);
