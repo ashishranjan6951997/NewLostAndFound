@@ -79,7 +79,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         homeFragment = new HomeFragment();
         builder = new AlertDialog.Builder(this);
         locationText = (EditText) findViewById(R.id.searchText);
-        addLocationButton = (ImageView) findViewById(R.id.addLocationButton);
+        addLocationButton =  findViewById(R.id.addLocationButton);
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -259,7 +259,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onStart();
         mapView.onStart();
         if (locationText != null) {
-            addLocationButton.setOnClickListener(new View.OnClickListener() {
+            addLocationButton.setOnClickListener(
+                    new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     sendLocationData();

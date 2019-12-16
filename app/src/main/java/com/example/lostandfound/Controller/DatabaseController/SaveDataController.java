@@ -14,6 +14,7 @@ import com.example.lostandfound.View.SecondUi.HomeFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -22,10 +23,12 @@ import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.lostandfound.NameClass.DETAILS;
 import static com.example.lostandfound.NameClass.EDIT;
 import static com.example.lostandfound.NameClass.LatitudeStorageInDatabase;
 import static com.example.lostandfound.NameClass.LongitudeStorageInDatabase;
 import static com.example.lostandfound.NameClass.POST;
+import static com.example.lostandfound.NameClass.USERS;
 import static com.example.lostandfound.NameClass.bioForStoringDatabase;
 import static com.example.lostandfound.NameClass.descriptionForStoringDatabase;
 import static com.example.lostandfound.NameClass.emailForStroringDatabase;
@@ -54,14 +57,15 @@ public class SaveDataController {
         map = new HashMap();
     }
 
-
-    public void saveData(String[] array, Uri uri, String str) {
+    public void saveData(String[] array, Uri uri, String str)
+    {
         // map.put(profileImageUri,);
         //getPhotoUri(uri);
         getPhotoUri(uri, array, str);
     }
 
-    public void getPhotoUri(Uri uri, final String[] array, String text) {
+    public void getPhotoUri(Uri uri, final String[] array, String text)
+    {
         final String[] str = new String[1];
         Bitmap bitmap = null;
 
@@ -77,7 +81,18 @@ public class SaveDataController {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 20, outputStream);
             byte[] bytes = outputStream.toByteArray();
 
-            if (text.equals(POST)) {
+            if (text.equals(POST))
+            {
+                final String key = FirebaseDatabase.getInstance().getReference()
+                        .child(USERS)
+                        .child(userId)
+                        .child(DETAILS)
+                        .child(POST)
+                        .push()
+                        .getKey();
+
+                storageReferenceForPost = storageReferenceForPost.child(key);
+
                 UploadTask uploadTask = storageReferenceForPost.putBytes(bytes);
                 try {
                     uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -103,23 +118,21 @@ public class SaveDataController {
                     //Toast.makeText(view.getRootView().getContext(),"Error--"+e.getMessage(),Toast.LENGTH_LONG).show();
                     Log.e("Error--", e.getMessage());
                 }
-
                 new java.util.Timer().schedule(
                         new java.util.TimerTask() {
                             @Override
-                            public void run() {
-
+                            public void run()
+                            {
                                 map.put(descriptionForStoringDatabase, array[0]);
                                 map.put(LatitudeStorageInDatabase, array[2]);
                                 map.put(LongitudeStorageInDatabase, array[3]);
                                 map.put(photoUriForStoringDatabase, str[0]);
 
-                                databaseDemo.saveData(map,POST);
+                                databaseDemo.saveData(map,POST,key);
                                 Log.v("Modified URkkkkI--", str[0] + "");
                             }
                         },
                         5000);
-
             }
 
             if (text.equals(EDIT)) {
@@ -160,7 +173,7 @@ public class SaveDataController {
                                 map.put(phoneForStoringDatabase, array[3]);
                                 map.put(profileImageUri, str[0]);
 
-                                databaseDemo.saveData(map,EDIT);
+                                databaseDemo.saveData(map,EDIT,null);
                             }
                         }, 5000);
             }

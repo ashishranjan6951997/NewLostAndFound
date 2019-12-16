@@ -49,20 +49,20 @@ public class RealtimeDatabaseDemoModel {
     }
 
 
-    public void saveData(Map dataMap, String text) {
+    public void saveData(Map dataMap, String text,String key) {
         Log.e("REFERENCE", String.valueOf(reference));
         Map map = new HashMap();
         String uId = FirebaseAuth.getInstance().getUid();
         String radioText = (String) dataMap.get(radioButtonText);
         //reference = reference.child(radioText);
 
-        String key = FirebaseDatabase.getInstance().getReference()
-                .child(USERS)
-                .child(uId)
-                .child(DETAILS)
-                .child(POST)
-                .push()
-                .getKey();
+//        String key = FirebaseDatabase.getInstance().getReference()
+//                .child(USERS)
+//                .child(uId)
+//                .child(DETAILS)
+//                .child(POST)
+//                .push()
+//                .getKey();
 
         if (text.equals(POST)) {
             if (dataMap.get(descriptionForStoringDatabase) != null) {

@@ -81,7 +81,7 @@ public class AuthenticateController {
                                             Map map = new HashMap();
                                             map.put(nameForStoringDatabase, userName);
                                             RealtimeDatabaseDemoModel model = new RealtimeDatabaseDemoModel();
-                                            model.saveData(map,EDIT);
+                                            model.saveData(map,EDIT,null);
                                         }
                                     }, 10000);
 
