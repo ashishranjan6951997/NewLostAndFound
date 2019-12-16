@@ -23,8 +23,10 @@ import static com.example.lostandfound.NameClass.DETAILS;
 import static com.example.lostandfound.NameClass.EDIT;
 import static com.example.lostandfound.NameClass.IMAGE_URI;
 import static com.example.lostandfound.NameClass.NAME;
+import static com.example.lostandfound.NameClass.POST;
 import static com.example.lostandfound.NameClass.RENDER_TIME;
 import static com.example.lostandfound.NameClass.USERS;
+import static com.example.lostandfound.NameClass.descriptionForStoringDatabase;
 
 public class FragmentDatabaseModel {
     public double choosenLatitude;
@@ -49,35 +51,99 @@ public class FragmentDatabaseModel {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 if (dataSnapshot.exists()) {
 
-                    String profileImage = "default";
+                    final String[] profileImage = {"default"};
 
                     Log.e("ERROR IS -->", dataSnapshot.child(DETAILS).child(EDIT).child(IMAGE_URI).toString());
 
                     if (!dataSnapshot.getKey().equals(currentUser)) {
-                        String stringLatitude = (String) dataSnapshot.child(DETAILS).child(EDIT).child("Latitude").getValue();
-                        String stringLongitude = (String) dataSnapshot.child(DETAILS).child(EDIT).child("Longitude").getValue();
-                       // Log.v("Out of IF CONDITION", stringLatitude);
-                        if (stringLatitude != null && stringLongitude != null) {
 
-                            double currentUserLatitude = Double.parseDouble(stringLatitude);
-                            double currentUserLongitude = Double.parseDouble(stringLongitude);
-                            Log.v("In IF CONDITION", currentUserLatitude + "   " + choosenLatitude);
-                            if ((choosenLatitude >= currentUserLatitude - 0.5) && (choosenLatitude <= currentUserLatitude + 0.5)) {
-                                if ((choosenLongitude >= currentUserLongitude - 0.5) && (choosenLatitude <= currentUserLongitude + 0.5)) {
-                                    Log.v("In IF CONDITION", stringLatitude);
 
-                                    if (dataSnapshot.child(DETAILS).child(EDIT).child(IMAGE_URI).getValue() == null || dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue().equals(profileImage)) {
-                                        item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(DETAILS).child(EDIT).child(NAME).getValue().toString(), profileImage);
-                                        list.add(item[0]);
-                                        Log.v("added", "doneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-                                    } else {
-                                        profileImage = dataSnapshot.child(DETAILS).child(EDIT).child(IMAGE_URI).getValue().toString();
-                                        item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(DETAILS).child(EDIT).child(NAME).getValue().toString(), profileImage);
-                                        list.add(item[0]);
+                        DatabaseReference referencePost = FirebaseDatabase.getInstance().getReference()
+                                .child(USERS)
+                                .child(dataSnapshot.getKey())
+                                .child(DETAILS)
+                                .child(POST);
+
+                        referencePost.addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                String stringLatitude = (String) dataSnapshot.child("Latitude").getValue();
+                                String stringLongitude = (String) dataSnapshot.child("Longitude").getValue();
+                                // Log.v("Out of IF CONDITION", stringLatitude);
+
+                                if (stringLatitude != null && stringLongitude != null) {
+
+                                    double currentUserLatitude = Double.parseDouble(stringLatitude);
+                                    double currentUserLongitude = Double.parseDouble(stringLongitude);
+                                    Log.v("In IF CONDITION", currentUserLatitude + "   " + choosenLatitude);
+                                    if ((choosenLatitude >= currentUserLatitude - 0.5) && (choosenLatitude <= currentUserLatitude + 0.5)) {
+                                        if ((choosenLongitude >= currentUserLongitude - 0.5) && (choosenLatitude <= currentUserLongitude + 0.5)) {
+                                            Log.v("In IF CONDITION", stringLatitude);
+
+                                            if (dataSnapshot.child(IMAGE_URI).getValue() == null || dataSnapshot.child(IMAGE_URI).getValue().equals(profileImage[0])) {
+                                                item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(descriptionForStoringDatabase).getValue().toString(), profileImage[0]);
+                                                list.add(item[0]);
+                                                Log.v("added", "doneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+                                            } else {
+                                                profileImage[0] = dataSnapshot.child(IMAGE_URI).getValue().toString();
+                                                item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(descriptionForStoringDatabase).getValue().toString(), profileImage[0]);
+                                                list.add(item[0]);
+                                            }
+                                        }
                                     }
                                 }
                             }
-                        }
+
+                            @Override
+                            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+//
+//                        String stringLatitude = (String) dataSnapshot.child(DETAILS).child(EDIT).child("Latitude").getValue();
+//                        String stringLongitude = (String) dataSnapshot.child(DETAILS).child(EDIT).child("Longitude").getValue();
+//                       // Log.v("Out of IF CONDITION", stringLatitude);
+//
+//
+//                        if (stringLatitude != null && stringLongitude != null) {
+//
+//                            double currentUserLatitude = Double.parseDouble(stringLatitude);
+//                            double currentUserLongitude = Double.parseDouble(stringLongitude);
+//                            Log.v("In IF CONDITION", currentUserLatitude + "   " + choosenLatitude);
+//                            if ((choosenLatitude >= currentUserLatitude - 0.5) && (choosenLatitude <= currentUserLatitude + 0.5)) {
+//                                if ((choosenLongitude >= currentUserLongitude - 0.5) && (choosenLatitude <= currentUserLongitude + 0.5)) {
+//                                    Log.v("In IF CONDITION", stringLatitude);
+//
+//                                    if (dataSnapshot.child(DETAILS).child(EDIT).child(IMAGE_URI).getValue() == null || dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue().equals(profileImage)) {
+//                                        item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(DETAILS).child(EDIT).child(NAME).getValue().toString(), profileImage);
+//                                        list.add(item[0]);
+//                                        Log.v("added", "doneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+//                                    } else {
+//                                        profileImage = dataSnapshot.child(DETAILS).child(EDIT).child(IMAGE_URI).getValue().toString();
+//                                        item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(DETAILS).child(EDIT).child(NAME).getValue().toString(), profileImage);
+//                                        list.add(item[0]);
+//                                    }
+//                                }
+//                            }
+//                        }
                     }
 
                     Log.v("Item[0] value is ", item[0] + "");

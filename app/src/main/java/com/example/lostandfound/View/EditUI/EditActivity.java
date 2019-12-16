@@ -41,8 +41,8 @@ import static com.example.lostandfound.NameClass.bioForStoringDatabase;
 import static com.example.lostandfound.NameClass.emailForStroringDatabase;
 import static com.example.lostandfound.NameClass.phoneForStoringDatabase;
 
-public class EditActivity extends AppCompatActivity implements Observer {
-
+public class EditActivity extends AppCompatActivity implements Observer
+{
     SaveDataController controller;
     EditText userNameEdit;
     EditText bioNameEdit;
@@ -94,7 +94,9 @@ public class EditActivity extends AppCompatActivity implements Observer {
                     String email = (String) dataSnapshot.child(emailForStroringDatabase).getValue();
                     String phone = (String) dataSnapshot.child(phoneForStoringDatabase).getValue();
 
-                    Glide.with(EditActivity.this).load(Uri.parse(profilePhotoUri)).into(imageView);
+                    if(profilePhotoUri != null) {
+                        Glide.with(EditActivity.this).load(Uri.parse(profilePhotoUri)).into(imageView);
+                    }
 
                     userNameEdit.setText(userName);
                     bioNameEdit.setText(bio);
@@ -109,7 +111,6 @@ public class EditActivity extends AppCompatActivity implements Observer {
 
             }
         });
-
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,7 +132,7 @@ public class EditActivity extends AppCompatActivity implements Observer {
 
                 controller.saveData(data, uri, EDIT);
                 demo.notifyObserver();
-                finish();
+                //finish();
             }
         });
     }
