@@ -272,7 +272,7 @@ class AddFragment extends FragmentInterface implements Observer
         if (requestCode == PHOTO_REQUEST) {
             uri = data.getData();
             Glide.with(this).load(uri).into(imageViewOfItem);
-            descriptionOfItem.setHint("Say Something about Photo");
+            descriptionOfItem.setHint("  Say Something about Photo");
         }
     }
 

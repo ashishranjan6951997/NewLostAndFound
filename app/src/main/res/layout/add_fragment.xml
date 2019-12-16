@@ -29,17 +29,19 @@
 
 
         <LinearLayout
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+           
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_imageView"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="10dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+              android:layout_gravity="center"
                 android:layout_marginTop="3dp"
-                android:layout_weight="1.5"
+
                 android:src="@drawable/account_photo" />
 
             <LinearLayout
@@ -58,7 +60,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/location_display"/>
+                    android:id="@+id/location_display"
+                    android:textSize="15sp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -72,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-               android:layout_weight="1.5"
+               android:layout_weight="1"
                 android:backgroundTint="#fff"
                 android:gravity="center"
                 android:text="Post"
@@ -82,6 +85,12 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button">
         <Spinner
 
             android:focusable="true"
@@ -92,8 +101,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:entries="@array/Spinner_items"></Spinner>
 
+            android:entries="@array/Spinner_items"></Spinner>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_margin="10dp"
@@ -107,13 +117,14 @@
                 android:id="@+id/postWrite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:minHeight="50dp"
                 android:background="@drawable/custom_button"
                 android:gravity="start"
-                android:hint="Type the description..."
+                android:hint="  Write the description..."
                 android:textSize="20dp" />
 
             <ImageView
+                android:layout_margin="10dp"
                 android:id="@+id/pickedImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -129,6 +140,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusable="false"
+
         android:orientation="vertical">
 
         <ImageView
