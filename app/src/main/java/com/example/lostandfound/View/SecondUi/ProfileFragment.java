@@ -85,8 +85,9 @@ public class ProfileFragment extends FragmentInterface {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Log.e("SNAPSHOT", dataSnapshot.toString());
+                if (dataSnapshot.exists())
                 name[0] = dataSnapshot.getValue().toString();
-                Log.e("SNAPSHOT LATER", name[0]);
+                //Log.e("SNAPSHOT LATER", name[0]);
                 getActivity().setTitle(name[0]);
                 getActivity().setTitleColor(Color.WHITE);
             }
