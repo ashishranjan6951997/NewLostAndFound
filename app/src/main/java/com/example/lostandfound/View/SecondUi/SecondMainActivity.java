@@ -1,9 +1,13 @@
 package com.example.lostandfound.View.SecondUi;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,19 +24,20 @@ import static com.example.lostandfound.NameClass.MatchesFragmentTAG;
 import static com.example.lostandfound.NameClass.MessageFragmentTAG;
 import static com.example.lostandfound.NameClass.ProfileFragmentTAG;
 
-public class SecondMainActivity extends AppCompatActivity
-{
+public class SecondMainActivity extends AppCompatActivity {
 
     static String TAG;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second_main);
         BottomNavigationView bottomNavigationView = findViewById(R.id.button_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new MatchesFragment(), MatchesFragmentTAG).commit();
+
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -60,15 +65,14 @@ public class SecondMainActivity extends AppCompatActivity
                             break;
 
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment,TAG).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment, TAG).commit();
                     return true;
                 }
             };
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(AddFragmentTAG);
         if (fragment != null) {
@@ -77,19 +81,16 @@ public class SecondMainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.second_main_menu,menu);
+        getMenuInflater().inflate(R.menu.second_main_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
-    {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        switch (id)
-        {
+        switch (id) {
             case R.id.signOut:
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(SecondMainActivity.this, AuthenticateActivity.class);
@@ -99,4 +100,6 @@ public class SecondMainActivity extends AppCompatActivity
         }
         return true;
     }
+
+
 }

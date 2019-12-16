@@ -52,7 +52,7 @@ public class ProfileDatabaseModel {
                 .child(USERS)
                 .child(userId)
                 .child(DETAILS)
-                .child(EDIT);
+                        .child(EDIT);
 
         referenceName.addValueEventListener(new ValueEventListener()
         {
