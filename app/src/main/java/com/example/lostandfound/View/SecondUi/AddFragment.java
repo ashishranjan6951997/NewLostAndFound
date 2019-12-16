@@ -59,9 +59,8 @@ import static com.example.lostandfound.NameClass.locationForStoringDatabase;
 import static com.example.lostandfound.NameClass.nameForStoringDatabase;
 import static com.example.lostandfound.NameClass.photoUriForStoringDatabase;
 
-class AddFragment extends FragmentInterface implements Observer
-{
-    
+class AddFragment extends FragmentInterface implements Observer {
+
     Button timePicker;
     View rootView;
     TextView dateTimeDisplay;
@@ -88,7 +87,8 @@ class AddFragment extends FragmentInterface implements Observer
 
     static int LOCATION_REQUEST = 1;
     static int PHOTO_REQUEST = 2;
-    int day,year,month;
+    int day, year, month;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -97,8 +97,7 @@ class AddFragment extends FragmentInterface implements Observer
         return rootView;
     }
 
-    private void init()
-    {
+    private void init() {
         descriptionOfItem = rootView.findViewById(R.id.postWrite);
         imageViewOfItem = rootView.findViewById(R.id.pickedImage);
         imageView = rootView.findViewById(R.id.profile_imageView);
@@ -108,18 +107,18 @@ class AddFragment extends FragmentInterface implements Observer
         locationBtn = rootView.findViewById(R.id.locationButton);
         photoBtn = rootView.findViewById(R.id.photoButton);
         postBtn = rootView.findViewById(R.id.postButton);
-        dateClickedButton=rootView.findViewById(R.id.date_pick);
-        dateTimeDisplay=rootView.findViewById(R.id.date_time_display);
+        dateClickedButton = rootView.findViewById(R.id.date_pick);
+        dateTimeDisplay = rootView.findViewById(R.id.date_time_display);
         controller = new SaveDataController(getActivity());
-        locationDisplay=rootView.findViewById(R.id.location_display);
+        locationDisplay = rootView.findViewById(R.id.location_display);
         //locationBtn = rootView.findViewById(R.id.);
-        timePicker=rootView.findViewById(R.id.time_picker);
-        mcurrent=Calendar.getInstance();
-        hour=mcurrent.get(Calendar.HOUR_OF_DAY);
-        min=mcurrent.get(Calendar.MINUTE);
+        timePicker = rootView.findViewById(R.id.time_picker);
+        mcurrent = Calendar.getInstance();
+        hour = mcurrent.get(Calendar.HOUR_OF_DAY);
+        min = mcurrent.get(Calendar.MINUTE);
         currentformatTime();
         currentFormatDate();
-        dateTimeDisplay.setText(day+"-"+month+"-"+year+", "+hour+":"+min+" "+format);
+        dateTimeDisplay.setText(day + "-" + month + "-" + year + ", " + hour + ":" + min + " " + format);
 
         demo = new RealtimeDatabaseDemoModel();
         demo.register(this);
@@ -141,7 +140,8 @@ class AddFragment extends FragmentInterface implements Observer
                 userPhoto[0] = (String) dataSnapshot.child(IMAGE_URI).getValue();
 
                 nameText.setText(userName[0]);
-                Glide.with(getActivity()).load(Uri.parse(userPhoto[0])).into(imageView);
+                if (userPhoto[0] != null)
+                    Glide.with(getActivity()).load(Uri.parse(userPhoto[0])).into(imageView);
             }
 
             @Override
@@ -168,91 +168,81 @@ class AddFragment extends FragmentInterface implements Observer
             }
         });
 
-        postBtn.setOnClickListener(new View.OnClickListener()
-        {
+        postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String desc = descriptionOfItem.getText().toString();
                 String location = "kiit";
-                String array[] = {desc,location, String.valueOf(choosenLatitude), String.valueOf(choosenLongitude)};
+                String array[] = {desc, location, String.valueOf(choosenLatitude), String.valueOf(choosenLongitude)};
 
-                if(!desc.equals("")) {
+                if (!desc.equals("")) {
                     controller.saveData(array, uri, POST);
                     demo.notifyObserver();
-                }
-                else
-                {
-                    Toast.makeText(getActivity(),"Please add some description",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(), "Please add some description", Toast.LENGTH_LONG).show();
                 }
             }
         });
-        dateClickedButton.setOnClickListener(new View.OnClickListener()
-        {
+        dateClickedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dateFunction();
-                dateTimeDisplay.setText(day+"-"+month+"-"+year+", "+hour+" : "+min+" "+format);
+                dateTimeDisplay.setText(day + "-" + month + "-" + year + ", " + hour + " : " + min + " " + format);
             }
         });
         timePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 timeFunction();
-                dateTimeDisplay.setText(day+"-"+month+"-"+year+", "+hour+" : "+min+" "+format);
+                dateTimeDisplay.setText(day + "-" + month + "-" + year + ", " + hour + " : " + min + " " + format);
             }
         });
 
     }
 
 
-
-    private void currentformatTime()
-    {
-        if(hour==0)
-        {
-            hour+=12;
-            format="AM";
-        }else if (hour==12)
-        {
-            format="PM";
-        }else if (hour>12)
-        {
-            hour-=12;
-            format="PM";
-        }else
-        {
-            format="AM";
+    private void currentformatTime() {
+        if (hour == 0) {
+            hour += 12;
+            format = "AM";
+        } else if (hour == 12) {
+            format = "PM";
+        } else if (hour > 12) {
+            hour -= 12;
+            format = "PM";
+        } else {
+            format = "AM";
         }
     }
-    private void currentFormatDate()
-    {
-        day=mcurrent.get(Calendar.DAY_OF_MONTH);
-        month=mcurrent.get(Calendar.MONTH);
-        month=month+1;
-        year=mcurrent.get(Calendar.YEAR);
+
+    private void currentFormatDate() {
+        day = mcurrent.get(Calendar.DAY_OF_MONTH);
+        month = mcurrent.get(Calendar.MONTH);
+        month = month + 1;
+        year = mcurrent.get(Calendar.YEAR);
     }
 
-    private void timeFunction()
-    {
-        TimePickerDialog timePickerDialog=new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+    private void timeFunction() {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                hour=i;
-                min=i1;
+                hour = i;
+                min = i1;
                 currentformatTime();
             }
-        },hour,min,true);
+        }, hour, min, true);
         timePickerDialog.show();
     }
+
     private void dateFunction() {
-         DatePickerDialog datePickerDialog=new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                    year=i;
-                    month=i1+1;
-                    day=i2;
+                year = i;
+                month = i1 + 1;
+                day = i2;
             }
-        },year,month,day);
+        }, year, month, day);
         datePickerDialog.show();
     }
 
@@ -277,8 +267,7 @@ class AddFragment extends FragmentInterface implements Observer
     }
 
     @Override
-    public void updateToast()
-    {
+    public void updateToast() {
         Toast.makeText(getActivity(), "Data Posted Successfully", Toast.LENGTH_LONG).show();
         postBtn.setEnabled(false);
     }

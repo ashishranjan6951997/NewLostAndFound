@@ -3,6 +3,8 @@
 
     <item
         android:id="@+id/signOut"
-        android:title="Sign Out" />
+        android:title="Sign Out"
+        git
+        />
 
 </menu>

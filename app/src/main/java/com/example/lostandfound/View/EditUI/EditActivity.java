@@ -131,6 +131,7 @@ public class EditActivity extends AppCompatActivity implements Observer {
 
                 controller.saveData(data, uri, EDIT);
                 demo.notifyObserver();
+                finish();
             }
         });
     }

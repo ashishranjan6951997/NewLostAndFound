@@ -94,6 +94,7 @@
         <Spinner
 
             android:focusable="true"
+            android:theme="@style/spinnerTheme"
             android:outlineAmbientShadowColor="#C7CCCC"
             android:contextClickable="true"
             android:layout_margin="10dp"
@@ -120,6 +121,7 @@
                 android:minHeight="50dp"
                 android:background="@drawable/custom_button"
                 android:gravity="start"
+                android:textColor="#000"
                 android:hint="  Write the description..."
                 android:textSize="20dp" />
 

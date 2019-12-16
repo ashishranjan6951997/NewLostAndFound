@@ -57,8 +57,7 @@ public class ProfileFragment extends FragmentInterface {
         return rootView;
     }
 
-    private void initView()
-    {
+    private void initView() {
         numberOfPosts = rootView.findViewById(R.id.number_of_posts);
         linearLayout = rootView.findViewById(R.id.linear_layout_image_and_number_of_post);
         profileImageView = rootView.findViewById(R.id.profile_imageView);
@@ -92,13 +91,17 @@ public class ProfileFragment extends FragmentInterface {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Log.e("SNAPSHOT", dataSnapshot.toString());
-                name[0] = dataSnapshot.child(NAME).getValue().toString();
-                uri[0] = dataSnapshot.child(IMAGE_URI).getValue().toString();
-                Log.e("SNAPSHOT LATER", name[0]);
-                getActivity().setTitle(name[0]);
 
-                nameText.setText(name[0]);
-                Glide.with(getActivity()).load(Uri.parse(uri[0])).into(profileImageView);
+                if (dataSnapshot.getValue() != null) {
+                    name[0] = dataSnapshot.child(NAME).getValue().toString();
+                    uri[0] = dataSnapshot.child(IMAGE_URI).getValue().toString();
+                }
+
+                getActivity().setTitle(name[0]);
+                if (name[0] != null)
+                    nameText.setText(name[0]);
+                if (uri[0] != null)
+                    Glide.with(getActivity()).load(Uri.parse(uri[0])).into(profileImageView);
 
             }
 

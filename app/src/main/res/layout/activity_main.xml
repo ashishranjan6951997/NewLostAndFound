@@ -30,7 +30,7 @@
         android:elevation="10dp"
         android:minHeight="0dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/lostandfound" />
+        android:src="@drawable/newlostandfoundimage" />
 
     <FrameLayout
         android:layout_width="match_parent"

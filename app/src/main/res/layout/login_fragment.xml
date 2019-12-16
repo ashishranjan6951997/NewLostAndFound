@@ -53,7 +53,7 @@
         android:background="@color/buttonBackgroundColor"
         android:backgroundTint="@color/buttonBackgroundColor"
         android:text="login"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/white" />
 
     <Button
         android:id="@+id/SignUp"
@@ -63,6 +63,6 @@
         android:background="@color/buttonBackgroundColor"
         android:backgroundTint="@color/buttonBackgroundColor"
         android:text="SignUp"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/white" />
 
 </LinearLayout>
