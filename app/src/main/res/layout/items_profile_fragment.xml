@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -20,6 +21,8 @@
         android:layout_gravity="center"
         android:elevation="2dp"
         card_view:cardCornerRadius="4dp">
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,9 +55,8 @@
                         android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="5dp"
                         android:text="Ashish Ranjan"
-                        android:textSize="10dp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -66,13 +68,13 @@
                         android:textSize="10dp" />
 
                     <TextView
+                        android:id="@+id/time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginBottom="5dp"
                         android:text="8:06 pm"
                         android:textSize="10dp" />
-
 
                 </LinearLayout>
 
@@ -95,24 +97,15 @@
 
 
             <TextView
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_horizontal_margin"
                 android:id="@+id/desc"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:text="Description"
-                android:textColor="@android:color/black"
-                android:textSize="8dp" />
-
-            <Button
-                android:id="@+id/chat"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/custom_button"
-                android:gravity="center"
-                android:text="chat" />
+                android:hint="Description"
+                android:textSize="15dp" />
 
 
         </LinearLayout>
