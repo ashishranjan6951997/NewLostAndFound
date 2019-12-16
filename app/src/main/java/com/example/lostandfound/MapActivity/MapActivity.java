@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.lostandfound.R;
-import com.example.lostandfound.View.SecondUi.HomeFragment;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.api.geocoding.v5.GeocodingCriteria;
@@ -64,7 +63,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     double SelectedLongitude;
     Button closeButton;
     AlertDialog.Builder builder;
-    Fragment homeFragment;
 
 
     @Override
@@ -76,7 +74,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         // This contains the MapView in XML and needs to be called after the access token is configured.
         setContentView(R.layout.map_activity);
 
-        homeFragment = new HomeFragment();
         builder = new AlertDialog.Builder(this);
         locationText = (EditText) findViewById(R.id.searchText);
         addLocationButton =  findViewById(R.id.addLocationButton);

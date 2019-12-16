@@ -16,7 +16,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import static com.example.lostandfound.NameClass.AddFragmentTAG;
-import static com.example.lostandfound.NameClass.HomeFragmentTAG;
 import static com.example.lostandfound.NameClass.MatchesFragmentTAG;
 import static com.example.lostandfound.NameClass.MessageFragmentTAG;
 import static com.example.lostandfound.NameClass.ProfileFragmentTAG;
@@ -42,10 +41,7 @@ public class SecondMainActivity extends AppCompatActivity
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                     Fragment selectedfragment = null;
                     switch (menuItem.getItemId()) {
-                        case R.id.nav_home:
-                            selectedfragment = new HomeFragment();
-                            TAG = HomeFragmentTAG;
-                            break;
+
                         case R.id.nav_matches:
                             selectedfragment = new MatchesFragment();
                             TAG = MatchesFragmentTAG;

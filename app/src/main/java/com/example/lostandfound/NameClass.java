@@ -34,7 +34,6 @@ public class NameClass
     public static String MESSAGE = "Are you sure to save this entry?";
 
     // Fragment Tag
-    public static String HomeFragmentTAG = "HomeFragment";
     public static String MatchesFragmentTAG = "MatchesFragment";
     public static String MessageFragmentTAG = "MessageFragment";
     public static String ProfileFragmentTAG = "ProfileFragment";
