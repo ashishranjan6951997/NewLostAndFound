@@ -17,10 +17,13 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.lostandfound.Controller.ProfileController.ProfileController;
 import com.example.lostandfound.R;
+import com.example.lostandfound.View.Adapter.ProfileAdapter;
 import com.example.lostandfound.View.EditUI.EditActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,6 +33,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.lostandfound.NameClass.DETAILS;
@@ -48,6 +52,8 @@ public class ProfileFragment extends FragmentInterface {
     LinearLayout layout;
     Button editBtn;
     TextView nameText;
+    ProfileController controller;
+    ProfileAdapter adapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,6 +74,7 @@ public class ProfileFragment extends FragmentInterface {
 
         nameText = rootView.findViewById(R.id.userName);
 
+        controller = new ProfileController(this);
         final String[] name = new String[1];
         final String[] uri = new String[1];
 
@@ -107,15 +114,24 @@ public class ProfileFragment extends FragmentInterface {
 
             }
         });
+
+        controller.showData();
     }
 
-    public void setRecyclerViewForProfile(List list) {
+    public void setRecyclerView(List list)
+    {
         if (list.size() == 0) {
             layout.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         } else {
             layout.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
+            adapter = new ProfileAdapter(getContext(),list);
+            adapter.notifyDataSetChanged();
+            final RecyclerView.LayoutManager manager = new LinearLayoutManager(this.getContext());
+            recyclerView.setLayoutManager(manager);
+            recyclerView.setAdapter(adapter);
         }
+
     }
 }

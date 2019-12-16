@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -93,7 +94,7 @@
                 android:id="@+id/foundPosts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Founds"
+                android:text="Found"
                 android:textColor="#000"
                 android:textSize="15dp" />
         </LinearLayout>
@@ -119,6 +120,7 @@
         android:textSize="10dp" />
 
     <View
+        android:id="@+id/border_view"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginTop="10dp"
@@ -126,9 +128,10 @@
         android:elevation="1dp" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/border_view"
         android:id="@+id/recycler"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="10dp" />
 
     <LinearLayout
@@ -138,17 +141,19 @@
         android:orientation="vertical"
         android:padding="100dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/camera" />
+        <!--<ImageView-->
+            <!--android:background="#ffff"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:src="@drawable/camera" />-->
 
         <TextView
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/no_data"
+            android:text="@string/no_post"
             android:textColor="#000000"
             android:textSize="20dp" />
 

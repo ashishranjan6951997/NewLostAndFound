@@ -9,6 +9,11 @@ public class Card
     String location;
     String profileImageUrl;
 
+    public Card()
+    {
+
+    }
+
     public Card(String id, String desc, String date, String time, String location, String profileImageUrl) {
         this.id = id;
         this.desc = desc;
