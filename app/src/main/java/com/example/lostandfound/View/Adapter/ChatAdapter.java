@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lostandfound.Model.ChatPOJO.Chat;
@@ -41,21 +42,24 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
     public void onBindViewHolder(@NonNull ChatAdapter.ViewHolder holder, int position)
     {
         Chat c = (Chat) objects.get(position);
+
         if(c.getmUser())
         {
-            holder.mMessage.setText(c.getmMessage());
-            holder.mMessage.setGravity(Gravity.END);
-            holder.mMessage.setTextColor(Color.parseColor("#000000"));
-            holder.mMessage.setBackgroundColor(Color.parseColor("#A2A2A2"));
-
-           // holder.mContainer.setBackgroundColor(Color.parseColor("#F4F4F4"));
+            holder.mMessage2.setText(c.getmMessage());
+            holder.mMessage2.setGravity(Gravity.END);
+            holder.mContainer1.setVisibility(View.GONE);
+//            holder.mMessage.setTextColor(Color.parseColor());
+//            holder.mMessage2.setBackground(Color.parseColor());
+//            holder.mMessage2.setBackgroundColor(ContextCompat.getColor(this, R.drawable.item_right_chat));
+//            holder.mContainer2
         }
         else
         {
-            holder.mMessage.setText(c.getmMessage());
-            holder.mMessage.setGravity(Gravity.START);
-            holder.mMessage.setTextColor(Color.parseColor("#ffffff"));
-            holder.mMessage.setBackgroundColor(Color.parseColor("#43A047"));
+            holder.mMessage1.setText(c.getmMessage());
+           holder.mMessage1.setGravity(Gravity.START);
+           holder.mContainer2.setVisibility(View.GONE);
+           // holder.mMessage.setTextColor(Color.parseColor("#ffffff"));
+           // holder.mMessage.setBackgroundColor(Color.parseColor("#43A047"));
 
             //holder.mContainer.setBackgroundColor(Color.parseColor("#2DB4C8"));
         }
@@ -70,13 +74,18 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
     public class ViewHolder extends RecyclerView.ViewHolder
     {
 
-        public TextView mMessage;
-        public LinearLayout mContainer;
+        public TextView mMessage1;
+        public LinearLayout mContainer1;
+        public TextView mMessage2;
+        public LinearLayout mContainer2;
+
 
         public ViewHolder(View view) {
             super(view);
-            mMessage = view.findViewById(R.id.text);
-            mContainer = view.findViewById(R.id.container);
+            mMessage1 = view.findViewById(R.id.txt_msg1);
+            mContainer1 = view.findViewById(R.id.container1);
+            mMessage2 = view.findViewById(R.id.txt_msg2);
+            mContainer2 = view.findViewById(R.id.container2);
         }
     }
 }
