@@ -37,6 +37,7 @@ public class ProfileDatabaseModel {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
 
         final String userName[] = new String[1];
+        userName[0] ="";
 
         DatabaseReference referencePost = FirebaseDatabase
                 .getInstance()
@@ -57,9 +58,10 @@ public class ProfileDatabaseModel {
         referenceName.addValueEventListener(new ValueEventListener()
         {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-            {
-                userName[0] = dataSnapshot.child(NAME).getValue().toString();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child(NAME).exists()) {
+                    userName[0] = dataSnapshot.child(NAME).getValue().toString();
+                }
             }
 
             @Override
