@@ -1,13 +1,17 @@
 package com.example.lostandfound.View.SecondUi;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,7 +41,10 @@ public class SecondMainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new MatchesFragment(), MatchesFragmentTAG).commit();
 
-
+        if(!isConnectedToInternet())
+        {
+            showToast();
+        }
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -50,18 +57,37 @@ public class SecondMainActivity extends AppCompatActivity {
                         case R.id.nav_matches:
                             selectedfragment = new MatchesFragment();
                             TAG = MatchesFragmentTAG;
+                            if(!isConnectedToInternet())
+                            {
+                                showToast();
+                            }
                             break;
                         case R.id.nav_messages:
                             selectedfragment = new MessageFragment();
                             TAG = MessageFragmentTAG;
+
+                            if(!isConnectedToInternet())
+                            {
+                                showToast();
+                            }
                             break;
                         case R.id.nav_profile:
                             selectedfragment = new ProfileFragment();
                             TAG = ProfileFragmentTAG;
+
+                            if(!isConnectedToInternet())
+                            {
+                                showToast();
+                            }
                             break;
                         case R.id.nav_add:
                             selectedfragment = new AddFragment();
                             TAG = AddFragmentTAG;
+
+                            if(!isConnectedToInternet())
+                            {
+                                showToast();
+                            }
                             break;
 
                     }
@@ -101,10 +127,31 @@ public class SecondMainActivity extends AppCompatActivity {
         return true;
     }
 
+    public boolean isConnectedToInternet(){
+        ConnectivityManager connectivity = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null)
+        {
+            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+            if (info != null)
+                for (int i = 0; i < info.length; i++)
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
+                    {
+                        return true;
+                    }
+
+        }
+        return false;
+    }
+
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    public void showToast()
+    {
+        Toast.makeText(this,"No Internet Connection",Toast.LENGTH_LONG).show();
     }
 }
