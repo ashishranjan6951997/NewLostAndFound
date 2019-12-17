@@ -52,12 +52,20 @@ public class FragmentDatabaseModel {
                 if (dataSnapshot.exists()) {
 
                     final String[] profileImage = {"default"};
+                    final String userId[] = new String[1];
+                    userId[0] = dataSnapshot.getKey();
 
-                    Log.e("ERROR IS -->", dataSnapshot.child(DETAILS).child(EDIT).child(IMAGE_URI).toString());
+                    //Log.e("ERROR IS -->", dataSnapshot.child(DETAILS).child(EDIT).child(IMAGE_URI).toString());
 
                     if (!dataSnapshot.getKey().equals(currentUser)) {
 
+                    final String currentUserName[] = new String[1];
+                        currentUserName[0]="";
 
+                        if(dataSnapshot.child(DETAILS).child(EDIT).exists() || dataSnapshot.child(DETAILS).child(EDIT).child(NAME).exists())
+                        {
+                                currentUserName[0] = dataSnapshot.child(DETAILS).child(EDIT).child(NAME).getValue().toString();
+                        }
                         DatabaseReference referencePost = FirebaseDatabase.getInstance().getReference()
                                 .child(USERS)
                                 .child(dataSnapshot.getKey())
@@ -82,12 +90,18 @@ public class FragmentDatabaseModel {
                                             Log.v("In IF CONDITION", stringLatitude);
 
                                             if (dataSnapshot.child(IMAGE_URI).getValue() == null || dataSnapshot.child(IMAGE_URI).getValue().equals(profileImage[0])) {
-                                                item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(descriptionForStoringDatabase).getValue().toString(), profileImage[0]);
+                                                item[0] = new Card();
+                                                item[0].setId(userId[0]);
+                                                item[0].setName(currentUserName[0]);
+                                                item[0].setProfileImageUrl(profileImage[0]);
                                                 list.add(item[0]);
                                                 Log.v("added", "doneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
                                             } else {
                                                 profileImage[0] = dataSnapshot.child(IMAGE_URI).getValue().toString();
-                                                item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(descriptionForStoringDatabase).getValue().toString(), profileImage[0]);
+                                                item[0] = new Card();
+                                                item[0].setId(userId[0]);
+                                                item[0].setName(currentUserName[0]);
+                                                item[0].setProfileImageUrl(profileImage[0]);
                                                 list.add(item[0]);
                                             }
                                         }
@@ -231,7 +245,11 @@ public class FragmentDatabaseModel {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                             String name = (String) dataSnapshot.child(key).child(DETAILS).child(EDIT).child(NAME).getValue();
-                            Card c = new Card(key, name);
+                            String uri = (String) dataSnapshot.child(key).child(DETAILS).child(EDIT).child(IMAGE_URI).getValue();
+                            Card c = new Card();
+                            c.setId(key);
+                            c.setName(name);
+                            c.setProfileImageUrl(uri);
                             list.add(c);
                             Log.v("Previous List Size", list.size() + "");
                         }

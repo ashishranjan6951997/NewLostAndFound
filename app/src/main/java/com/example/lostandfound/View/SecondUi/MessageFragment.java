@@ -60,7 +60,6 @@ public class MessageFragment extends FragmentInterface{
     @Override
     public void setRecyclerView(List list)
     {
-
         adapter = new MessageAdapter(getContext(), list);
         adapter.notifyDataSetChanged();
         final RecyclerView.LayoutManager manager = new LinearLayoutManager(this.getContext());
