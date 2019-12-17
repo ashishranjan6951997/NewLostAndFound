@@ -79,13 +79,12 @@ public class ChatController {
         referenceUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child(currentUser).hasChild(CONNECTIONS))
-                {
+
+                Log.v("USER", user);
+                if (dataSnapshot.child(currentUser).hasChild(CONNECTIONS)) {
                     key = (String) dataSnapshot.child(currentUser).child(CONNECTIONS).child(user).child(CHAT_ID).getValue();
                     referenceChat = referenceChat.child(key);
-                }
-                else
-                {
+                } else {
                     key = FirebaseDatabase.getInstance().getReference().child(CHAT).push().getKey();
                     referenceChat = referenceChat.child(key);
 
@@ -93,8 +92,7 @@ public class ChatController {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError)
-            {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });

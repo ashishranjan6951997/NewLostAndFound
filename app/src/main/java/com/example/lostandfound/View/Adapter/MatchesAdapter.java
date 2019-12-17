@@ -44,7 +44,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
     public void onBindViewHolder(@NonNull MatchesAdapter.ViewHolder holder, int position)
     {
         final Card card = (Card) objects.get(position);
-        holder.nameText.setText(card.getId());
+        holder.nameText.setText(card.getName());
         holder.descText.setText(card.getDesc());
         //String str="Date :" + card.getDate() + "  " + "Time :" + card.getTime();
 

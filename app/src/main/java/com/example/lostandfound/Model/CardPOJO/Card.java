@@ -2,7 +2,9 @@ package com.example.lostandfound.Model.CardPOJO;
 
 public class Card
 {
+
     String id;
+    String name;
     String desc;
     String date;
     String time;
@@ -42,6 +44,15 @@ public class Card
 
     public void setId(String id) {
         this.id = id;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDesc() {
