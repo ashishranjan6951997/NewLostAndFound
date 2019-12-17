@@ -280,7 +280,7 @@ class AddFragment extends FragmentInterface implements Observer {
 
     @Override
     public void updateToast() {
-        Toast.makeText(getActivity(), "Data Posted Successfully", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Status Upload Completed", Toast.LENGTH_LONG).show();
         postBtn.setEnabled(false);
     }
 }
