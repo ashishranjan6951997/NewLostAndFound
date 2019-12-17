@@ -55,6 +55,8 @@ public class MessageFragment extends FragmentInterface{
         progressBar = rootView.findViewById(R.id.progress);
         controller = new CardController(this);
         controller.setRecyclerViewForMessage();
+
+        getActivity().setTitle("Chats");
     }
 
     @Override

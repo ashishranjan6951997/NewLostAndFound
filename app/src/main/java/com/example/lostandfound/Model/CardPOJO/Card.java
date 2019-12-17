@@ -11,6 +11,9 @@ public class Card
     String location;
     String profileImageUrl;
 
+
+    String postImageUri;
+
     public Card()
     {
 
@@ -69,6 +72,15 @@ public class Card
 
     public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
+    }
+
+
+    public String getPostImageUri() {
+        return postImageUri;
+    }
+
+    public void setPostImageUri(String postImageUri) {
+        this.postImageUri = postImageUri;
     }
 
     public String getDate() {

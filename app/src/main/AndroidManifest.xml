@@ -23,7 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.Chat.ChatActivity" />
+        <activity
+            android:name=".View.Chat.ChatActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".View.Authentication.AuthenticateActivity"
             android:theme="@style/AppTheme.NoActionBar">
