@@ -23,7 +23,7 @@
             android:src="@drawable/ic_add_location_black_24dp"
             />
         <EditText
-            android:textColor="#000"
+
             android:id="@+id/fragmentLocationButton"
             android:clickable="true"
             android:focusable="false"

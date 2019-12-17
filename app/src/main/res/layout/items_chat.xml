@@ -1,39 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <LinearLayout
-        android:id="@+id/container1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_alignParentStart="true"
-        android:layout_margin="10dp"
-        android:orientation="vertical"
-        android:paddingBottom="10dp">
 
-        <TextView
-            android:background="@drawable/item_left_chat"
-            android:visibility="invisible"
-            android:id="@+id/txt_msg1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxWidth="300dp"
-            android:padding="5dp"
-            android:textSize="15sp"
-            android:textColor="@android:color/white" />
-
-    </LinearLayout>
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:id="@+id/container2"
-        android:layout_gravity="end"
+
         android:layout_margin="10dp"
         android:orientation="vertical"
         android:paddingBottom="10dp">

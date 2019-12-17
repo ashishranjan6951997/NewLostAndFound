@@ -46,18 +46,21 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
         if(c.getmUser())
         {
             holder.mMessage2.setText(c.getmMessage());
-            holder.mMessage2.setGravity(Gravity.END);
-            holder.mContainer1.setVisibility(View.GONE);
-//            holder.mMessage.setTextColor(Color.parseColor());
+            holder.mContainer2.setGravity(Gravity.END);
+            holder.mMessage2.setTextColor(Color.parseColor("#000000"));
+           // holder.mContainer2.setLayoutParams(ViewGroup.LayoutParams.GRAVITY);
 //            holder.mMessage2.setBackground(Color.parseColor());
-//            holder.mMessage2.setBackgroundColor(ContextCompat.getColor(this, R.drawable.item_right_chat));
+           holder.mMessage2.setBackgroundResource(R.drawable.item_right_chat);
 //            holder.mContainer2
         }
         else
         {
-            holder.mMessage1.setText(c.getmMessage());
-           holder.mMessage1.setGravity(Gravity.START);
-           holder.mContainer2.setVisibility(View.GONE);
+            holder.mMessage2.setText(c.getmMessage());
+           holder.mContainer2.setGravity(Gravity.START);
+           holder.mMessage2.setGravity(Gravity.END);
+           holder.mMessage2.setBackgroundResource(R.drawable.item_left_chat);
+
+            holder.mMessage2.setTextColor(Color.parseColor("#ffffff"));
            // holder.mMessage.setTextColor(Color.parseColor("#ffffff"));
            // holder.mMessage.setBackgroundColor(Color.parseColor("#43A047"));
 
@@ -74,16 +77,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
     public class ViewHolder extends RecyclerView.ViewHolder
     {
 
-        public TextView mMessage1;
-        public LinearLayout mContainer1;
+
         public TextView mMessage2;
         public LinearLayout mContainer2;
 
 
         public ViewHolder(View view) {
             super(view);
-            mMessage1 = view.findViewById(R.id.txt_msg1);
-            mContainer1 = view.findViewById(R.id.container1);
+
             mMessage2 = view.findViewById(R.id.txt_msg2);
             mContainer2 = view.findViewById(R.id.container2);
         }
