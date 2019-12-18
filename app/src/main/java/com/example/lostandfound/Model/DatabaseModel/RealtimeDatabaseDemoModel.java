@@ -30,14 +30,21 @@ import static com.example.lostandfound.NameClass.LongitudeStorageInDatabase;
 import static com.example.lostandfound.NameClass.NAME;
 import static com.example.lostandfound.NameClass.POST;
 import static com.example.lostandfound.NameClass.USERS;
+import static com.example.lostandfound.NameClass.amOrPmForStoringDatabse;
 import static com.example.lostandfound.NameClass.bioForStoringDatabase;
+import static com.example.lostandfound.NameClass.categoryForStoringDatabase;
+import static com.example.lostandfound.NameClass.dateForStoringDatabse;
 import static com.example.lostandfound.NameClass.descriptionForStoringDatabase;
 import static com.example.lostandfound.NameClass.emailForStroringDatabase;
+import static com.example.lostandfound.NameClass.hourForStoringDatabse;
+import static com.example.lostandfound.NameClass.minuteForStoringDatabse;
+import static com.example.lostandfound.NameClass.monthForStoringDatabse;
 import static com.example.lostandfound.NameClass.nameForStoringDatabase;
 import static com.example.lostandfound.NameClass.phoneForStoringDatabase;
 import static com.example.lostandfound.NameClass.photoUriForStoringDatabase;
 import static com.example.lostandfound.NameClass.profileImageUri;
 import static com.example.lostandfound.NameClass.radioButtonText;
+import static com.example.lostandfound.NameClass.yearForStoringDatabse;
 
 public class RealtimeDatabaseDemoModel {
     DatabaseReference reference;
@@ -80,6 +87,41 @@ public class RealtimeDatabaseDemoModel {
             if (dataMap.get(photoUriForStoringDatabase) != null) {
                 String postUri = (String) dataMap.get(photoUriForStoringDatabase);
                 map.put(photoUriForStoringDatabase, postUri);
+            }
+            if(dataMap.get(dateForStoringDatabse) != null)
+            {
+                String date = (String) dataMap.get(dateForStoringDatabse);
+                map.put(dateForStoringDatabse,date);
+            }
+            if(dataMap.get(monthForStoringDatabse) !=null)
+            {
+                String month = (String) dataMap.get(monthForStoringDatabse);
+                map.put(monthForStoringDatabse,month);
+            }
+            if(dataMap.get(yearForStoringDatabse) !=null)
+            {
+                String year = (String) dataMap.get(yearForStoringDatabse);
+                map.put(yearForStoringDatabse,year);
+            }
+            if(dataMap.get(hourForStoringDatabse) !=null)
+            {
+                String hour = (String)dataMap.get(hourForStoringDatabse);
+                map.put(hourForStoringDatabse,hour);
+            }
+            if(dataMap.get(minuteForStoringDatabse) !=null)
+            {
+                String minute = (String)dataMap.get(minuteForStoringDatabse);
+                map.put(minuteForStoringDatabse,minute);
+            }
+            if(dataMap.get(categoryForStoringDatabase) !=null)
+            {
+                String category = (String) dataMap.get(categoryForStoringDatabase);
+                map.put(categoryForStoringDatabase,category);
+            }
+            if(dataMap.get(amOrPmForStoringDatabse) !=null)
+            {
+                String format = (String) dataMap.get(amOrPmForStoringDatabse);
+                map.put(amOrPmForStoringDatabse,format);
             }
 
             reference.child(uId).child(DETAILS).child(text).child(key).setValue(map);

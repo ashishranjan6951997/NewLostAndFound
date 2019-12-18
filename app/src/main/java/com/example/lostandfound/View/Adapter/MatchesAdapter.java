@@ -20,7 +20,9 @@ import com.example.lostandfound.R;
 import com.example.lostandfound.View.Chat.ChatActivity;
 
 import java.util.List;
+
 import static com.example.lostandfound.NameClass.CHAT_ID;
+import static com.example.lostandfound.NameClass.minuteForStoringDatabse;
 
 public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHolder> {
     Context context;
@@ -33,24 +35,32 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
 
     @NonNull
     @Override
-    public MatchesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
-    {
+    public MatchesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.items_match_fragment, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MatchesAdapter.ViewHolder holder, int position)
-    {
+    public void onBindViewHolder(@NonNull MatchesAdapter.ViewHolder holder, int position) {
         final Card card = (Card) objects.get(position);
         holder.nameText.setText(card.getName());
         holder.descText.setText(card.getDesc());
         //String str="Date :" + card.getDate() + "  " + "Time :" + card.getTime();
+        String date = card.getDate();
+        String month = card.getMonth();
+        String year = card.getYear();
 
-        String s="null";
-        holder.timeText.setText(s);
-       //Log.v("CARD Details", card.getId() + "  " + card.getDesc());
+        holder.dateText.setText(date+"-"+month+"-"+year);
+
+        String hour = card.getHour();
+        String minute = card.getMinute();
+        if (Integer.parseInt(minute) < 10) {
+            minute = "0" + minute;
+        }
+        String format = card.getFormat();
+        holder.timeText.setText(hour+":"+minute+" "+format);
+        //Log.v("CARD Details", card.getId() + "  " + card.getDesc());
 
         switch (card.getProfileImageUrl()) {
             case "default":
@@ -64,9 +74,9 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
         holder.chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,ChatActivity.class);
+                Intent intent = new Intent(context, ChatActivity.class);
                 Bundle b = new Bundle();
-                b.putString(CHAT_ID,card.getId());
+                b.putString(CHAT_ID, card.getId());
                 intent.putExtras(b);
                 context.startActivity(intent);
             }
@@ -82,7 +92,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
 
         ImageView imageView;
         Button chat;
-        TextView nameText, descText, timeText;
+        TextView nameText, descText, timeText, dateText;
 
         public ViewHolder(View view) {
             super(view);
@@ -90,8 +100,9 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
             imageView = view.findViewById(R.id.image);
             nameText = view.findViewById(R.id.name);
             descText = view.findViewById(R.id.desc);
-            timeText = view.findViewById(R.id.date);
+            timeText = view.findViewById(R.id.time);
             chat = view.findViewById(R.id.chat);
+            dateText = view.findViewById(R.id.date);
         }
     }
 }

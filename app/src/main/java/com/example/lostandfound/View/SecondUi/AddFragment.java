@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -98,8 +99,8 @@ class AddFragment extends FragmentInterface implements Observer {
         return rootView;
     }
 
-    private void init()
-    {
+    private void init() {
+        final String[] spinnerText = new String[1];
         descriptionOfItem = rootView.findViewById(R.id.postWrite);
         imageViewOfItem = rootView.findViewById(R.id.pickedImage);
         imageView = rootView.findViewById(R.id.profile_imageView);
@@ -152,6 +153,14 @@ class AddFragment extends FragmentInterface implements Observer {
             }
         });
 
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                spinnerText[0] = (String) parent.getItemAtPosition(pos);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         locationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,7 +184,19 @@ class AddFragment extends FragmentInterface implements Observer {
             public void onClick(View v) {
                 String desc = descriptionOfItem.getText().toString();
                 String location = "kiit";
-                String array[] = {desc, location, String.valueOf(choosenLatitude), String.valueOf(choosenLongitude)};
+                String array[] = {
+                        desc,
+                        location,
+                        String.valueOf(choosenLatitude),
+                        String.valueOf(choosenLongitude),
+                        String.valueOf(day),
+                        String.valueOf(month),
+                        String.valueOf(year),
+                        String.valueOf(hour),
+                        String.valueOf(min),
+                        String.valueOf(spinnerText[0]),
+                        format
+                };
 
                 if (!desc.equals("")) {
                     controller.saveData(array, uri, POST);
@@ -228,7 +249,7 @@ class AddFragment extends FragmentInterface implements Observer {
     }
 
     private void timeFunction() {
-        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), R.style.MyDatePicker,new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), R.style.MyDatePicker, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
                 hour = i;
@@ -237,10 +258,13 @@ class AddFragment extends FragmentInterface implements Observer {
             }
         }, hour, min, true);
         timePickerDialog.show();
+        timePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
+        timePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+
     }
 
     private void dateFunction() {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), R.style.MyDatePicker,new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), R.style.MyDatePicker, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 year = i;

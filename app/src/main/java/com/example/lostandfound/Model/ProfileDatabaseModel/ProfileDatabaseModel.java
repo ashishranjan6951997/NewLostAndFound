@@ -94,7 +94,7 @@ public class ProfileDatabaseModel {
                     if(!userName[0].equals(""))
                     {
                         name = userName[0];
-                        card.setId(name);
+                        card.setName(name);
                     }
 
                     list.add(card);
