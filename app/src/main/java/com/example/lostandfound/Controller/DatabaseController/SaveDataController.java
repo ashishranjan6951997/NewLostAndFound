@@ -28,15 +28,22 @@ import static com.example.lostandfound.NameClass.LatitudeStorageInDatabase;
 import static com.example.lostandfound.NameClass.LongitudeStorageInDatabase;
 import static com.example.lostandfound.NameClass.POST;
 import static com.example.lostandfound.NameClass.USERS;
+import static com.example.lostandfound.NameClass.amOrPmForStoringDatabse;
 import static com.example.lostandfound.NameClass.bioForStoringDatabase;
+import static com.example.lostandfound.NameClass.categoryForStoringDatabase;
+import static com.example.lostandfound.NameClass.dateForStoringDatabse;
 import static com.example.lostandfound.NameClass.descriptionForStoringDatabase;
 import static com.example.lostandfound.NameClass.emailForStroringDatabase;
+import static com.example.lostandfound.NameClass.hourForStoringDatabse;
+import static com.example.lostandfound.NameClass.minuteForStoringDatabse;
+import static com.example.lostandfound.NameClass.monthForStoringDatabse;
 import static com.example.lostandfound.NameClass.nameForStoringDatabase;
 import static com.example.lostandfound.NameClass.phoneForStoringDatabase;
 import static com.example.lostandfound.NameClass.photoUriForStoringDatabase;
 import static com.example.lostandfound.NameClass.postImageUri;
 import static com.example.lostandfound.NameClass.profileImageUri;
 import static com.example.lostandfound.NameClass.radioButtonText;
+import static com.example.lostandfound.NameClass.yearForStoringDatabse;
 
 public class SaveDataController {
     Map map;
@@ -126,6 +133,13 @@ public class SaveDataController {
                                 map.put(LatitudeStorageInDatabase, array[2]);
                                 map.put(LongitudeStorageInDatabase, array[3]);
                                 map.put(photoUriForStoringDatabase, str[0]);
+                                map.put(dateForStoringDatabse,array[4]);
+                                map.put(monthForStoringDatabse,array[5]);
+                                map.put(yearForStoringDatabse,array[6]);
+                                map.put(hourForStoringDatabse,array[7]);
+                                map.put(minuteForStoringDatabse,array[8]);
+                                map.put(categoryForStoringDatabase,array[9]);
+                                map.put(amOrPmForStoringDatabse,array[10]);
 
                                 databaseDemo.saveData(map,POST,key);
                                 Log.v("Modified URkkkkI--", str[0] + "");

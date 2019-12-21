@@ -15,6 +15,13 @@ public class NameClass
     public static String descriptionForStoringDatabase = "desc";
     public static String photoUriForStoringDatabase = "uri";
     public static String locationForStoringDatabase = "location";
+    public static String dateForStoringDatabse = "date";
+    public static String monthForStoringDatabse = "month";
+    public static String yearForStoringDatabse = "year";
+    public static String hourForStoringDatabse = "hour";
+    public static String minuteForStoringDatabse = "minute";
+    public static String amOrPmForStoringDatabse = "amOrpm";
+    public static String categoryForStoringDatabase = "category";
 
     public static String radioButtonText = "category";
     public static String postImageUri = "postImageUri";

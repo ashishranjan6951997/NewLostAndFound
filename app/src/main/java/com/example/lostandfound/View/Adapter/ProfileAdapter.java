@@ -60,7 +60,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull final ProfileAdapter.ViewHolder holder, int position) {
         final Card card = (Card) list.get(position);
-        holder.nameText.setText(card.getId());
+        holder.nameText.setText(card.getName());
         holder.descText.setText(card.getDesc());
         holder.descText.setTextColor(Color.parseColor("#000000"));
 

@@ -40,8 +40,7 @@
                     android:layout_height="35dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="3dp"
-
-                    android:src="@drawable/ashishranjan" />
+                    android:src="@drawable/account_photo" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -53,7 +52,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="Ashish Ranjan"
                         android:textSize="10dp"
                         android:textStyle="bold" />
 
@@ -62,15 +60,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="6 November"
                         android:textSize="10dp" />
 
                     <TextView
+                        android:id="@+id/time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginBottom="5dp"
-                        android:text="8:06 pm"
                         android:textSize="10dp" />
 
 
@@ -95,6 +92,8 @@
 
 
             <TextView
+
+                android:paddingLeft="10dp"
                 android:id="@+id/desc"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -102,7 +101,7 @@
                 android:layout_weight="1"
                 android:text="Description"
                 android:textColor="@android:color/black"
-                android:textSize="8dp" />
+                android:textSize="20dp" />
 
             <Button
                 android:id="@+id/chat"

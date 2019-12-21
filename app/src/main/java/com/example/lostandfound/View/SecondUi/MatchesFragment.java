@@ -1,6 +1,9 @@
 package com.example.lostandfound.View.SecondUi;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +60,9 @@ public class MatchesFragment extends FragmentInterface {
         init();
     }
 
-    private void init() {
+
+    private void init()
+    {
         getActivity().setTitle("Search Your Item");
         recyclerView = rootView.findViewById(R.id.recycler);
         layout = rootView.findViewById(R.id.substitute_linear);
@@ -68,16 +73,15 @@ public class MatchesFragment extends FragmentInterface {
         searchText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MapActivity.class);
-                startActivityForResult(intent, locationRequestCode);
+                if (isConnectedToInternet()) {
+                    Intent intent = new Intent(getActivity(), MapActivity.class);
+                    startActivityForResult(intent, locationRequestCode);
+                }
+                else {
+                    Toast.makeText(getActivity(),"No Internet Connection",Toast.LENGTH_LONG).show();
+                }
             }
         });
-//        Card card = new Card("123","Sayan","default");
-//        List list1 = new ArrayList();
-//        list1.add(card);
-//        setFlingContainer(list1);
-//        controller.setLatLang(choosenLongitude,choosenLatitude);
-//        controller.setRecyclerView();
     }
 
     @Override
@@ -122,19 +126,34 @@ public class MatchesFragment extends FragmentInterface {
     }
 
     @Override
-
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         if (requestCode == locationRequestCode && resultCode == RESULT_OK) {
             choosenLongitude = data.getDoubleExtra("choosenLongitude", 0);
             choosenLatitude = data.getDoubleExtra("choosenLatitude", 0);
-            Toast.makeText(getActivity(), choosenLatitude + "ok" + choosenLongitude, Toast.LENGTH_LONG).show();
             searchText.setText(data.getStringExtra("StringText"));
             controller.setLatLang(choosenLongitude, choosenLatitude);
             controller.setRecyclerView();
 
         }
     }
+
+    public boolean isConnectedToInternet(){
+        ConnectivityManager connectivity = (ConnectivityManager)getActivity().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null)
+        {
+            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+            if (info != null)
+                for (int i = 0; i < info.length; i++)
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
+                    {
+                        return true;
+                    }
+
+        }
+        return false;
+    }
+
 
     private void showData() {
         progressBar.setVisibility(View.VISIBLE);

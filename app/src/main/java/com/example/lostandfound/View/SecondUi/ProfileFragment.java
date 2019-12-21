@@ -1,7 +1,10 @@
 package com.example.lostandfound.View.SecondUi;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
@@ -81,8 +85,15 @@ public class ProfileFragment extends FragmentInterface {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), EditActivity.class);
-                getActivity().startActivity(intent);
+
+                if(isConnectedToInternet()) {
+                    Intent intent = new Intent(getActivity(), EditActivity.class);
+                    getActivity().startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(getActivity(),"No Internet Connection",Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -137,4 +148,23 @@ public class ProfileFragment extends FragmentInterface {
         }
 
     }
+
+
+
+    public boolean isConnectedToInternet(){
+        ConnectivityManager connectivity = (ConnectivityManager)getActivity().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null)
+        {
+            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+            if (info != null)
+                for (int i = 0; i < info.length; i++)
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
+                    {
+                        return true;
+                    }
+
+        }
+        return false;
+    }
+
 }

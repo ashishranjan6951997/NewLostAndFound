@@ -26,7 +26,13 @@ import static com.example.lostandfound.NameClass.NAME;
 import static com.example.lostandfound.NameClass.POST;
 import static com.example.lostandfound.NameClass.RENDER_TIME;
 import static com.example.lostandfound.NameClass.USERS;
+import static com.example.lostandfound.NameClass.amOrPmForStoringDatabse;
+import static com.example.lostandfound.NameClass.dateForStoringDatabse;
 import static com.example.lostandfound.NameClass.descriptionForStoringDatabase;
+import static com.example.lostandfound.NameClass.hourForStoringDatabse;
+import static com.example.lostandfound.NameClass.minuteForStoringDatabse;
+import static com.example.lostandfound.NameClass.monthForStoringDatabse;
+import static com.example.lostandfound.NameClass.yearForStoringDatabse;
 
 public class FragmentDatabaseModel {
     public double choosenLatitude;
@@ -59,13 +65,18 @@ public class FragmentDatabaseModel {
 
                     if (!dataSnapshot.getKey().equals(currentUser)) {
 
-                    final String currentUserName[] = new String[1];
-                        currentUserName[0]="";
+                        final String currentUserName[] = new String[1];
+                        currentUserName[0] = "";
 
-                        if(dataSnapshot.child(DETAILS).child(EDIT).exists() || dataSnapshot.child(DETAILS).child(EDIT).child(NAME).exists())
-                        {
-                                currentUserName[0] = dataSnapshot.child(DETAILS).child(EDIT).child(NAME).getValue().toString();
+                        final String desc[] = new String[1];
+                        desc[0] = "";
+
+
+                        if (dataSnapshot.child(DETAILS).child(EDIT).exists() || dataSnapshot.child(DETAILS).child(EDIT).child(NAME).exists()) {
+                            currentUserName[0] = dataSnapshot.child(DETAILS).child(EDIT).child(NAME).getValue().toString();
                         }
+
+
                         DatabaseReference referencePost = FirebaseDatabase.getInstance().getReference()
                                 .child(USERS)
                                 .child(dataSnapshot.getKey())
@@ -89,21 +100,58 @@ public class FragmentDatabaseModel {
                                         if ((choosenLongitude >= currentUserLongitude - 0.5) && (choosenLatitude <= currentUserLongitude + 0.5)) {
                                             Log.v("In IF CONDITION", stringLatitude);
 
+                                            item[0] = new Card();
                                             if (dataSnapshot.child(IMAGE_URI).getValue() == null || dataSnapshot.child(IMAGE_URI).getValue().equals(profileImage[0])) {
-                                                item[0] = new Card();
+
                                                 item[0].setId(userId[0]);
                                                 item[0].setName(currentUserName[0]);
                                                 item[0].setProfileImageUrl(profileImage[0]);
-                                                list.add(item[0]);
+
                                                 Log.v("added", "doneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
                                             } else {
                                                 profileImage[0] = dataSnapshot.child(IMAGE_URI).getValue().toString();
-                                                item[0] = new Card();
+
                                                 item[0].setId(userId[0]);
                                                 item[0].setName(currentUserName[0]);
                                                 item[0].setProfileImageUrl(profileImage[0]);
-                                                list.add(item[0]);
+
                                             }
+
+                                            if (dataSnapshot.child(descriptionForStoringDatabase) != null || dataSnapshot.child(descriptionForStoringDatabase).getValue() != null) {
+                                                String desc = dataSnapshot.child(descriptionForStoringDatabase).getValue().toString();
+                                                item[0].setDesc(desc);
+                                            }
+
+                                            if (dataSnapshot.child(dateForStoringDatabse) != null || dataSnapshot.child(dateForStoringDatabse).getValue() != null) {
+                                                String date = (String) dataSnapshot.child(dateForStoringDatabse).getValue();
+                                                item[0].setDate(date);
+                                            }
+
+                                            if (dataSnapshot.child(monthForStoringDatabse) != null || dataSnapshot.child(monthForStoringDatabse).getValue() != null) {
+                                                String month = dataSnapshot.child(monthForStoringDatabse).getValue().toString();
+                                                item[0].setMonth(month);
+                                            }
+
+                                            if (dataSnapshot.child(yearForStoringDatabse) != null || dataSnapshot.child(yearForStoringDatabse).getValue() != null) {
+                                                String year = dataSnapshot.child(yearForStoringDatabse).getValue().toString();
+                                                item[0].setYear(year);
+                                            }
+
+                                            if (dataSnapshot.child(hourForStoringDatabse) != null || dataSnapshot.child(hourForStoringDatabse).getValue() != null) {
+                                                String hour = dataSnapshot.child(hourForStoringDatabse).getValue().toString();
+                                                item[0].setHour(hour);
+                                            }
+
+                                            if (dataSnapshot.child(minuteForStoringDatabse) != null || dataSnapshot.child(minuteForStoringDatabse).getValue() != null) {
+                                                String minute = dataSnapshot.child(minuteForStoringDatabse).getValue().toString();
+                                                item[0].setMinute(minute);
+                                            }
+                                            if (dataSnapshot.child(amOrPmForStoringDatabse) != null || dataSnapshot.child(amOrPmForStoringDatabse).getValue() != null) {
+                                                String amOrPm = dataSnapshot.child(amOrPmForStoringDatabse).getValue().toString();
+                                                item[0].setFormat(amOrPm);
+                                            }
+
+                                            list.add(item[0]);
                                         }
                                     }
                                 }

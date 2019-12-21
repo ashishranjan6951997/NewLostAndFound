@@ -10,7 +10,6 @@
     <string name="no_post">No Post Yet</string>
 
     <string name="access_token">pk.eyJ1IjoiYW51YXNoaXNoNjk1IiwiYSI6ImNrMjM4MW4zNzBwbXIzY2s1ZmExbzUxb3YifQ.OP1yz2OfS02xJLgTzuiWKA</string>
-    
     <string-array name="Spinner_items">
 
         <item>Select Your Query</item>

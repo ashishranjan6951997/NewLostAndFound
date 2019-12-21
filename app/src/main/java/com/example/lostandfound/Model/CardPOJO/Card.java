@@ -6,21 +6,24 @@ public class Card
     String id;
     String name;
     String desc;
+    String hour;
+    String minute;
     String date;
-    String time;
+    String month;
+    String year;
     String location;
     String profileImageUrl;
+    String postImageUri;
+    String format;
 
     public Card()
     {
 
     }
 
-    public Card(String id, String desc, String date, String time, String location, String profileImageUrl) {
+    public Card(String id, String desc, String location, String profileImageUrl) {
         this.id = id;
         this.desc = desc;
-        this.date = date;
-        this.time = time;
         this.location = location;
         this.profileImageUrl = profileImageUrl;
     }
@@ -36,6 +39,54 @@ public class Card
     {
         this.id = key;
         this.desc = name;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
+    public String getHour() {
+        return hour;
+    }
+
+    public void setHour(String hour) {
+        this.hour = hour;
+    }
+
+    public String getMinute() {
+        return minute;
+    }
+
+    public void setMinute(String minute) {
+        this.minute = minute;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 
     public String getId() {
@@ -71,20 +122,13 @@ public class Card
         this.profileImageUrl = profileImageUrl;
     }
 
-    public String getDate() {
-        return date;
+
+    public String getPostImageUri() {
+        return postImageUri;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setPostImageUri(String postImageUri) {
+        this.postImageUri = postImageUri;
     }
 
     public String getLocation() {
