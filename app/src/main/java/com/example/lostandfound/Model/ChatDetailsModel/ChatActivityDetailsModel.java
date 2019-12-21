@@ -19,6 +19,7 @@ import java.util.List;
 
 import static com.example.lostandfound.NameClass.CHAT;
 import static com.example.lostandfound.NameClass.CREATED_BY;
+import static com.example.lostandfound.NameClass.IS_URL;
 import static com.example.lostandfound.NameClass.TEXT;
 
 public class ChatActivityDetailsModel {
@@ -30,10 +31,9 @@ public class ChatActivityDetailsModel {
         referenceChat = FirebaseDatabase.getInstance().getReference().child(CHAT);
     }
 
-    public void getChatMessage(String chatId)
-    {
+    public void getChatMessage(String chatId) {
         referenceChat = referenceChat.child(chatId);
-        Log.v("Beginning","IN BEGINNING");
+        Log.v("Beginning", "IN BEGINNING");
         final String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         //   referenceChat = referenceChat.push();
@@ -42,11 +42,11 @@ public class ChatActivityDetailsModel {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Log.v("IN DATA_SNAPSHOT", dataSnapshot.exists() + "");
                 int k = 0;
-                if (dataSnapshot.exists())
-                {
+                if (dataSnapshot.exists()) {
 
                     final String[] message = new String[1];
                     final String[] createdByUser = new String[1];
+                    final String[] isPhoto = new String[1];
 
                     Log.v("child(TEXT)", dataSnapshot.child(TEXT).getValue() + "");
 
@@ -59,6 +59,9 @@ public class ChatActivityDetailsModel {
                         Log.v("USER[0]", createdByUser[0]);
                     }
 
+                    if (dataSnapshot.child(IS_URL).exists()) {
+                        isPhoto[0] = dataSnapshot.child(IS_URL).getValue().toString();
+                    }
 
                     if (message[0] != null && createdByUser[0] != null) {
                         final Boolean currentUserBoolean[] = new Boolean[1];
@@ -79,6 +82,13 @@ public class ChatActivityDetailsModel {
 //                        );
 
                         Chat c = new Chat(message[0], currentUserBoolean[0]);
+
+                        boolean isPhotoBoolean = false;
+                        if (isPhoto[0].equals("true")) {
+                            isPhotoBoolean = true;
+                        }
+
+                        c.setPhoto(isPhotoBoolean);
                         list.add(c);
 
                         Log.v("SIZE[0]", list.size() + "");
@@ -106,11 +116,10 @@ public class ChatActivityDetailsModel {
 
             }
         });
-       // Log.v("LATER SIZE[0]", list.size() + "");
+        // Log.v("LATER SIZE[0]", list.size() + "");
     }
 
-    public List getList()
-    {
+    public List getList() {
         Log.v("SIZE[0] LIST", list.size() + "");
         return list;
     }

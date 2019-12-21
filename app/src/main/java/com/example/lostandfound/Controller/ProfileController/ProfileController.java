@@ -21,6 +21,7 @@ public class ProfileController
     public void showData()
     {
         model.setArrayList();
+
         Thread timer = new Thread()
         {
             @Override
@@ -30,7 +31,7 @@ public class ProfileController
                     fragment.getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            fragment.setRecyclerView(model.getList());
+                            fragment.setRecyclerView(model.getList(),model.getMap());
                             //Log.v("Size from controller ", list.size() + "");
                         }
                     });

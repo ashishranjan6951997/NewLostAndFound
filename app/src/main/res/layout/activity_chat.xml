@@ -80,6 +80,12 @@
             android:textColor="#000"
             android:textStyle="bold" />
 
+        <Button
+            android:text="Attachments"
+            android:id="@+id/attachmentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 

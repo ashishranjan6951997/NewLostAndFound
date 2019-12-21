@@ -1,11 +1,13 @@
 package com.example.lostandfound.View.Chat;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Intent.ACTION_PICK;
 import static com.example.lostandfound.NameClass.CHAT_ID;
 import static com.example.lostandfound.NameClass.DETAILS;
 import static com.example.lostandfound.NameClass.EDIT;
@@ -45,8 +48,11 @@ public class ChatActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     EditText editText;
     Button sendBtn;
+    Button attachmentBtn;
     String chatId;
     DatabaseReference reference;
+    Uri uri;
+    static int imageViewRequestCode = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +62,15 @@ public class ChatActivity extends AppCompatActivity {
         chatId = (String) b.get(CHAT_ID);
         controller = new ChatController(this,chatId);
 
-        controller.send(chatId,"");
+        controller.send(chatId,"",false);
 
         profileImageView = findViewById(R.id.profile_imageView);
         nameTextView = findViewById(R.id.profileName);
+        attachmentBtn = findViewById(R.id.attachmentButton);
 
-        String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         reference = FirebaseDatabase.getInstance().getReference()
                 .child(USERS)
-                .child(currentUser)
+                .child(chatId)
                 .child(DETAILS)
                 .child(EDIT);
 
@@ -101,19 +107,21 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String strText = editText.getText().toString();
-                controller.send(chatId,strText);
+                controller.send(chatId,strText,false);
                 editText.setText("");
 
             }
         });
 
-//        List list = new ArrayList();
-//        ChatAdapter chatAdapter = new ChatAdapter(this,list);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-//        chatAdapter.notifyDataSetChanged();
-//        recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setAdapter(chatAdapter);
 
+        attachmentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ACTION_PICK);
+                intent.setType("image/");
+                startActivityForResult(intent, imageViewRequestCode);
+            }
+        });
     }
 
     public void bindRecyclerView(List list)
@@ -123,5 +131,17 @@ public class ChatActivity extends AppCompatActivity {
         chatAdapter.notifyDataSetChanged();
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(chatAdapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == imageViewRequestCode && resultCode == RESULT_OK && data !=null && data.getData() !=null)
+        {
+            uri = data.getData();
+            controller.send(chatId,uri.toString(),true);
+
+        }
     }
 }

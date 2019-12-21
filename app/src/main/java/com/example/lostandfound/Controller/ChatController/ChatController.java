@@ -3,22 +3,18 @@ package com.example.lostandfound.Controller.ChatController;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
+import com.example.lostandfound.Model.ChatDataSaveModels.ChatDataSaveModel;
 import com.example.lostandfound.Model.ChatDetailsModel.ChatActivityDetailsModel;
-import com.example.lostandfound.Model.ChatPOJO.Chat;
 import com.example.lostandfound.View.Chat.ChatActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -27,9 +23,11 @@ import static com.example.lostandfound.NameClass.CHAT_ID;
 import static com.example.lostandfound.NameClass.CONNECTIONS;
 import static com.example.lostandfound.NameClass.CREATED_BY;
 import static com.example.lostandfound.NameClass.DOUBLE_RENDER_TIME;
+import static com.example.lostandfound.NameClass.IS_URL;
 import static com.example.lostandfound.NameClass.RENDER_TIME;
 import static com.example.lostandfound.NameClass.TEXT;
 import static com.example.lostandfound.NameClass.USERS;
+import static com.example.lostandfound.NameClass.emailForStroringDatabase;
 
 public class ChatController {
     ChatActivity context;
@@ -38,11 +36,13 @@ public class ChatController {
     String chatId;
     String currentUser;
     String key;
+    ChatDataSaveModel saveModel;
 
     public ChatController(ChatActivity chatActivity, String user) {
         context = chatActivity;
         chatId = user;
         model = new ChatActivityDetailsModel();
+        saveModel = new ChatDataSaveModel(context);
     }
 
     private void getChatId(String user) {
@@ -50,30 +50,10 @@ public class ChatController {
         referenceChat = FirebaseDatabase.getInstance().getReference().child(CHAT);
         currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Log.v("CREATE CHAT", "before createChatId");
-//        createChatId(user);
-//        Log.v("AFTER CHAT","after createChatId");
-//        referenceUser = referenceUser.child(currentUser).child(CONNECTIONS).child(user).child(CHAT_ID);
-//        referenceUser.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                if(dataSnapshot.exists())
-//                {
-//                    chatId = dataSnapshot.getValue().toString();
-//              Log.v("CHAT[0] PREVIOUS",chatId+"");
-//                    int k = 9;
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError)
-//            {
-//
-//            }
-//        });
     }
 
-    public void send(final String user, final String text) {
+    public void send(final String user, final String text, final boolean isUri)
+    {
         getChatId(user);
 
         referenceUser.addValueEventListener(new ValueEventListener() {
@@ -136,14 +116,24 @@ public class ChatController {
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        if (!text.equals("") || !text.isEmpty()) {
-                            Map map = new HashMap();
-                            map.put(CREATED_BY, currentUser);
-                            map.put(TEXT, text);
-
+                        if (!text.equals("") || !text.isEmpty())
+                        {
                             referenceChat = referenceChat.push();
-                            referenceChat.setValue(map);
+                            String innerKey = referenceChat.getKey();
+                            if(!isUri) {
+                                Map map = new HashMap();
+                                map.put(CREATED_BY, currentUser);
+                                map.put(TEXT, text);
+                                map.put(IS_URL,isUri);
+
+                                referenceChat.setValue(map);
+                            }
+                            else
+                            {
+                                saveModel.saveDataInStorage(key,innerKey,text,isUri);
+                            }
                         }
+
                     }
                 }, RENDER_TIME
         );

@@ -14,30 +14,43 @@ import com.google.firebase.database.ValueEventListener;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.example.lostandfound.NameClass.DETAILS;
 import static com.example.lostandfound.NameClass.EDIT;
+import static com.example.lostandfound.NameClass.Found;
 import static com.example.lostandfound.NameClass.IMAGE_URI;
 import static com.example.lostandfound.NameClass.LatitudeStorageInDatabase;
+import static com.example.lostandfound.NameClass.Lost;
 import static com.example.lostandfound.NameClass.NAME;
 import static com.example.lostandfound.NameClass.POST;
 import static com.example.lostandfound.NameClass.USERS;
+import static com.example.lostandfound.NameClass.amOrPmForStoringDatabse;
+import static com.example.lostandfound.NameClass.categoryForStoringDatabase;
+import static com.example.lostandfound.NameClass.dateForStoringDatabse;
 import static com.example.lostandfound.NameClass.descriptionForStoringDatabase;
+import static com.example.lostandfound.NameClass.hourForStoringDatabse;
+import static com.example.lostandfound.NameClass.minuteForStoringDatabse;
+import static com.example.lostandfound.NameClass.monthForStoringDatabse;
+import static com.example.lostandfound.NameClass.yearForStoringDatabse;
 
 public class ProfileDatabaseModel {
 
     List list;
+    int found, lost;
 
     public ProfileDatabaseModel() {
         list = new ArrayList();
     }
 
-    public void setArrayList() {
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+    public void setArrayList()
+    {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         final String userName[] = new String[1];
-        userName[0] ="";
+        userName[0] = "";
 
         DatabaseReference referencePost = FirebaseDatabase
                 .getInstance()
@@ -55,8 +68,7 @@ public class ProfileDatabaseModel {
                 .child(DETAILS)
                 .child(EDIT);
 
-        referenceName.addValueEventListener(new ValueEventListener()
-        {
+        referenceName.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(NAME).exists()) {
@@ -70,15 +82,16 @@ public class ProfileDatabaseModel {
             }
         });
 
-        referencePost.addChildEventListener(new ChildEventListener()
-        {
+        referencePost.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.exists())
-                {
+                if (dataSnapshot.exists()) {
                     String name = "";
                     String desc = "";
                     String uri = "";
+                    String date = "", month = "", year = "";
+                    String hour = "", min = "";
+                    String format = "";
                     Card card = new Card();
 
                     if (dataSnapshot.child(descriptionForStoringDatabase).exists()) {
@@ -91,8 +104,45 @@ public class ProfileDatabaseModel {
                         card.setProfileImageUrl(uri);
                     }
 
-                    if(!userName[0].equals(""))
-                    {
+                    if (dataSnapshot.child(dateForStoringDatabse).exists()) {
+                        date = dataSnapshot.child(dateForStoringDatabse).getValue().toString();
+                        card.setDate(date);
+                    }
+
+                    if (dataSnapshot.child(monthForStoringDatabse).exists()) {
+                        month = dataSnapshot.child(monthForStoringDatabse).getValue().toString();
+                        card.setMonth(month);
+                    }
+
+                    if (dataSnapshot.child(yearForStoringDatabse).exists()) {
+                        year = dataSnapshot.child(yearForStoringDatabse).getValue().toString();
+                        card.setYear(year);
+                    }
+
+                    if (dataSnapshot.child(minuteForStoringDatabse).exists()) {
+                        min = dataSnapshot.child(minuteForStoringDatabse).getValue().toString();
+                        card.setMinute(min);
+                    }
+
+                    if (dataSnapshot.child(hourForStoringDatabse).exists()) {
+                        hour = dataSnapshot.child(hourForStoringDatabse).getValue().toString();
+                        card.setHour(hour);
+                    }
+
+                    if (dataSnapshot.child(amOrPmForStoringDatabse).exists()) {
+                        format = dataSnapshot.child(amOrPmForStoringDatabse).getValue().toString();
+                        card.setFormat(format);
+                    }
+
+                    if (dataSnapshot.child(categoryForStoringDatabase).getValue().equals(Lost)) {
+                        lost++;
+                    }
+
+                    if (dataSnapshot.child(categoryForStoringDatabase).getValue().equals(Found)) {
+                        found++;
+                    }
+
+                    if (!userName[0].equals("")) {
                         name = userName[0];
                         card.setName(name);
                     }
@@ -122,6 +172,13 @@ public class ProfileDatabaseModel {
 
             }
         });
+    }
+
+    public Map getMap() {
+        Map map = new HashMap();
+        map.put(Lost, lost);
+        map.put(Found, found);
+        return map;
     }
 
     public List getList() {

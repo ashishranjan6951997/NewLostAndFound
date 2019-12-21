@@ -22,10 +22,14 @@ public class NameClass
     public static String minuteForStoringDatabse = "minute";
     public static String amOrPmForStoringDatabse = "amOrpm";
     public static String categoryForStoringDatabase = "category";
+    public static String Lost = "Lost Item";
+    public static String Found = "Found Item";
+    public static String IS_URL = "isUrl";
 
     public static String radioButtonText = "category";
     public static String postImageUri = "postImageUri";
     public static String profileImageUri = "profileImageUri";
+    public static String chatImageUri = "chatImageUri";
     public static String LatitudeStorageInDatabase="Latitude";
     public static String LongitudeStorageInDatabase="Longitude";
     public static String DETAILS="details";

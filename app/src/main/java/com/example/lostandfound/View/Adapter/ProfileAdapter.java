@@ -64,12 +64,24 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         holder.descText.setText(card.getDesc());
         holder.descText.setTextColor(Color.parseColor("#000000"));
 
+        String date = card.getDate();
+        String month = card.getMonth();
+        String year = card.getYear();
+        holder.dateText.setText(date + "-" + month + "-" + year);
+
+        String hour = card.getHour();
+        String minute = card.getMinute();
+        if (Integer.parseInt(minute) < 10) {
+            minute = "0" + minute;
+        }
+        String format = card.getFormat();
+        holder.timeText.setText(hour + ":" + minute + " " + format);
 
         referenceProfile.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    if(dataSnapshot.child(EDIT).exists() || dataSnapshot.child(EDIT).child(IMAGE_URI).exists()) {
+                    if (dataSnapshot.child(EDIT).exists() || dataSnapshot.child(EDIT).child(IMAGE_URI).exists()) {
                         String uri = dataSnapshot.child(EDIT).child(IMAGE_URI).getValue().toString();
                         Glide.with(context).load(Uri.parse(uri)).into(holder.profilePhoto);
                     }
@@ -96,14 +108,17 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView, profilePhoto;
-        TextView nameText, descText;
+        TextView nameText, descText, dateText, timeText;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+
             nameText = itemView.findViewById(R.id.name);
             descText = itemView.findViewById(R.id.desc);
+            dateText = itemView.findViewById(R.id.date);
+            timeText = itemView.findViewById(R.id.time);
             imageView = itemView.findViewById(R.id.image);
             profilePhoto = itemView.findViewById(R.id.card_layout_home_fragment_imageView);
         }

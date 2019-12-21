@@ -4,12 +4,20 @@ public class Chat
 {
     public String mMessage;
     public Boolean mCurrentUser;
+    public Boolean isPhoto;
 
     public Chat(String mMessage, Boolean mUser) {
         this.mMessage = mMessage;
         this.mCurrentUser = mUser;
     }
 
+    public Boolean getPhoto() {
+        return isPhoto;
+    }
+
+    public void setPhoto(Boolean photo) {
+        isPhoto = photo;
+    }
 
     public String getmMessage() {
         return mMessage;
