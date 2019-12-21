@@ -12,13 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/container2"
-
         android:layout_margin="10dp"
         android:orientation="vertical"
         android:paddingBottom="10dp">
 
         <TextView
-            android:background="@drawable/item_right_chat"
             android:id="@+id/txt_msg2"
             android:layout_width="wrap_content"
             android:textSize="15sp"
@@ -27,6 +25,12 @@
             android:padding="5dp"
             android:textColor="@android:color/black" />
 
-    </LinearLayout>
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/txt_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
+        <!---->
+    </LinearLayout>
 </LinearLayout>

@@ -39,10 +39,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.example.lostandfound.NameClass.DETAILS;
 import static com.example.lostandfound.NameClass.EDIT;
+import static com.example.lostandfound.NameClass.Found;
 import static com.example.lostandfound.NameClass.IMAGE_URI;
+import static com.example.lostandfound.NameClass.Lost;
 import static com.example.lostandfound.NameClass.NAME;
 import static com.example.lostandfound.NameClass.USERS;
 
@@ -51,13 +54,13 @@ public class ProfileFragment extends FragmentInterface {
     Toolbar toolbar;
     LinearLayout linearLayout;
     ImageView profileImageView;
-    TextView numberOfPosts;
     RecyclerView recyclerView;
     LinearLayout layout;
     Button editBtn;
     TextView nameText;
     ProfileController controller;
     ProfileAdapter adapter;
+    TextView totalPostText,lostPostText,foundPostText;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,12 +71,15 @@ public class ProfileFragment extends FragmentInterface {
     }
 
     private void initView() {
-        numberOfPosts = rootView.findViewById(R.id.number_of_posts);
         linearLayout = rootView.findViewById(R.id.linear_layout_image_and_number_of_post);
         profileImageView = rootView.findViewById(R.id.profile_imageView);
         recyclerView = rootView.findViewById(R.id.recycler);
         layout = rootView.findViewById(R.id.substitute_linear_profile);
         editBtn = rootView.findViewById(R.id.edit_btn);
+
+        totalPostText = rootView.findViewById(R.id.number_of_posts);
+        lostPostText = rootView.findViewById(R.id.number_of_lost_posts);
+        foundPostText = rootView.findViewById(R.id.number_of_found_posts);
 
         nameText = rootView.findViewById(R.id.userName);
 
@@ -132,12 +138,23 @@ public class ProfileFragment extends FragmentInterface {
         controller.showData();
     }
 
-    public void setRecyclerView(List list)
+    public void setRecyclerView(List list, Map map)
     {
         if (list.size() == 0) {
             layout.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         } else {
+
+            String lost = map.get(Lost).toString();
+            String found = map.get(Found).toString();
+            int lostPost = Integer.parseInt(lost);
+            int foundPost = Integer.parseInt(found);
+            int total = lostPost + foundPost;
+
+            totalPostText.setText(String.valueOf(total));
+            foundPostText.setText(String.valueOf(foundPost));
+            lostPostText.setText(String.valueOf(lostPost));
+
             layout.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
             adapter = new ProfileAdapter(getContext(),list);
@@ -146,10 +163,7 @@ public class ProfileFragment extends FragmentInterface {
             recyclerView.setLayoutManager(manager);
             recyclerView.setAdapter(adapter);
         }
-
     }
-
-
 
     public boolean isConnectedToInternet(){
         ConnectivityManager connectivity = (ConnectivityManager)getActivity().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -166,5 +180,4 @@ public class ProfileFragment extends FragmentInterface {
         }
         return false;
     }
-
 }
