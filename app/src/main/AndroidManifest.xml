@@ -3,6 +3,7 @@
     package="com.example.lostandfound">
 
     <application
+
         android:allowBackup="true"
         android:icon="@drawable/newlostandfoundimage"
         android:label="@string/app_name"
@@ -10,11 +11,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:screenOrientation="portrait"
             android:name=".View.EditUI.EditActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            >
 
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -23,10 +27,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".View.Chat.ChatActivity"
+        <activity android:name=".View.Chat.ChatActivity"
+            android:screenOrientation="portrait"
+       
+         
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
+            android:screenOrientation="portrait"
             android:name=".View.Authentication.AuthenticateActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -35,8 +42,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.SecondUi.SecondMainActivity" />
-        <activity android:name=".MapActivity.MapActivity" />
+        <activity android:name=".View.SecondUi.SecondMainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MapActivity.MapActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
