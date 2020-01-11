@@ -28,20 +28,30 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Calendar;
+import java.util.Map;
 
 import static android.content.Intent.ACTION_PICK;
 import static com.example.lostandfound.NameClass.CHAT_ID;
+import static com.example.lostandfound.NameClass.CHAT_TIME;
+import static com.example.lostandfound.NameClass.DATE;
 import static com.example.lostandfound.NameClass.DETAILS;
 import static com.example.lostandfound.NameClass.EDIT;
+import static com.example.lostandfound.NameClass.HOUR;
 import static com.example.lostandfound.NameClass.IMAGE_URI;
+import static com.example.lostandfound.NameClass.MINUTE;
+import static com.example.lostandfound.NameClass.MONTH;
 import static com.example.lostandfound.NameClass.NAME;
+import static com.example.lostandfound.NameClass.TEXT;
 import static com.example.lostandfound.NameClass.USERS;
+import static com.example.lostandfound.NameClass.YEAR;
 
 public class ChatActivity extends AppCompatActivity {
 
     ChatController controller;
+
     Toolbar toolbar;
     ImageView profileImageView;
     TextView nameTextView;
@@ -52,17 +62,23 @@ public class ChatActivity extends AppCompatActivity {
     String chatId;
     DatabaseReference reference;
     Uri uri;
+    int hour,min,date,month,year;
     static int imageViewRequestCode = 1;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
         Bundle b = getIntent().getExtras();
         chatId = (String) b.get(CHAT_ID);
+        //chatTime = (String) b.get(CHAT_TIME);
         controller = new ChatController(this,chatId);
 
-        controller.send(chatId,"",false);
+        Map map = new HashMap();
+        map.put(TEXT,"");
+        controller.send(chatId,map,false);
 
         profileImageView = findViewById(R.id.profile_imageView);
         nameTextView = findViewById(R.id.profileName);
@@ -80,12 +96,16 @@ public class ChatActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                profileUri[0] = dataSnapshot.child(IMAGE_URI).getValue().toString();
+                if(dataSnapshot.child(IMAGE_URI).exists())
+                {
+                    profileUri[0] = dataSnapshot.child(IMAGE_URI).getValue().toString();
+                }
                 name[0] = dataSnapshot.child(NAME).getValue().toString();
 
-                Glide.with(ChatActivity.this).load(Uri.parse(profileUri[0])).into(profileImageView);
+                if(profileUri[0]!=null) {
+                    Glide.with(ChatActivity.this).load(Uri.parse(profileUri[0])).into(profileImageView);
+                }
                 nameTextView.setText(name[0]);
-
             }
 
             @Override
@@ -105,9 +125,27 @@ public class ChatActivity extends AppCompatActivity {
         toolbar.setBackgroundColor(Color.parseColor("#43A047"));
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                String chatTime = String.valueOf(System.currentTimeMillis());
+                Calendar calendar = Calendar.getInstance();
+                hour = calendar.get(Calendar.HOUR_OF_DAY);
+                min = calendar.get(Calendar.MINUTE);
+                date = calendar.get(Calendar.DATE);
+                month = calendar.get(Calendar.MONTH)+1;
+                year = calendar.get(Calendar.YEAR);
+
+                Map map = new HashMap();
+                map.put(HOUR,hour);
+                map.put(MINUTE,min);
+                map.put(DATE,date);
+                map.put(MONTH,month);
+                map.put(YEAR,year);
+
                 String strText = editText.getText().toString();
-                controller.send(chatId,strText,false);
+
+                map.put(TEXT,strText);
+                controller.send(chatId,map,false);
                 editText.setText("");
 
             }
@@ -140,8 +178,30 @@ public class ChatActivity extends AppCompatActivity {
         if(requestCode == imageViewRequestCode && resultCode == RESULT_OK && data !=null && data.getData() !=null)
         {
             uri = data.getData();
-            controller.send(chatId,uri.toString(),true);
+            String uriString = uri.toString();
+            Map map = new HashMap();
 
+            Calendar calendar = Calendar.getInstance();
+            hour = calendar.get(Calendar.HOUR_OF_DAY);
+            min = calendar.get(Calendar.MINUTE);
+            date = calendar.get(Calendar.DATE);
+            month = calendar.get(Calendar.MONTH) + 1;
+            year = calendar.get(Calendar.YEAR);
+
+            map.put(HOUR,hour);
+            map.put(MINUTE,min);
+            map.put(DATE,date);
+            map.put(MONTH,month);
+            map.put(YEAR,year);
+            map.put(TEXT,uriString);
+            controller.send(chatId,map,true);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        controller.destroy();
     }
 }

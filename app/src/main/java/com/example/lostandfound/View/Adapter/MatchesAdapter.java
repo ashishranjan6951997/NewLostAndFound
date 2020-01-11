@@ -22,6 +22,7 @@ import com.example.lostandfound.View.Chat.ChatActivity;
 import java.util.List;
 
 import static com.example.lostandfound.NameClass.CHAT_ID;
+import static com.example.lostandfound.NameClass.CHAT_TIME;
 import static com.example.lostandfound.NameClass.minuteForStoringDatabse;
 
 public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHolder> {
@@ -76,6 +77,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
             public void onClick(View v) {
                 Intent intent = new Intent(context, ChatActivity.class);
                 Bundle b = new Bundle();
+                Log.e("CURRENT", String.valueOf(System.currentTimeMillis()));
                 b.putString(CHAT_ID, card.getId());
                 intent.putExtras(b);
                 context.startActivity(intent);

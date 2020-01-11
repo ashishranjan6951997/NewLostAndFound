@@ -21,6 +21,7 @@ import com.example.lostandfound.View.Chat.ChatActivity;
 import java.util.List;
 
 import static com.example.lostandfound.NameClass.CHAT_ID;
+import static com.example.lostandfound.NameClass.CHAT_TIME;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder>
 {

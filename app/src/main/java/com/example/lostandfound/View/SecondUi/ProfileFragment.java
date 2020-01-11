@@ -49,7 +49,8 @@ import static com.example.lostandfound.NameClass.Lost;
 import static com.example.lostandfound.NameClass.NAME;
 import static com.example.lostandfound.NameClass.USERS;
 
-public class ProfileFragment extends FragmentInterface {
+public class ProfileFragment extends FragmentInterface
+{
     View rootView;
     Toolbar toolbar;
     LinearLayout linearLayout;
@@ -116,11 +117,13 @@ public class ProfileFragment extends FragmentInterface {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Log.e("SNAPSHOT", dataSnapshot.toString());
 
-                if (dataSnapshot.getValue() != null) {
+                if (dataSnapshot.child(NAME).getValue() != null) {
                     name[0] = dataSnapshot.child(NAME).getValue().toString();
-                    uri[0] = dataSnapshot.child(IMAGE_URI).getValue().toString();
                 }
 
+                if(dataSnapshot.child(IMAGE_URI).getValue() !=null) {
+                    uri[0] = dataSnapshot.child(IMAGE_URI).getValue().toString();
+                }
                 getActivity().setTitle(name[0]);
                 if (name[0] != null)
                     nameText.setText(name[0]);

@@ -15,9 +15,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import io.reactivex.Maybe;
+import io.reactivex.MaybeEmitter;
+import io.reactivex.MaybeOnSubscribe;
+
 import static com.example.lostandfound.NameClass.CHAT;
+import static com.example.lostandfound.NameClass.CHAT_TIME;
 import static com.example.lostandfound.NameClass.CONNECTIONS;
 import static com.example.lostandfound.NameClass.DETAILS;
 import static com.example.lostandfound.NameClass.EDIT;
@@ -37,217 +46,181 @@ import static com.example.lostandfound.NameClass.yearForStoringDatabse;
 public class FragmentDatabaseModel {
     public double choosenLatitude;
     public double choosenLongitude;
-    public List list;
 
-    public FragmentDatabaseModel(List list) {
-        this.list = list;
+    public FragmentDatabaseModel() {
+
     }
 
-    public void setArrayList(double longitude, double latitude) {
+    public Maybe<List> setArrayList(double longitude, double latitude)
+    {
+
+        final List list = new ArrayList();
         this.choosenLongitude = longitude;
         this.choosenLatitude = latitude;
 
         final String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(USERS);
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(USERS);
         final Card[] item = new Card[1];
 
         //reference = reference.child(currentUser).child(DETAILS);
-        reference.addChildEventListener(new ChildEventListener() {
+
+        return Maybe.create(new MaybeOnSubscribe<List>() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.exists()) {
+            public void subscribe(final MaybeEmitter<List> emitter) throws Exception {
+                reference.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        if (dataSnapshot.exists()) {
 
-                    final String[] profileImage = {"default"};
-                    final String userId[] = new String[1];
-                    userId[0] = dataSnapshot.getKey();
+                            final String[] profileImage = {"default"};
+                            final String userId[] = new String[1];
+                            userId[0] = dataSnapshot.getKey();
 
-                    //Log.e("ERROR IS -->", dataSnapshot.child(DETAILS).child(EDIT).child(IMAGE_URI).toString());
+                            //Log.e("ERROR IS -->", dataSnapshot.child(DETAILS).child(EDIT).child(IMAGE_URI).toString());
 
-                    if (!dataSnapshot.getKey().equals(currentUser)) {
+                            if (!dataSnapshot.getKey().equals(currentUser)) {
 
-                        final String currentUserName[] = new String[1];
-                        currentUserName[0] = "";
+                                final String currentUserName[] = new String[1];
+                                currentUserName[0] = "";
 
-                        final String desc[] = new String[1];
-                        desc[0] = "";
-
-
-                        if (dataSnapshot.child(DETAILS).child(EDIT).exists() || dataSnapshot.child(DETAILS).child(EDIT).child(NAME).exists()) {
-                            currentUserName[0] = dataSnapshot.child(DETAILS).child(EDIT).child(NAME).getValue().toString();
-                        }
+                                final String desc[] = new String[1];
+                                desc[0] = "";
 
 
-                        DatabaseReference referencePost = FirebaseDatabase.getInstance().getReference()
-                                .child(USERS)
-                                .child(dataSnapshot.getKey())
-                                .child(DETAILS)
-                                .child(POST);
+                                if (dataSnapshot.child(DETAILS).child(EDIT).exists() || dataSnapshot.child(DETAILS).child(EDIT).child(NAME).exists()) {
+                                    currentUserName[0] = dataSnapshot.child(DETAILS).child(EDIT).child(NAME).getValue().toString();
+                                }
 
-                        referencePost.addChildEventListener(new ChildEventListener() {
-                            @Override
-                            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                DatabaseReference referencePost = FirebaseDatabase.getInstance().getReference()
+                                        .child(USERS)
+                                        .child(dataSnapshot.getKey())
+                                        .child(DETAILS)
+                                        .child(POST);
 
-                                String stringLatitude = (String) dataSnapshot.child("Latitude").getValue();
-                                String stringLongitude = (String) dataSnapshot.child("Longitude").getValue();
-                                // Log.v("Out of IF CONDITION", stringLatitude);
+                                referencePost.addChildEventListener(new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                                if (stringLatitude != null && stringLongitude != null) {
+                                        String stringLatitude = (String) dataSnapshot.child("Latitude").getValue();
+                                        String stringLongitude = (String) dataSnapshot.child("Longitude").getValue();
+                                        // Log.v("Out of IF CONDITION", stringLatitude);
 
-                                    double currentUserLatitude = Double.parseDouble(stringLatitude);
-                                    double currentUserLongitude = Double.parseDouble(stringLongitude);
-                                    Log.v("In IF CONDITION", currentUserLatitude + "   " + choosenLatitude);
-                                    if ((choosenLatitude >= currentUserLatitude - 0.5) && (choosenLatitude <= currentUserLatitude + 0.5)) {
-                                        if ((choosenLongitude >= currentUserLongitude - 0.5) && (choosenLatitude <= currentUserLongitude + 0.5)) {
-                                            Log.v("In IF CONDITION", stringLatitude);
+                                        if (stringLatitude != null && stringLongitude != null) {
 
-                                            item[0] = new Card();
-                                            if (dataSnapshot.child(IMAGE_URI).getValue() == null || dataSnapshot.child(IMAGE_URI).getValue().equals(profileImage[0])) {
+                                            double currentUserLatitude = Double.parseDouble(stringLatitude);
+                                            double currentUserLongitude = Double.parseDouble(stringLongitude);
+                                            Log.v("In IF CONDITION", currentUserLatitude + "   " + choosenLatitude);
+                                            if ((choosenLatitude >= currentUserLatitude - 0.5) && (choosenLatitude <= currentUserLatitude + 0.5)) {
+                                                if ((choosenLongitude >= currentUserLongitude - 0.5) && (choosenLatitude <= currentUserLongitude + 0.5)) {
+                                                    Log.v("In IF CONDITION", stringLatitude);
 
-                                                item[0].setId(userId[0]);
-                                                item[0].setName(currentUserName[0]);
-                                                item[0].setProfileImageUrl(profileImage[0]);
+                                                    item[0] = new Card();
+                                                    if (dataSnapshot.child(IMAGE_URI).getValue() == null || dataSnapshot.child(IMAGE_URI).getValue().equals(profileImage[0])) {
 
-                                                Log.v("added", "doneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-                                            } else {
-                                                profileImage[0] = dataSnapshot.child(IMAGE_URI).getValue().toString();
+                                                        item[0].setId(userId[0]);
+                                                        item[0].setName(currentUserName[0]);
+                                                        item[0].setProfileImageUrl(profileImage[0]);
 
-                                                item[0].setId(userId[0]);
-                                                item[0].setName(currentUserName[0]);
-                                                item[0].setProfileImageUrl(profileImage[0]);
+                                                        Log.v("added", "doneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+                                                    } else {
+                                                        profileImage[0] = dataSnapshot.child(IMAGE_URI).getValue().toString();
 
+                                                        item[0].setId(userId[0]);
+                                                        item[0].setName(currentUserName[0]);
+                                                        item[0].setProfileImageUrl(profileImage[0]);
+
+                                                    }
+
+                                                    if (dataSnapshot.child(descriptionForStoringDatabase) != null || dataSnapshot.child(descriptionForStoringDatabase).getValue() != null) {
+                                                        String desc = dataSnapshot.child(descriptionForStoringDatabase).getValue().toString();
+                                                        item[0].setDesc(desc);
+                                                    }
+
+                                                    if (dataSnapshot.child(dateForStoringDatabse) != null || dataSnapshot.child(dateForStoringDatabse).getValue() != null) {
+                                                        String date = (String) dataSnapshot.child(dateForStoringDatabse).getValue();
+                                                        item[0].setDate(date);
+                                                    }
+
+                                                    if (dataSnapshot.child(monthForStoringDatabse) != null || dataSnapshot.child(monthForStoringDatabse).getValue() != null) {
+                                                        String month = dataSnapshot.child(monthForStoringDatabse).getValue().toString();
+                                                        item[0].setMonth(month);
+                                                    }
+
+                                                    if (dataSnapshot.child(yearForStoringDatabse) != null || dataSnapshot.child(yearForStoringDatabse).getValue() != null) {
+                                                        String year = dataSnapshot.child(yearForStoringDatabse).getValue().toString();
+                                                        item[0].setYear(year);
+                                                    }
+
+                                                    if (dataSnapshot.child(hourForStoringDatabse) != null || dataSnapshot.child(hourForStoringDatabse).getValue() != null) {
+                                                        String hour = dataSnapshot.child(hourForStoringDatabse).getValue().toString();
+                                                        item[0].setHour(hour);
+                                                    }
+
+                                                    if (dataSnapshot.child(minuteForStoringDatabse) != null || dataSnapshot.child(minuteForStoringDatabse).getValue() != null) {
+                                                        String minute = dataSnapshot.child(minuteForStoringDatabse).getValue().toString();
+                                                        item[0].setMinute(minute);
+                                                    }
+                                                    if (dataSnapshot.child(amOrPmForStoringDatabse) != null || dataSnapshot.child(amOrPmForStoringDatabse).getValue() != null) {
+                                                        String amOrPm = dataSnapshot.child(amOrPmForStoringDatabse).getValue().toString();
+                                                        item[0].setFormat(amOrPm);
+                                                    }
+                                                    list.add(item[0]);
+                                                    Log.e("SIZE MODEL", String.valueOf(list.size()));
+                                                    emitter.onSuccess(list);
+                                                    emitter.onComplete();
+                                                    //list.clear();
+                                                }
                                             }
-
-                                            if (dataSnapshot.child(descriptionForStoringDatabase) != null || dataSnapshot.child(descriptionForStoringDatabase).getValue() != null) {
-                                                String desc = dataSnapshot.child(descriptionForStoringDatabase).getValue().toString();
-                                                item[0].setDesc(desc);
-                                            }
-
-                                            if (dataSnapshot.child(dateForStoringDatabse) != null || dataSnapshot.child(dateForStoringDatabse).getValue() != null) {
-                                                String date = (String) dataSnapshot.child(dateForStoringDatabse).getValue();
-                                                item[0].setDate(date);
-                                            }
-
-                                            if (dataSnapshot.child(monthForStoringDatabse) != null || dataSnapshot.child(monthForStoringDatabse).getValue() != null) {
-                                                String month = dataSnapshot.child(monthForStoringDatabse).getValue().toString();
-                                                item[0].setMonth(month);
-                                            }
-
-                                            if (dataSnapshot.child(yearForStoringDatabse) != null || dataSnapshot.child(yearForStoringDatabse).getValue() != null) {
-                                                String year = dataSnapshot.child(yearForStoringDatabse).getValue().toString();
-                                                item[0].setYear(year);
-                                            }
-
-                                            if (dataSnapshot.child(hourForStoringDatabse) != null || dataSnapshot.child(hourForStoringDatabse).getValue() != null) {
-                                                String hour = dataSnapshot.child(hourForStoringDatabse).getValue().toString();
-                                                item[0].setHour(hour);
-                                            }
-
-                                            if (dataSnapshot.child(minuteForStoringDatabse) != null || dataSnapshot.child(minuteForStoringDatabse).getValue() != null) {
-                                                String minute = dataSnapshot.child(minuteForStoringDatabse).getValue().toString();
-                                                item[0].setMinute(minute);
-                                            }
-                                            if (dataSnapshot.child(amOrPmForStoringDatabse) != null || dataSnapshot.child(amOrPmForStoringDatabse).getValue() != null) {
-                                                String amOrPm = dataSnapshot.child(amOrPmForStoringDatabse).getValue().toString();
-                                                item[0].setFormat(amOrPm);
-                                            }
-
-                                            list.add(item[0]);
                                         }
                                     }
-                                }
+
+                                    @Override
+                                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
                             }
 
-                            @Override
-                            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                            }
-
-                            @Override
-                            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                            }
-
-                            @Override
-                            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-
-
-//
-//                        String stringLatitude = (String) dataSnapshot.child(DETAILS).child(EDIT).child("Latitude").getValue();
-//                        String stringLongitude = (String) dataSnapshot.child(DETAILS).child(EDIT).child("Longitude").getValue();
-//                       // Log.v("Out of IF CONDITION", stringLatitude);
-//
-//
-//                        if (stringLatitude != null && stringLongitude != null) {
-//
-//                            double currentUserLatitude = Double.parseDouble(stringLatitude);
-//                            double currentUserLongitude = Double.parseDouble(stringLongitude);
-//                            Log.v("In IF CONDITION", currentUserLatitude + "   " + choosenLatitude);
-//                            if ((choosenLatitude >= currentUserLatitude - 0.5) && (choosenLatitude <= currentUserLatitude + 0.5)) {
-//                                if ((choosenLongitude >= currentUserLongitude - 0.5) && (choosenLatitude <= currentUserLongitude + 0.5)) {
-//                                    Log.v("In IF CONDITION", stringLatitude);
-//
-//                                    if (dataSnapshot.child(DETAILS).child(EDIT).child(IMAGE_URI).getValue() == null || dataSnapshot.child(DETAILS).child(IMAGE_URI).getValue().equals(profileImage)) {
-//                                        item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(DETAILS).child(EDIT).child(NAME).getValue().toString(), profileImage);
-//                                        list.add(item[0]);
-//                                        Log.v("added", "doneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-//                                    } else {
-//                                        profileImage = dataSnapshot.child(DETAILS).child(EDIT).child(IMAGE_URI).getValue().toString();
-//                                        item[0] = new Card(dataSnapshot.getKey(), dataSnapshot.child(DETAILS).child(EDIT).child(NAME).getValue().toString(), profileImage);
-//                                        list.add(item[0]);
-//                                    }
-//                                }
-//                            }
-//                        }
+                        }
                     }
 
-                    Log.v("Item[0] value is ", item[0] + "");
-                    //list.add(item);
-//
-//                    new java.util.Timer().schedule(
-//                            new java.util.TimerTask() {
-//                                @Override
-//                                public void run() {
-//                                    // your code here
-//                                    Log.v("LATER item[0] value is ",item[0]+"");
-//                                    list.add(item[0]);
-//                                    Log.v("Size",list.size()+"");
-//                                }
-//                            },
-//                            RENDER_TIME
-//                    );
-                    int k = 9;
-                    // ar.notifyDataSetChanged();
-                }
-            }
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    }
 
-            }
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                    }
 
-            }
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    }
 
-            }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+                    }
+                });
 
 //
 //        new java.util.Timer().schedule(
@@ -262,78 +235,100 @@ public class FragmentDatabaseModel {
 //                },
 //                RENDER_TIME
 //        );
+            }
+
+        });
     }
 
-    public List getList() {
-        return list;
-    }
 
-    public void setArrayListForMessage() {
+    public Maybe<List> setArrayListForMessage() {
         final String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference referenceChat = FirebaseDatabase.
+        final DatabaseReference referenceChat = FirebaseDatabase.
                 getInstance().
                 getReference().
                 child(USERS).
                 child(currentUser).
                 child(CONNECTIONS);
 
-        referenceChat.addChildEventListener(new ChildEventListener() {
+        final List list = new ArrayList();
+        final Card c = new Card();
+
+        return Maybe.create(new MaybeOnSubscribe<List>() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.exists()) {
-                    DatabaseReference referenceUser = FirebaseDatabase.
-                            getInstance().
-                            getReference().
-                            child(USERS);
+            public void subscribe(final MaybeEmitter<List> emitter) throws Exception {
+                referenceChat.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        if (dataSnapshot.exists()) {
+                            DatabaseReference referenceUser = FirebaseDatabase.
+                                    getInstance().
+                                    getReference().
+                                    child(USERS);
 
-                    final String key = dataSnapshot.getKey();
+                            if(dataSnapshot.child(CHAT_TIME).exists()) {
+                                String time = dataSnapshot.child(CHAT_TIME).getValue().toString();
+                                c.setChatTime(time);
+                            }
 
-                    referenceUser.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            final String key = dataSnapshot.getKey();
 
-                            String name = (String) dataSnapshot.child(key).child(DETAILS).child(EDIT).child(NAME).getValue();
-                            String uri = (String) dataSnapshot.child(key).child(DETAILS).child(EDIT).child(IMAGE_URI).getValue();
-                            Card c = new Card();
-                            c.setId(key);
-                            c.setName(name);
-                            c.setProfileImageUrl(uri);
-                            list.add(c);
-                            Log.v("Previous List Size", list.size() + "");
+                            referenceUser.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                    String name = (String) dataSnapshot.child(key).child(DETAILS).child(EDIT).child(NAME).getValue();
+                                    String uri = (String) dataSnapshot.child(key).child(DETAILS).child(EDIT).child(IMAGE_URI).getValue();
+
+                                    c.setId(key);
+                                    c.setName(name);
+                                    c.setProfileImageUrl(uri);
+                                    list.add(c);
+
+//                                    Collections.sort(list, new Comparator() {
+//                                        @Override
+//                                        public int compare(Object o1, Object o2) {
+//
+//                                            Card card1 = (Card) o1;
+//                                            Card card2 = (Card) o2;
+//
+//                                            return card1.getChatTime().compareToIgnoreCase(card2.getChatTime());
+//                                        }
+//                                    });
+
+
+                                    emitter.onSuccess(list);
+//                                  Log.v("Previous List Size", list.size() + "");
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
                         }
+                    }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                        }
-                    });
-                }
-            }
+                    }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
 
-            }
+                    }
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-            }
+                    }
 
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                    }
+                });
             }
         });
-    }
-
-    public List getListForMessage() {
-        Log.v("Later List Size", list.size() + "");
-        return list;
     }
 }

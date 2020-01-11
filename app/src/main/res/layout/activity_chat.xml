@@ -23,15 +23,16 @@
                 android:layout_weight="2"
                 android:src="@drawable/account_photo"></de.hdodenhof.circleimageview.CircleImageView>
 
+
             <TextView
-                android:textSize="20dp"
-                android:textStyle="bold"
                 android:id="@+id/profileName"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="6"
                 android:text="Name"
-                android:textColor="#ffff" />
+                android:textColor="#ffff"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -81,10 +82,10 @@
             android:textStyle="bold" />
 
         <Button
-            android:text="Attachments"
             android:id="@+id/attachmentButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Attachments" />
 
     </LinearLayout>
 

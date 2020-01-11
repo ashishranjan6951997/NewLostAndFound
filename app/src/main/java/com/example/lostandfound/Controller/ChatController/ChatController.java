@@ -4,7 +4,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.lostandfound.Model.CardPOJO.Card;
 import com.example.lostandfound.Model.ChatDataSaveModels.ChatDataSaveModel;
+import com.example.lostandfound.Model.ChatDataSaveModels.ChatKeySaveModel;
 import com.example.lostandfound.Model.ChatDetailsModel.ChatActivityDetailsModel;
 import com.example.lostandfound.View.Chat.ChatActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -14,189 +16,112 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableMaybeObserver;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.example.lostandfound.NameClass.CHAT;
 import static com.example.lostandfound.NameClass.CHAT_ID;
 import static com.example.lostandfound.NameClass.CONNECTIONS;
-import static com.example.lostandfound.NameClass.CREATED_BY;
-import static com.example.lostandfound.NameClass.DOUBLE_RENDER_TIME;
-import static com.example.lostandfound.NameClass.IS_URL;
-import static com.example.lostandfound.NameClass.RENDER_TIME;
 import static com.example.lostandfound.NameClass.TEXT;
 import static com.example.lostandfound.NameClass.USERS;
-import static com.example.lostandfound.NameClass.emailForStroringDatabase;
 
-public class ChatController {
+public class ChatController
+{
     ChatActivity context;
-    ChatActivityDetailsModel model;
+    ChatActivityDetailsModel chatActivityDetailsModel;
+    ChatKeySaveModel chatKeySaveModel;
     DatabaseReference referenceUser, referenceChat;
     String chatId;
     String currentUser;
     String key;
-    ChatDataSaveModel saveModel;
+    ChatDataSaveModel chatDataSaveModel;
+    CompositeDisposable disposable;
 
     public ChatController(ChatActivity chatActivity, String user) {
         context = chatActivity;
         chatId = user;
-        model = new ChatActivityDetailsModel();
-        saveModel = new ChatDataSaveModel(context);
+        chatActivityDetailsModel = new ChatActivityDetailsModel();
+        chatDataSaveModel = new ChatDataSaveModel(context);
+
+        disposable = new CompositeDisposable();
     }
 
-    private void getChatId(String user) {
+    private void getChatId() {
         referenceUser = FirebaseDatabase.getInstance().getReference().child(USERS);
         referenceChat = FirebaseDatabase.getInstance().getReference().child(CHAT);
         currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Log.v("CREATE CHAT", "before createChatId");
     }
 
-    public void send(final String user, final String text, final boolean isUri)
-    {
-        getChatId(user);
-
-        referenceUser.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                Log.v("USER", user);
-                if (dataSnapshot.child(currentUser).hasChild(CONNECTIONS)) {
-                    key = (String) dataSnapshot.child(currentUser).child(CONNECTIONS).child(user).child(CHAT_ID).getValue();
-                    referenceChat = referenceChat.child(key);
-                } else {
-                    key = FirebaseDatabase.getInstance().getReference().child(CHAT).push().getKey();
-                    referenceChat = referenceChat.child(key);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+    private void getKey(final String user) {
+        getChatId();
 
 
-        referenceUser.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Log.v("BEFORE FLOW","create chat id");
-                if (!dataSnapshot.child(currentUser).child(CONNECTIONS).hasChild(user) || !dataSnapshot.child(currentUser).child(CONNECTIONS).child(user).child(CHAT_ID).exists()) {
-                    int a = 9;
-                    DatabaseReference database = referenceUser;
-
-                    database.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                            if (dataSnapshot.exists()) {
-                                referenceUser.child(user).child(CONNECTIONS).child(currentUser).child(CHAT_ID).setValue(key);
-                                referenceUser.child(currentUser).child(CONNECTIONS).child(user).child(CHAT_ID).setValue(key);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                        }
-                    });
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-        new java.util.Timer().schedule(
-
-                new java.util.TimerTask() {
+        Log.e("KEY0",key+"");
+        chatKeySaveModel = new ChatKeySaveModel();
+        disposable.add(chatKeySaveModel.saveChatKey(user,currentUser)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableMaybeObserver<String>() {
                     @Override
-                    public void run() {
-                        if (!text.equals("") || !text.isEmpty())
-                        {
-                            referenceChat = referenceChat.push();
-                            String innerKey = referenceChat.getKey();
-                            if(!isUri) {
-                                Map map = new HashMap();
-                                map.put(CREATED_BY, currentUser);
-                                map.put(TEXT, text);
-                                map.put(IS_URL,isUri);
-
-                                referenceChat.setValue(map);
-                            }
-                            else
-                            {
-                                saveModel.saveDataInStorage(key,innerKey,text,isUri);
-                            }
-                        }
-
-                    }
-                }, RENDER_TIME
-        );
-
-        // Log.v("AFTER FLOW","send");
-
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-
+                    public void onSuccess(String str) {
+                        key = str;
+                        Log.e("KEY1",key+"");
                         getList();
                     }
-                }, DOUBLE_RENDER_TIME
-        );
-    }
 
-    private void getList() {
-        int k = 9;
-        model.getChatMessage(key);
+                    @Override
+                    public void onError(Throwable e) {
 
-//        new java.util.Timer().schedule(
-//                new java.util.TimerTask()
-//                {
-//                    @Override
-//                    public void run()
-//                    {
-//                        Log.v("List[0] LATER", model.getList().size() + "");
-//                        context.bindRecyclerView(model.getList());
-//                    }
-//                }, DOUBLE_RENDER_TIME + 1000
-//        );
+                    }
 
-        Thread timer = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    sleep(DOUBLE_RENDER_TIME);
-                    context.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+                    @Override
+                    public void onComplete() {
 
-                            context.bindRecyclerView(model.getList());
-                        }
-                    });
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        timer.start();
+                    }
+                }));
+
     }
 
 
-    public void createChatId(final String user) {
+    public void send(final String user, final Map data, final boolean isUri)
+    {
+        getKey(user);
+//        Log.e("TIME",time);
+
+        Log.e("REFERENCECHAT 1", referenceChat.toString());
+        Log.e("CHAT_KEY1",key+"");
         referenceUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                final String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                key = FirebaseDatabase.getInstance().getReference().child(CHAT).push().getKey();
-                referenceChat = referenceChat.child(key);
+                 DatabaseReference database = referenceUser;
 
-                // Log.v("BEFORE FLOW","create chat id");
+
+                database.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if (dataSnapshot.exists()) {
+                            referenceUser.child(user).child(CONNECTIONS).child(currentUser).child(CHAT_ID).setValue(key);
+                            referenceUser.child(currentUser).child(CONNECTIONS).child(user).child(CHAT_ID).setValue(key);
+
+//                            if (!data.get(TEXT).equals("") || !data.get(TEXT).toString().isEmpty()) {
+//                                String time = String.valueOf(System.currentTimeMillis());
+//                                referenceUser.child(user).child(CONNECTIONS).child(currentUser).child(CHAT_TIME).setValue(time);
+//                                referenceUser.child(currentUser).child(CONNECTIONS).child(user).child(CHAT_TIME).setValue(time);
+//                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
 
             }
 
@@ -206,5 +131,87 @@ public class ChatController {
             }
         });
 
+        Log.e("CHAT_KEY2",key+"");
+
+
+        if (!data.get(TEXT).equals("") || !data.get(TEXT).toString().isEmpty()) {
+            Log.e("REFERENCECHAT 2", referenceChat.toString());
+
+            referenceChat = referenceChat.push();
+
+            Log.e("REFERENCECHAT 3", referenceChat.toString());
+
+            String innerKey = referenceChat.getKey();
+
+            disposable.add(chatDataSaveModel.saveDataInStorage(key, innerKey, data, isUri)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribeWith(new DisposableMaybeObserver<Card>() {
+                        @Override
+                        public void onSuccess(Card incomingList) {
+                            Log.e("ELSE ONSUCCESS", "In else");
+                            getList();
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            Log.e("ELSE ONCOMPLETE", "In else");
+                            getList();
+
+                        }
+
+                    }));
+        }
+
+        /* else part not required here as else part code is written above */
+//        } else {
+//
+//            Log.e("ELSE","In else");
+//            getList();
+//        }
     }
+
+
+    public void getList()
+    {
+        Log.e("CHAT_KEY3",key+"");
+
+        disposable.add(chatActivityDetailsModel.getChatMessage(key)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribeWith(new DisposableMaybeObserver<List>() {
+                    @Override
+                    public void onSuccess(List incomingList)
+                    {
+                        Log.e("ELSE GET","In else");
+
+                        Log.e("LIST SIZE",incomingList.size()+"");
+                        context.bindRecyclerView(incomingList);
+                        int k = 9;
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+
+                    }
+
+                }));
+    }
+
+    public void destroy()
+    {
+        disposable.dispose();
+    }
+
 }

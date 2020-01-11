@@ -22,8 +22,8 @@ import java.util.List;
 
 import static com.example.lostandfound.NameClass.RECEIVED_TIME;
 
-public class MessageFragment extends FragmentInterface{
-
+public class MessageFragment extends FragmentInterface
+{
     View rootView;
     RecyclerView recyclerView;
     CardController controller;
@@ -35,8 +35,8 @@ public class MessageFragment extends FragmentInterface{
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
         rootView =  inflater.inflate(R.layout.message_fragment,container,false);
         return rootView;
     }
@@ -88,7 +88,7 @@ public class MessageFragment extends FragmentInterface{
 
                 if(isScrolling == true && currentItems + scrollOutItems == totalItems)
                 {
-                    showData();
+                    //showData();
                 }
             }
         });

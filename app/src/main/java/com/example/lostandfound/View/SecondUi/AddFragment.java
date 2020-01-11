@@ -61,8 +61,8 @@ import static com.example.lostandfound.NameClass.locationForStoringDatabase;
 import static com.example.lostandfound.NameClass.nameForStoringDatabase;
 import static com.example.lostandfound.NameClass.photoUriForStoringDatabase;
 
-class AddFragment extends FragmentInterface implements Observer {
-
+public class AddFragment extends FragmentInterface implements Observer
+{
     Button timePicker;
     View rootView;
     TextView dateTimeDisplay;
@@ -210,20 +210,30 @@ class AddFragment extends FragmentInterface implements Observer {
             @Override
             public void onClick(View view) {
                 dateFunction();
-                dateTimeDisplay.setText(day + "-" + month + "-" + year + ", " + hour + " : " + min + " " + format);
+                dateTimeDisplay.setText(day + "-" + month + "-" + year + ", " + modifiedFormat(hour) + " : " + modifiedFormat(min) + " " + format);
             }
         });
         timePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 timeFunction();
-                dateTimeDisplay.setText(day + "-" + month + "-" + year + ", " + hour + " : " + min + " " + format);
+                dateTimeDisplay.setText(day + "-" + month + "-" + year + ", " + modifiedFormat(hour) + " : " + modifiedFormat(min) + " " + format);
             }
         });
 
 
         getActivity().setTitle("Post");
 
+    }
+
+    private String modifiedFormat(int min)
+    {
+        if(min<10)
+        {
+            return "0"+min;
+        }
+        else
+            return String.valueOf(min);
     }
 
 

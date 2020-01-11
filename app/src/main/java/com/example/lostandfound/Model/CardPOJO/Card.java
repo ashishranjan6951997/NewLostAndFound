@@ -15,6 +15,7 @@ public class Card
     String profileImageUrl;
     String postImageUri;
     String format;
+    String chatTime;
 
     public Card()
     {
@@ -137,5 +138,13 @@ public class Card
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getChatTime() {
+        return chatTime;
+    }
+
+    public void setChatTime(String chatTime) {
+        this.chatTime = chatTime;
     }
 }

@@ -83,7 +83,6 @@ public class SecondMainActivity extends AppCompatActivity {
                         case R.id.nav_add:
                             selectedfragment = new AddFragment();
                             TAG = AddFragmentTAG;
-
                             if(!isConnectedToInternet())
                             {
                                 showToast();

@@ -59,9 +59,15 @@ public class NameClass
 
     // Chatter Id
     public static String CHAT_ID = "chatId";
+    public static String CHAT_TIME = "chatTime";
     public static String CHAT ="chat";
     public static String CREATED_BY = "createdBy";
     public static String TEXT = "text";
+    public static String HOUR = "hour";
+    public static String MINUTE = "min";
+    public static String MONTH = "month";
+    public static String YEAR = "year";
+
     public static String CONNECTIONS = "CONNECTIONS";
 
 

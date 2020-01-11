@@ -13,6 +13,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableMaybeObserver;
+import io.reactivex.schedulers.Schedulers;
+
 import static com.example.lostandfound.NameClass.DOUBLE_RENDER_TIME;
 import static com.example.lostandfound.NameClass.USERS;
 
@@ -25,63 +30,75 @@ public class CardController {
     List list;
     double choosenLongitude;
     double choosenLatitude;
+    CompositeDisposable disposable;
+
     public CardController(Fragment fragment) {
         this.databaseReference = FirebaseDatabase.getInstance().getReference().child(USERS);
         this.currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         this.fragment = (FragmentInterface) fragment;
         list = new ArrayList();
-        model = new FragmentDatabaseModel(list);
+        model = new FragmentDatabaseModel();
+        disposable = new CompositeDisposable();
     }
 
 
     public void setRecyclerView() {
-        model.setArrayList(choosenLongitude,choosenLatitude);
+        disposable.add(model.setArrayList(choosenLongitude, choosenLatitude)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableMaybeObserver<List>() {
+                    @Override
+                    public void onSuccess(List incomingList)
+                    {
+                        fragment.setRecyclerView(incomingList);
 
-        Thread timer = new Thread()
-        {
-            @Override
-            public void run() {
-                try {
-                    sleep(DOUBLE_RENDER_TIME);
-                    fragment.getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            fragment.setRecyclerView(model.getList());
-                            Log.v("Size from controller ", list.size() + "");
-                        }
-                    });
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        timer.start();
+                        Log.e("SIZE", incomingList.size()+"");
+                        //incomingList.clear();
+                        Log.e("SIZE REMOVED", String.valueOf(incomingList.size()));
+                    }
+
+                    @Override
+                    public void onError(Throwable e)
+                    {
+                        Log.e("ERROR",e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete()
+                    {
+
+                    }
+                }));
+
     }
 
     public void setRecyclerViewForMessage()
     {
-        model.setArrayListForMessage();
+        disposable.add(model.setArrayListForMessage()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableMaybeObserver<List>() {
+                    @Override
+                    public void onSuccess(List incomingList)
+                    {
+                        fragment.setRecyclerView(incomingList);
+                        Log.e("SIZE", incomingList.toString());
+                        //incomingList.clear();
+                        Log.e("SIZE REMOVED", String.valueOf(incomingList.toString()));
+                    }
 
-        Thread timer = new Thread()
-        {
-            @Override
-            public void run() {
-                try {
-                    sleep(DOUBLE_RENDER_TIME);
-                    fragment.getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run()
-                        {
-                            fragment.setRecyclerView(model.getListForMessage());
-                            Log.v("Size from controller ", list.size() + "");
-                        }
-                    });
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        timer.start();
+                    @Override
+                    public void onError(Throwable e)
+                    {
+                        Log.e("ERROR",e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete()
+                    {
+
+                    }
+                }));
     }
 
     public void setLatLang(double choosenLongitude, double choosenLatitude) {

@@ -81,7 +81,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    if (dataSnapshot.child(EDIT).exists() || dataSnapshot.child(EDIT).child(IMAGE_URI).exists()) {
+                    if (dataSnapshot.child(EDIT).child(IMAGE_URI).exists()) {
                         String uri = dataSnapshot.child(EDIT).child(IMAGE_URI).getValue().toString();
                         Glide.with(context).load(Uri.parse(uri)).into(holder.profilePhoto);
                     }
