@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.lostandfound.Model.CardPOJO.Card;
+import com.example.lostandfound.OnItemClickInterface;
 import com.example.lostandfound.R;
 import com.example.lostandfound.View.Chat.ChatActivity;
 
@@ -28,11 +30,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     Context context;
     List objects;
     String id;
+    OnItemClickInterface onItemClickInterface;
 
-    public MessageAdapter(@NonNull Context context, @NonNull List objects)
+    public MessageAdapter(@NonNull Context context, @NonNull List objects,OnItemClickInterface onItemClickInterface)
     {
         this.context = context;
         this.objects = objects;
+        this.onItemClickInterface = onItemClickInterface;
     }
 
     @NonNull
@@ -41,18 +45,23 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.message_card_layout, parent, false);
-        return new MessageAdapter.ViewHolder(view);
+        return new MessageAdapter.ViewHolder(view,onItemClickInterface);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder holder, int position)
     {
+
         Card card = (Card)objects.get(position);
+        Log.e("PHOTO",card.getProfileImageUrl()+"");
         if(card.getName()!=null) {
             holder.nameText.setText(card.getName());
         }
         if(card.getProfileImageUrl()!=null) {
             Glide.with(context).load(Uri.parse(card.getProfileImageUrl())).into(holder.imageView);
+        }
+        else{
+            holder.imageView.setImageResource(R.drawable.account_photo);
         }
         id = card.getId();
     }
@@ -67,7 +76,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     {
         TextView nameText;
         ImageView imageView;
-        public ViewHolder(@NonNull View itemView)
+        public ViewHolder(@NonNull View itemView, final OnItemClickInterface onItemClickInterface)
         {
             super(itemView);
             nameText = itemView.findViewById(R.id.textViewName);
@@ -77,13 +86,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                 @Override
                 public void onClick(View v)
                 {
-                    Intent intent = new Intent(context,ChatActivity.class);
-                    Bundle b = new Bundle();
-                    b.putString(CHAT_ID,id);
-                    intent.putExtras(b);
-                    context.startActivity(intent);
+                    onItemClickInterface.onItemClick(getAdapterPosition(),objects);
                 }
             });
         }
+    }
+
+    public void filterList(List<Card> list)
+    {
+        this.objects = list;
+        notifyDataSetChanged();
     }
 }

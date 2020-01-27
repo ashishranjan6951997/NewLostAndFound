@@ -38,6 +38,12 @@ public class AuthenticateController {
         }
     }
 
+    public AuthenticateController(Activity activity,String email){
+        mAuth = FirebaseAuth.getInstance();
+        this.activity = activity;
+        this.email = email;
+    }
+
     public void login() {
         if (!email.isEmpty() || !password.isEmpty()) {
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
@@ -117,5 +123,18 @@ public class AuthenticateController {
         Intent intent = new Intent(activity, SecondMainActivity.class);
         activity.startActivity(intent);
         activity.finish();
+    }
+
+    public void forgetPassword()
+    {
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(activity,"Email Sent",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
 }

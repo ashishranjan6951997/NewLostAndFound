@@ -51,8 +51,7 @@ public class FragmentDatabaseModel {
 
     }
 
-    public Maybe<List> setArrayList(double longitude, double latitude)
-    {
+    public Maybe<List> setArrayList(double longitude, double latitude) {
 
         final List list = new ArrayList();
         this.choosenLongitude = longitude;
@@ -250,8 +249,10 @@ public class FragmentDatabaseModel {
                 child(currentUser).
                 child(CONNECTIONS);
 
+
+
         final List list = new ArrayList();
-        final Card c = new Card();
+        final String[] time = new String[1];
 
         return Maybe.create(new MaybeOnSubscribe<List>() {
             @Override
@@ -265,9 +266,9 @@ public class FragmentDatabaseModel {
                                     getReference().
                                     child(USERS);
 
-                            if(dataSnapshot.child(CHAT_TIME).exists()) {
-                                String time = dataSnapshot.child(CHAT_TIME).getValue().toString();
-                                c.setChatTime(time);
+                            if (dataSnapshot.child(CHAT_TIME).exists()) {
+                                 time[0] = dataSnapshot.child(CHAT_TIME).getValue().toString();
+
                             }
 
                             final String key = dataSnapshot.getKey();
@@ -276,13 +277,18 @@ public class FragmentDatabaseModel {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+
                                     String name = (String) dataSnapshot.child(key).child(DETAILS).child(EDIT).child(NAME).getValue();
                                     String uri = (String) dataSnapshot.child(key).child(DETAILS).child(EDIT).child(IMAGE_URI).getValue();
 
-                                    c.setId(key);
-                                    c.setName(name);
-                                    c.setProfileImageUrl(uri);
-                                    list.add(c);
+                                    Card card = new Card();
+                                    card.setChatTime(time[0]);
+                                    card.setId(key);
+                                    card.setName(name);
+                                    card.setProfileImageUrl(uri);
+                                    list.add(card);
+
+                                    Log.e("LIST BEFORE",list.toString());
 
 //                                    Collections.sort(list, new Comparator() {
 //                                        @Override
@@ -295,9 +301,9 @@ public class FragmentDatabaseModel {
 //                                        }
 //                                    });
 
-
+                                    Log.e("LIST LATER",list.toString());
                                     emitter.onSuccess(list);
-//                                  Log.v("Previous List Size", list.size() + "");
+//
                                 }
 
                                 @Override

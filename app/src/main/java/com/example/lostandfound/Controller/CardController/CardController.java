@@ -4,7 +4,9 @@ import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.lostandfound.Model.CardPOJO.Card;
 import com.example.lostandfound.Model.DatabaseForMatchFragment.FragmentDatabaseModel;
+import com.example.lostandfound.View.Adapter.MessageAdapter;
 import com.example.lostandfound.View.SecondUi.FragmentInterface;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -48,39 +50,33 @@ public class CardController {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableMaybeObserver<List>() {
                     @Override
-                    public void onSuccess(List incomingList)
-                    {
+                    public void onSuccess(List incomingList) {
                         fragment.setRecyclerView(incomingList);
 
-                        Log.e("SIZE", incomingList.size()+"");
+                        Log.e("SIZE", incomingList.size() + "");
                         //incomingList.clear();
                         Log.e("SIZE REMOVED", String.valueOf(incomingList.size()));
                     }
 
                     @Override
-                    public void onError(Throwable e)
-                    {
-                        Log.e("ERROR",e.getMessage());
+                    public void onError(Throwable e) {
+                        Log.e("ERROR", e.getMessage());
                     }
 
                     @Override
-                    public void onComplete()
-                    {
+                    public void onComplete() {
 
                     }
                 }));
-
     }
 
-    public void setRecyclerViewForMessage()
-    {
+    public void setRecyclerViewForMessage() {
         disposable.add(model.setArrayListForMessage()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableMaybeObserver<List>() {
                     @Override
-                    public void onSuccess(List incomingList)
-                    {
+                    public void onSuccess(List incomingList) {
                         fragment.setRecyclerView(incomingList);
                         Log.e("SIZE", incomingList.toString());
                         //incomingList.clear();
@@ -88,21 +84,29 @@ public class CardController {
                     }
 
                     @Override
-                    public void onError(Throwable e)
-                    {
-                        Log.e("ERROR",e.getMessage());
+                    public void onError(Throwable e) {
+                        Log.e("ERROR", e.getMessage());
                     }
 
                     @Override
-                    public void onComplete()
-                    {
+                    public void onComplete() {
 
                     }
                 }));
     }
 
     public void setLatLang(double choosenLongitude, double choosenLatitude) {
-        this.choosenLongitude=choosenLongitude;
-        this.choosenLatitude=choosenLatitude;
+        this.choosenLongitude = choosenLongitude;
+        this.choosenLatitude = choosenLatitude;
+    }
+
+    public void filter(String s, List<Card> dataList, MessageAdapter adapter) {
+        ArrayList<Card> list = new ArrayList();
+        for (Card card : dataList) {
+            if (card.getName().toLowerCase().contains(s.toLowerCase())) {
+                list.add(card);
+            }
+        }
+        adapter.filterList(list);
     }
 }

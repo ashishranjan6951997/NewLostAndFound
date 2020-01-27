@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +26,9 @@ public class LoginFragment extends Fragment
     EditText editpass;
     Button btnlogin;
     Button btnSignup;
+    Button btnForgetPassword;
     AuthenticateController controller;
+    String emailAddress;
 
     @Nullable
     @Override
@@ -40,12 +43,12 @@ public class LoginFragment extends Fragment
     }
     private void initUI()
     {
-
+        emailAddress="";
         editemail=rootView.findViewById(R.id.email);
         editpass=rootView.findViewById(R.id.password);
         btnlogin=rootView.findViewById(R.id.login);
         btnSignup=rootView.findViewById(R.id.SignUp);
-
+        btnForgetPassword = rootView.findViewById(R.id.forget_password);
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,10 +67,29 @@ public class LoginFragment extends Fragment
                 String emailText = editemail.getText().toString();
                 String passwordText = editpass.getText().toString();
 
+
+
                 String cred[] = {emailText,passwordText};
 
                 controller = new AuthenticateController(getActivity(),cred);
                 controller.login();
+            }
+        });
+
+        btnForgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                emailAddress = editemail.getText().toString();
+
+                if(emailAddress.equals((""))){
+                    Toast.makeText(getActivity(),"Please add email id",Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    controller = new AuthenticateController(getActivity(),emailAddress);
+                    controller.forgetPassword();
+                }
             }
         });
     }

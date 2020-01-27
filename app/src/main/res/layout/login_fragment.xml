@@ -65,4 +65,16 @@
         android:text="SignUp"
         android:textColor="@android:color/white" />
 
+
+    <Button
+        android:id="@+id/forget_password"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:text="Forgot Password?"
+        android:textAllCaps="false"
+        android:background="@null"
+        android:backgroundTint="#fff"
+        android:textColor="@color/buttonBackgroundColor" />
+
 </LinearLayout>
