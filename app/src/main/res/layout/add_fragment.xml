@@ -116,6 +116,7 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:padding="9dp"
                     android:id="@+id/postWrite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

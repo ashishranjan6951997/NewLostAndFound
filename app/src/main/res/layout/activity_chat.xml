@@ -52,10 +52,27 @@
 
     <LinearLayout
         android:id="@+id/sendLayout"
+        android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/custom_button"
+        android:background="@drawable/chat_text_layout"
+        android:orientation="horizontal">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_margin="5dp"
+            android:background="@drawable/circle_in_attachment_button"
+            android:id="@+id/attachmentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:baselineAlignBottom="true"
+           android:src="@drawable/ic_add_black_24dp" />
+    <LinearLayout
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/send_button_chat_activity"
         android:orientation="horizontal">
 
 
@@ -64,29 +81,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_weight="9"
-            android:gravity="start"
-            android:textColor="#000" />
+            android:padding="6dp"
+            android:layout_weight="2"
 
-        <Button
+            android:gravity="start"
+            android:textColor="#000"
+            android:background="@null"/>
+
+        <ImageButton
             android:id="@+id/send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_weight="1"
-            android:background="#fff"
-            android:backgroundTint="#fff"
-            android:gravity="center"
-            android:text="SEND"
+            android:layout_gravity="bottom"
+            android:baselineAlignBottom="true"
+           android:background="@drawable/ic_send_black_24dp"
             android:textColor="#000"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/attachmentButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Attachments" />
 
+</LinearLayout>
     </LinearLayout>
 
 

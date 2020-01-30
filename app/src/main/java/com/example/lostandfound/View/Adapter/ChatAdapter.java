@@ -58,11 +58,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
                 holder.mMessage2.setText(c.getmMessage());
                 holder.mContainer2.setGravity(Gravity.END);
                 holder.mMessage2.setTextColor(Color.parseColor("#000000"));
-                //holder.mContainer2.setLayoutParams(ViewGroup.LayoutParams.GRAVITY);
-                //holder.mMessage2.setBackground(Color.parseColor());
-                //holder.mContainer2.setBackgroundColor(Color.parseColor("#cdcdcd"));
                 holder.mMessage2.setBackgroundResource(R.drawable.item_right_chat);
-                holder.timeText.setBackgroundResource(R.drawable.item_right_chat);
+              //  holder.timeText.setBackgroundResource(R.drawable.item_right_chat);
+                holder.timeText.setGravity(Gravity.END);
                 //holder.mContainer2
             } else {
                 holder.mMessage2.setText(c.getmMessage());
@@ -71,7 +69,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
                 //holder.mContainer2.setBackgroundColor(Color.parseColor("#43A047"));
                 holder.mMessage2.setBackgroundResource(R.drawable.item_left_chat);
                 holder.mMessage2.setTextColor(Color.parseColor("#ffffff"));
-                holder.timeText.setBackgroundResource(R.drawable.item_left_chat);
+              //  holder.timeText.setBackgroundResource(R.drawable.item_left_chat);
+                holder.timeText.setGravity(Gravity.START);
                 // holder.mMessage.setTextColor(Color.parseColor("#ffffff"));
                 // holder.mMessage.setBackgroundColor(Color.parseColor("#43A047"));
 
