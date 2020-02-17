@@ -27,6 +27,7 @@ import com.example.lostandfound.MapActivity.MapActivity;
 import com.example.lostandfound.R;
 import com.example.lostandfound.View.Adapter.MatchesAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -74,6 +75,16 @@ public class MatchesFragment extends FragmentInterface {
             @Override
             public void onClick(View view) {
                 if (isConnectedToInternet()) {
+
+                    List list = new ArrayList();
+                    layout.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                    adapter = new MatchesAdapter(getContext(), list);
+                    adapter.notifyDataSetChanged();
+                    final RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
+                    recyclerView.setLayoutManager(manager);
+                    recyclerView.setAdapter(adapter);
+
                     Intent intent = new Intent(getActivity(), MapActivity.class);
                     startActivityForResult(intent, locationRequestCode);
                 }
@@ -99,29 +110,7 @@ public class MatchesFragment extends FragmentInterface {
             final RecyclerView.LayoutManager manager = new LinearLayoutManager(this.getContext());
             recyclerView.setLayoutManager(manager);
             recyclerView.setAdapter(adapter);
-            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                    super.onScrollStateChanged(recyclerView, newState);
 
-                    if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-                        isScrolling = true;
-                    }
-                }
-
-                @Override
-                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
-
-                    currentItems = manager.getChildCount();
-                    totalItems = manager.getItemCount();
-                    scrollOutItems = ((LinearLayoutManager) manager).findFirstVisibleItemPosition();
-
-                    if (isScrolling == true && currentItems + scrollOutItems == totalItems) {
-                        //showData();
-                    }
-                }
-            });
         }
     }
 

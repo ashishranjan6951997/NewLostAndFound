@@ -4,7 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +27,7 @@ import com.example.lostandfound.Controller.DatabaseController.SaveDataController
 import com.example.lostandfound.Model.DatabaseModel.RealtimeDatabaseDemoModel;
 import com.example.lostandfound.Observer;
 import com.example.lostandfound.R;
+import com.example.lostandfound.View.SecondUi.ProfileFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +40,7 @@ import static com.example.lostandfound.NameClass.DETAILS;
 import static com.example.lostandfound.NameClass.EDIT;
 import static com.example.lostandfound.NameClass.IMAGE_URI;
 import static com.example.lostandfound.NameClass.NAME;
+import static com.example.lostandfound.NameClass.ProfileFragmentTAG;
 import static com.example.lostandfound.NameClass.USERS;
 import static com.example.lostandfound.NameClass.bioForStoringDatabase;
 import static com.example.lostandfound.NameClass.emailForStroringDatabase;

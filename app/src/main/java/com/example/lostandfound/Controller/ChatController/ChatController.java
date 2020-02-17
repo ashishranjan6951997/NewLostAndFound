@@ -110,11 +110,6 @@ public class ChatController
                             referenceUser.child(user).child(CONNECTIONS).child(currentUser).child(CHAT_ID).setValue(key);
                             referenceUser.child(currentUser).child(CONNECTIONS).child(user).child(CHAT_ID).setValue(key);
 
-//                            if (!data.get(TEXT).equals("") || !data.get(TEXT).toString().isEmpty()) {
-//                                String time = String.valueOf(System.currentTimeMillis());
-//                                referenceUser.child(user).child(CONNECTIONS).child(currentUser).child(CHAT_TIME).setValue(time);
-//                                referenceUser.child(currentUser).child(CONNECTIONS).child(user).child(CHAT_TIME).setValue(time);
-//                            }
                         }
                     }
 

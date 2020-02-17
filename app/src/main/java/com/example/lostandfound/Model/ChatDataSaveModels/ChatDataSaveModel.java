@@ -61,7 +61,8 @@ public class ChatDataSaveModel {
         chatStorageReference = chatStorageReference.child(key).child(innerKey);
 
 
-        if(isUri) {
+        if(isUri)
+        {
             if (map.get(TEXT).toString() != null) {
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), Uri.parse(map.get(TEXT).toString()));
@@ -86,6 +87,9 @@ public class ChatDataSaveModel {
                                 chatPhoto[0] = uri.toString();
                                 map.put(TEXT,chatPhoto[0]);
                                 Log.e("CHAT", chatPhoto[0] + "");
+
+                                saveDataInDatabase(key,innerKey,map,isUri);
+
                             }
                         });
                     }
@@ -98,7 +102,7 @@ public class ChatDataSaveModel {
         return Maybe.create(new MaybeOnSubscribe() {
             @Override
             public void subscribe(MaybeEmitter emitter) throws Exception {
-                saveDataInDatabase(key,innerKey,map,isUri);
+//                saveDataInDatabase(key,innerKey,map,isUri);
 
                 Card card = new Card();
                 emitter.onSuccess(card);
