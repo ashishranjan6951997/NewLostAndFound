@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -57,8 +58,8 @@ public class ChatActivity extends AppCompatActivity {
     TextView nameTextView;
     RecyclerView recyclerView;
     EditText editText;
-    Button sendBtn;
-    Button attachmentBtn;
+    ImageButton sendBtn;
+    ImageView attachmentBtn;
     String chatId;
     DatabaseReference reference;
     Uri uri;

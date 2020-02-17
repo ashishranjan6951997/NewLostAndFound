@@ -198,12 +198,20 @@ public class AddFragment extends FragmentInterface implements Observer
                         format
                 };
 
-                if (!desc.equals("")) {
+                if (!desc.equals("") && array[1]!="kiit") {
                     controller.saveData(array, uri, POST);
                     demo.notifyObserver();
-                } else {
-                    Toast.makeText(getActivity(), "Please add some description", Toast.LENGTH_LONG).show();
+                } else if(!desc.equals("")) {
+                    Toast.makeText(getActivity(), "Please Write the description", Toast.LENGTH_LONG).show();
                 }
+                else if(array[1]!="kiit")
+                {
+                    Toast.makeText(getActivity(), "Please add some Location", Toast.LENGTH_LONG).show();
+
+                }else
+                    Toast.makeText(getActivity(), "Please add some details", Toast.LENGTH_LONG).show();
+
+
             }
         });
         dateClickedButton.setOnClickListener(new View.OnClickListener() {
