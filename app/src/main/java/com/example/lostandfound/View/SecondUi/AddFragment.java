@@ -2,10 +2,14 @@ package com.example.lostandfound.View.SecondUi;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -156,6 +160,7 @@ public class AddFragment extends FragmentInterface implements Observer
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 spinnerText[0] = (String) parent.getItemAtPosition(pos);
+                Log.d("spinner", "onItemSelected: "+spinnerText[0]);
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -170,6 +175,8 @@ public class AddFragment extends FragmentInterface implements Observer
             }
         });
 
+//Image from Gallery
+
         photoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -178,6 +185,26 @@ public class AddFragment extends FragmentInterface implements Observer
                 startActivityForResult(intent, PHOTO_REQUEST);
             }
         });
+
+        //Image from Camera
+
+//        photoBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ContentValues values=new ContentValues();
+//                values.put(MediaStore.Images.Media.TITLE,"New Picture");
+//                values.put(MediaStore.Images.Media.DESCRIPTION,"From the camera");
+//                uri= rootView.getContentResolver()
+//                Intent cameraIntent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                cameraIntent.setType("image/");
+//                startActivityForResult(cameraIntent,PHOTO_REQUEST);
+//            }
+//        });
+
+
+
+
+
 
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,18 +225,17 @@ public class AddFragment extends FragmentInterface implements Observer
                         format
                 };
 
-                if (!desc.equals("") && array[1]!="kiit") {
-                    controller.saveData(array, uri, POST);
-                    demo.notifyObserver();
-                } else if(!desc.equals("")) {
-                    Toast.makeText(getActivity(), "Please Write the description", Toast.LENGTH_LONG).show();
-                }
-                else if(array[1]!="kiit")
-                {
-                    Toast.makeText(getActivity(), "Please add some Location", Toast.LENGTH_LONG).show();
 
+                if(spinnerText[0]!="Select Your Query") {
+                    Log.d("spinner111", "onItemSelected: "+spinnerText[0]);
+                    if (!desc.equals("")) {
+                        controller.saveData(array, uri, POST);
+                        demo.notifyObserver();
+                        descriptionOfItem.setText("");
+                    } else
+                        Toast.makeText(getActivity(), "Please add some details", Toast.LENGTH_LONG).show();
                 }else
-                    Toast.makeText(getActivity(), "Please add some details", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Please Select Your Query", Toast.LENGTH_LONG).show();
 
 
             }
