@@ -1,9 +1,9 @@
 # NewLostAndFound
 
-<img src="images/first.png" width="300">
-<img src="images/second.jpg" width="300">
-<img src="images/third.png" width="300">
-<img src="images/fourth.png" width="300">
+<img src="images/firstImage.png" width="300">
+<img src="images/secondImage.jpg" width="300">
+<img src="images/thirdImage.png" width="300">
+<img src="images/fourthImage.png" width="300">
   
   
   
