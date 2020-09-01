@@ -1,7 +1,7 @@
 # NewLostAndFound
 
 <img src="images/firstImage.png" width="300">
-<img src="images/secondImage.jpg" width="300">
+<img src="images/secondImage.png" width="300">
 <img src="images/thirdImage.png" width="300">
 <img src="images/fourthImage.png" width="300">
   
