@@ -140,7 +140,6 @@ public class SaveDataController {
                                 map.put(minuteForStoringDatabse,array[8]);
                                 map.put(categoryForStoringDatabase,array[9]);
                                 map.put(amOrPmForStoringDatabse,array[10]);
-
                                 databaseDemo.saveData(map,POST,key);
                                 Log.v("Modified URkkkkI--", str[0] + "");
                             }

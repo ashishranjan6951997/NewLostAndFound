@@ -43,9 +43,18 @@
             android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forget Password?"
+        android:layout_gravity="end"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:id="@+id/forget_password"
+        ></TextView>
     <!-- Login Button -->
     <Button
+
         android:id="@+id/login"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -66,15 +75,15 @@
         android:textColor="@android:color/white" />
 
 
-    <Button
-        android:id="@+id/forget_password"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dip"
-        android:text="Forgot Password?"
-        android:textAllCaps="false"
-        android:background="@null"
-        android:backgroundTint="#fff"
-        android:textColor="@color/buttonBackgroundColor" />
+<!--    <Button-->
+<!--        android:id="@+id/forget_password"-->
+<!--        android:layout_width="fill_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dip"-->
+<!--        android:text="Forgot Password?"-->
+<!--        android:textAllCaps="false"-->
+<!--        android:background="@null"-->
+<!--        android:backgroundTint="#fff"-->
+<!--        android:textColor="@color/buttonBackgroundColor" />-->
 
 </LinearLayout>
